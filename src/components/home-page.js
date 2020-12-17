@@ -1,5 +1,7 @@
 import Login from "./login"
 import Signup from "./signup"
+import LoginContext from "../context/context"
+import React, { useContext } from "react"
 
 
 
@@ -9,8 +11,12 @@ import Signup from "./signup"
 
 
 function Homepage() {
+
+    const loginContext = useContext(LoginContext)
+
     return (
         <div>
+            {}
             when logged out:
             <div>
                 <h1>Welcome to the site!</h1>
