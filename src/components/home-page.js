@@ -1,46 +1,70 @@
 import Login from "./login"
 import Signup from "./signup"
 import LoginContext from "../context/context"
-import React, { useContext } from "react"
-
-
-
-// Components:
-// Login / Signup button
-// Login / Signup modal(triggered when the button is pressed)
-
+import { AdminContext } from "../context/context.js"
+import React, { useContext, useState } from "react"
+import { Modal } from "react-bootstrap"
 
 function Homepage() {
 
+    const adminContext = useContext(AdminContext)
     const loginContext = useContext(LoginContext)
+    const [isLoginOpen, setIsLoginOpen] = useState(false);
+    const [isSignupOpen, setIsSignupOpen] = useState(false);
+
+    const openLoginModal = () => {
+        setIsLoginOpen(true)
+    }
+
+    const closeLoginModal = () => {
+        setIsLoginOpen(false)
+    }
+
+    const openSignupModal = () => {
+        setIsSignupOpen(true)
+    }
+
+    const closeSignupModal = () => {
+        setIsSignupOpen(false)
+    }
 
     return (
         <div>
-            {}
-            when logged out:
-            <div>
-                <h1>Welcome to the site!</h1>
-                <p>description to the service provided</p>
-                <button>login/signup</button>
-                the button should trigger a modal with either:
-                <br/>
-                <Signup />
-                or
-                <Login />
-                link to the search page
-            </div>
-            when logged in:
-            <div>
+            {loginContext.login ?
                 <h1>Welcome to the site First Name Last Name</h1>
-                <button>search</button>
-                <br />
-                <a href> link to My Pets Page</a>
-                <br />
-                Has access to navigate to profile settings
-            </div>
+                :
+                <div>
+                    <h1>Welcome to the site!</h1>
+                    <p>description to the service provided</p>
+                    <button
+                        onClick={openLoginModal}
+                    >
+                        Login
+                    </button>
+                    <button
+                        onClick={openSignupModal}
+                    >
+                        Signup
+                    </button>
+                    <br />
+                    <Modal
+                        show={isSignupOpen}
+                        onHide={closeSignupModal}
+                    >
+                        <Signup />
+                    </Modal>
+                    <Modal
+                        show={isLoginOpen}
+                        onHide={closeLoginModal}
+                    >
+                        <Login />
+                    </Modal>
+                </div>
+            }
+            {adminContext.admin && <h1 className="text-center mb-4 mt-5">Admin</h1>}
         </div>
     );
-} 
+}
 
 
 export default Homepage
