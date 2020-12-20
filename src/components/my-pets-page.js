@@ -1,25 +1,33 @@
 // See more button(this button takes you to a full detailed description of the pet)
+// Can toggle between pets and saved pets    
 
-
-import { Button, Card } from "react-bootstrap";
+import React, { useContext} from "react"
+import UserContext from "../context/context"
+import { Button, Card, } from "react-bootstrap";
+// import PetPage from "./pet-page";
  
 function MyPetsPage() {
+
+    const userContext = useContext(UserContext)
+
+    if (userContext.pets.length===0) {return <h2>you currently don't own any pets</h2>}
     return (
         <>
-            <h2 className="text-center mb-4">My Pets Page</h2>
-            if not own or foster any pets? display text saying that
-            <Card className="d-flex align-items-center justify-content-center bg-transparent">
-                <Card.Body>
-                    Can toggle between pets and saved pets
-                    <br/>
-                    and both should be displaying for each pet:
-                    <br/>
-                    <Card.Img src="" alt="image of the pet"/>
-                    <Card.Title>Pet's Name</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">Pet's Status: foster / adopted</Card.Subtitle>
-                    <Button variant="primary"> See More (should take you to PetPage)</Button>
-                </Card.Body>
-            </Card>
+            <h2 className="text-center mb-4">My Pets</h2>
+            {userContext.pets.map(pet => {
+                return (
+                    <div key={Math.random()}>
+                        <Card className="align-items-center justify-content-center bg-transparent">
+                            <Card.Body>
+                                <Card.Img src="../images" alt="image of the pet" />
+                                <Card.Title>{pet.name}</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">{pet.status}</Card.Subtitle>
+                                <Button variant="primary">See More</Button>
+                            </Card.Body>
+                        </Card>
+                    </div>
+                )
+            })}
         </>
     )
 }
