@@ -18,24 +18,18 @@ function AddPet() {
     });
 
     const handlePictureChange = (event) => {
-        const file = event.target.files[0];
+        const file = event.target.files[0]
         setAddPetData({ ...addPetData, image: file })
     };
 
     const handleTypeChange = (event) => {
-        if (event === 1) {
-            setAddPetData({ ...addPetData, type: "cat" });
-        } else {
-            setAddPetData({ ...addPetData, type: "dog" });
-        }
+        if (event === 1) {setAddPetData({ ...addPetData, type: "cat" })}
+        else {setAddPetData({ ...addPetData, type: "dog" })}
     };
 
     const handleHypoChange = (event) => {
-        if (event === 1) {
-            setAddPetData({ ...addPetData, hypoallergenic: true });
-        } else {
-            setAddPetData({ ...addPetData, hypoallergenic: false });
-        }
+        if (event === 1) {setAddPetData({ ...addPetData, hypoallergenic: true })}
+        else {setAddPetData({ ...addPetData, hypoallergenic: false })}
     };
 
     const handleOnSubmit = (event) => {
@@ -60,9 +54,9 @@ function AddPet() {
                 <Card.Title className="text-center mb-4">Add Pet</Card.Title>
                 <Card.Body>
                     <Form
-                        className="login-form bg-light"
+                        className="bg-light"
                         onSubmit={(event) => handleOnSubmit(event)}
-                        action="AddPet"
+                        action="addPet"
                         method="post"
                         encType="multipart/form-data"
                     >
