@@ -8,11 +8,20 @@ import Search from './components/search-page';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
 import { Navbar } from "react-bootstrap"
 import UserContext from "./context/context"
-import React, { useContext} from "react"
+import React, { useContext, useEffect} from "react"
 import PetPage from './components/pet-page';
+import { getPets } from "./lib/api";
 
 
 function App() {
+
+  useEffect(() => {
+    getPets("http://localhost:5000/api/users").then((response) => {
+      // setAllPets(response.pets)
+      console.log(response);
+    })
+    // return () => {cleanup}
+  }, [])
 
   const userContext = useContext(UserContext)
 

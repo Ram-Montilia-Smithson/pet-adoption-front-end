@@ -1,6 +1,6 @@
 import { Button, Card, Form, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
 import React, { useState } from "react";
-import {postData } from "../api";
+import {postData } from "../lib/api";
 
 function AddPet() {
 
