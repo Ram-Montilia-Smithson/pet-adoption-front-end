@@ -16,10 +16,20 @@ export const postData = async (url = "", data = {}) => {
         });
 }
 
-const baseUrl = '/'
+const postPets = async (data) => {
+    await axios.post('http://localhost:5000/addPet', data)
+        .then((response => {
+            console.log(response, "response from postPets");
+            // console.log(data, "addPetData");
+    }))
+        .catch((error) => {
+        console.log(error);
+    })    
+}
 
-const getPets = () => {
-    return fetch(baseUrl).then(res => res)
+const getPets = async () => {
+    const response = await axios.get('http://localhost:5000/')
+    return response
 }
 
 // const getUserById = (id) => {
@@ -36,4 +46,4 @@ const getPets = () => {
 //     }).then(res => res.json())
 // }
 
-export { getPets }
+export { getPets, postPets }

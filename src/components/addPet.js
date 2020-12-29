@@ -1,6 +1,6 @@
 import { Button, Card, Form, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
 import React, { useState } from "react";
-import {postData } from "../lib/api";
+import {postPets } from "../lib/api";
 
 function AddPet() {
 
@@ -14,7 +14,7 @@ function AddPet() {
         color: "",
         bio: "",
         hypoallergenic: false,
-        dietaryRestrictions: ""
+        diet: ""
     });
 
     const handlePictureChange = (event) => {
@@ -43,8 +43,8 @@ function AddPet() {
         // }
         formData.append('status', null)
         formData.append('userId', "")
-        postData("http://localhost:5000/admin/add-pet",formData);
-        console.log(formData)
+        postPets(addPetData);
+        // console.log(formData)
         // console.log(addPetData);
     };
 
@@ -158,7 +158,7 @@ function AddPet() {
                             <Form.Label>Dietary Restrictions</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder="Diet"
+                                placeholder="Dietary Restrictions"
                                 onChange={(event) =>
                                 setAddPetData({...addPetData,diet: event.target.value})}
                             />

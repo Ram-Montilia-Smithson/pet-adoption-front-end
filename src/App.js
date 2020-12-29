@@ -14,11 +14,9 @@ import { getPets } from "./lib/api";
 
 
 function App() {
-
   useEffect(() => {
-    getPets("http://localhost:5000/api/users").then((response) => {
-      // setAllPets(response.pets)
-      console.log(response);
+    getPets().then((response) => {
+      console.log(response, "verifying get");
     })
     // return () => {cleanup}
   }, [])
