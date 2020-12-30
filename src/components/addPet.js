@@ -1,6 +1,6 @@
 import { Button, Card, Form, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
 import React, { useState } from "react";
-import {postPets } from "../lib/api";
+import {postPet } from "../lib/api";
 
 function AddPet() {
 
@@ -33,19 +33,21 @@ function AddPet() {
     };
 
     const handleOnSubmit = (event) => {
-        event.preventDefault();
-        const formData = new FormData();
-        for (const key in addPetData) {
-            formData.append(key, addPetData[key]);
-        }
-        // for (let pair of formData.entries()){
-        //     console.log(pair[0],pair[1])
-        // }
-        formData.append('status', null)
-        formData.append('userId', "")
-        postPets(addPetData);
-        // console.log(formData)
-        // console.log(addPetData);
+        event.preventDefault()
+        postPet(addPetData)
+        console.log(addPetData)
+        setAddPetData({
+            name: "",
+            image: null,
+            type: "",
+            breed: "",
+            height: 0,
+            weight: 0,
+            color: "",
+            bio: "",
+            hypoallergenic: false,
+            diet: ""
+        })
     };
 
     return (
@@ -65,7 +67,8 @@ function AddPet() {
                             <Form.Control
                                 type="text"
                                 placeholder="Name"
-                                onChange={(event) =>setAddPetData({ ...addPetData, name: event.target.value })}
+                                onChange={(event) => setAddPetData({ ...addPetData, name: event.target.value })}
+                                value={addPetData.name}
                                 required
                             />
                         </Form.Group>
@@ -73,7 +76,7 @@ function AddPet() {
                             <Form.Label>Pet's Image</Form.Label>
                             <Form.File
                                 // required
-                                name="image"
+                                // name="image"
                                 onChange={(event) => handlePictureChange(event)}
                             />
                         </Form.Group>
@@ -83,6 +86,7 @@ function AddPet() {
                                 type="radio"
                                 name="types"
                                 onChange={(event) => handleTypeChange(event)}
+                                value={addPetData.type}
                                 required
                             >
                                 <ToggleButton value={1}>cat</ToggleButton>
@@ -95,23 +99,17 @@ function AddPet() {
                                 type="text"
                                 placeholder="Breed"
                                 onChange={(event) => setAddPetData({ ...addPetData, breed: event.target.value })}
+                                value={addPetData.breed}
                                 required
                             />
                         </Form.Group>
-                        {/* <Form.Group id="adoption">
-                            <Form.Label>Adoption Status</Form.Label><br />
-                            <ToggleButtonGroup type="radio" name="adoption-status">
-                                <ToggleButton value={1}>Owned</ToggleButton>
-                                <ToggleButton value={2}>Fostered</ToggleButton>
-                                <ToggleButton value={3}>None</ToggleButton>
-                            </ToggleButtonGroup>
-                        </Form.Group> */}
                         <Form.Group id="height">
                             <Form.Label>Height</Form.Label>
                             <Form.Control
                                 type="number"
                                 placeholder="Height"
                                 onChange={(event) => setAddPetData({ ...addPetData, height: event.target.value })}
+                                value={addPetData.height}
                                 required
                             />
                         </Form.Group>
@@ -121,6 +119,7 @@ function AddPet() {
                                 type="number"
                                 placeholder="weight"
                                 onChange={(event) => setAddPetData({ ...addPetData, weight: event.target.value })}
+                                value={addPetData.weight}
                                 required
                             />
                         </Form.Group>
@@ -130,6 +129,7 @@ function AddPet() {
                                 type="text"
                                 placeholder="Color"
                                 onChange={(event) => setAddPetData({ ...addPetData, color: event.target.value })}
+                                value={addPetData.color}
                                 required
                             />
                         </Form.Group>
@@ -140,6 +140,7 @@ function AddPet() {
                                 rows={3}
                                 placeholder="Bio"
                                 onChange={(event) => setAddPetData({ ...addPetData, bio: event.target.value })}
+                                value={addPetData.bio}
                                 required
                             />
                         </Form.Group>
@@ -147,8 +148,10 @@ function AddPet() {
                             <Form.Label>Hypoallergenic</Form.Label><br />
                             <ToggleButtonGroup
                                 type="radio"
-                                name="yes-no"
+                                name="hypoallergenic"
                                 onChange={(event) => handleHypoChange(event)}
+                                value={addPetData.hypoallergenic}
+                                required
                             >
                                 <ToggleButton value={1}>Yes</ToggleButton>
                                 <ToggleButton value={2}>No</ToggleButton>
@@ -159,8 +162,8 @@ function AddPet() {
                             <Form.Control
                                 type="text"
                                 placeholder="Dietary Restrictions"
-                                onChange={(event) =>
-                                setAddPetData({...addPetData,diet: event.target.value})}
+                                onChange={(event) => setAddPetData({ ...addPetData, diet: event.target.value })}
+                                value={addPetData.diet}
                             />
                         </Form.Group>
                         <Button type="submit">Add Pet</Button>

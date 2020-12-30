@@ -1,49 +1,63 @@
 import axios from "axios";
 
-export const getData = async (url) => {
-    const response = await axios.get(url)
+export const postPet = async (data) => {
+    await axios.post('http://localhost:5000/api/pets', data)
+        .then((response => {
+            console.log(response, "response from postPet");
+    }))
+        .catch((error) => {
+        console.log(error);
+    })   
+}
+
+export const postUser = async (data) => {
+    await axios.post('http://localhost:5000/api/users', data)
+        .then((response => {
+            console.log(response, "response from postUser");
+        }))
+        .catch((error) => {
+            console.log(error);
+        })
+}
+
+export const getUsers = async () => {
+    const response = await axios.get('http://localhost:5000/api/users')
     const data = response.data
     return data
 }
 
-export const postData = async (url = "", data = {}) => {
-    await axios.post(url, data)
-        .then((response => {
-            console.log(response);
-        }))
-        .catch((error) => {
-            console.log(error);
-        });
+export const getPets = async () => {
+    const response = await axios.get('http://localhost:5000/api/pets')
+    const data = response.data
+    return data
 }
 
-const postPets = async (data) => {
-    await axios.post('http://localhost:5000/addPet', data)
-        .then((response => {
-            console.log(response, "response from postPets");
-            // console.log(data, "addPetData");
-    }))
-        .catch((error) => {
-        console.log(error);
-    })    
+export const getPetById = async (id) => {
+    const response = await axios.get(`http://localhost:5000/api/pets/${id}`)
+    const data = response.data
+    return data
 }
 
-const getPets = async () => {
-    const response = await axios.get('http://localhost:5000/')
+export const getUserById = async (id) => {
+    const response = await axios.get(`http://localhost:5000/api/users/${id}`)
+    // const data = response.data
     return response
 }
 
-// const getUserById = (id) => {
-//     return fetch(`${baseUrl}/${id}`).then(res => res.json())
-// }
+export const deletePetById = async (id) => {
+    const response = await axios.delete(`http://localhost:5000/api/pets/${id}`)
+    const data = response.data
+    return data
+}
 
-// const addNewUser = (data) => {
-//     return fetch(baseUrl, {
-//         method: 'POST',
-//         body: JSON.stringify(data),
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     }).then(res => res.json())
-// }
+export const deleteUserById = async (id) => {
+    const response = await axios.delete(`http://localhost:5000/api/users/${id}`)
+    const data = response.data
+    return data
+}
 
-export { getPets, postPets }
+export const updateUserById = async (id) => {
+    const response = await axios.put(`http://localhost:5000/api/users/${id}`)
+    const data = response.data
+    return data
+}

@@ -10,13 +10,35 @@ import { Navbar } from "react-bootstrap"
 import UserContext from "./context/context"
 import React, { useContext, useEffect} from "react"
 import PetPage from './components/pet-page';
-import { getPets } from "./lib/api";
+import { getPetById, getPets, getUserById, getUsers, deletePetById, deleteUserById, updateUserById } from "./lib/api";
 
 
 function App() {
   useEffect(() => {
-    getPets().then((response) => {
-      console.log(response, "verifying get");
+    // works
+    // getPets().then((response) => {
+    //   console.log(response, "getPets");
+    // })
+    // works
+    // getUsers().then((response) => {
+    //   console.log(response, "getUsers");
+    // })
+    // works
+    // getPetById("5fec75fc3720284b9c287a81").then((response) => {
+    //   console.log(response, "getPetById");
+    // })
+    // works
+    // getUserById("5fe875e5a60ccb614872b295").then((response) => {
+    //   console.log(response, "getUserById");
+    // })
+    // deletePetById("5fec9d661610890b741e797d").then((response) => {
+    //   console.log(response, "deletePetById");
+    // })
+    // deleteUserById("5feccaf83e80613a285c288e").then((response) => {
+    //   console.log(response, "deleteUserById");
+    // })
+    updateUserById("5fec9ac61610890b741e797b").then((response) => {
+      console.log(response, "updateUserById");
     })
     // return () => {cleanup}
   }, [])
