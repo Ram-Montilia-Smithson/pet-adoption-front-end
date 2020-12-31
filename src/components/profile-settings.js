@@ -1,13 +1,24 @@
 import UserContext from "../context/context"
 import { Form, Button, Card} from "react-bootstrap";
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
+import { getUserById, updateUserById } from "../lib/api";
 
+
+// updateUserById("5fedfc2b5c7cb144f8b36d6b").then((response) => {
+//     console.log(response, "updateUserById");
+// })
 
 
 function ProfileSettings() {
 
-    const userContext = useContext(UserContext)
+    // let user
 
+    // useEffect(() => {
+    //     getUserById("5fedfc2b5c7cb144f8b36d6b").then((response) => {
+    //       console.log(response, "getUserById");
+          
+    //     })
+    // },[])
 
     return (
         <Card className="d-flex align-items-center justify-content-center bg-transparent">

@@ -10,10 +10,13 @@ import { Navbar } from "react-bootstrap"
 import UserContext from "./context/context"
 import React, { useContext, useEffect} from "react"
 import PetPage from './components/pet-page';
-import { getPetById, getPets, getUserById, getUsers, deletePetById, deleteUserById, updateUserById } from "./lib/api";
+import { getPetById, getPets, getUserById, getUsers, deletePetById, deleteUserById, updateUserById, updatePetById } from "./lib/api";
 
 
 function App() {
+
+  let mongoUserContext = UserContext
+
   useEffect(() => {
     // works
     // getPets().then((response) => {
@@ -28,22 +31,26 @@ function App() {
     //   console.log(response, "getPetById");
     // })
     // works
-    // getUserById("5fe875e5a60ccb614872b295").then((response) => {
-    //   console.log(response, "getUserById");
+    // getUserById("5fec971b1610890b741e797a").then((response) => {
+    //   console.log(response.data, "getUserById");
+    //   mongoUserContext = response.data
     // })
     // deletePetById("5fec9d661610890b741e797d").then((response) => {
     //   console.log(response, "deletePetById");
     // })
-    // deleteUserById("5feccaf83e80613a285c288e").then((response) => {
+    // deleteUserById("5feccadc3e80613a285c288d").then((response) => {
     //   console.log(response, "deleteUserById");
     // })
-    updateUserById("5fec9ac61610890b741e797b").then((response) => {
-      console.log(response, "updateUserById");
-    })
+    // updateUserById("5fedfc2b5c7cb144f8b36d6b").then((response) => {
+    //     console.log(response, "updateUserById");
+    // })
+    // updatePetById("5feb8bcabeea947148ce4895").then((response) => {
+    //     console.log(response, "updatePetById");
+    // })
     // return () => {cleanup}
   }, [])
 
-  const userContext = useContext(UserContext)
+  const userContext = useContext(mongoUserContext)
 
   return (
     <div className="App">

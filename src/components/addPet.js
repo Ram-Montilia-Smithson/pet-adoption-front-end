@@ -35,7 +35,7 @@ function AddPet() {
     const handleOnSubmit = (event) => {
         event.preventDefault()
         postPet(addPetData)
-        console.log(addPetData)
+        // console.log(addPetData, "addpetdata")
         setAddPetData({
             name: "",
             image: null,
@@ -75,9 +75,13 @@ function AddPet() {
                         <Form.Group id="pet's-image">
                             <Form.Label>Pet's Image</Form.Label>
                             <Form.File
-                                // required
-                                // name="image"
+                                type="file"
+                                // placeholder="Upload image"
+                                // controlid="petImage"
+                                name="image"
                                 onChange={(event) => handlePictureChange(event)}
+                                // required
+                                // value={addPetData.image}
                             />
                         </Form.Group>
                         <Form.Group id="type">
