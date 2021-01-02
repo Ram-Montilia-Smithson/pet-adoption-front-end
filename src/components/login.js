@@ -1,9 +1,15 @@
 import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
 
-
-//  Login Component (inside a modal):
-
+// Login API
+// route: ‘/login’ [POST]
+// The login api is responsible for logging in existing users
+// Validate all the user input is valid
+// Check the email and password match an existing user
+// Retrieve the users data from the database and login the user.
+//     Fields:
+// Email address
+// Password
 
 export default function Login() {
     

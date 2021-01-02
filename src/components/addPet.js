@@ -1,12 +1,32 @@
 import { Button, Card, Form, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
 import React, { useState } from "react";
-import {postPet } from "../lib/api";
+import { postPet } from "../lib/api";
+
+// Add Pet API
+// Route: ‘/pet’ [POST] (Protected to admin only)
+// The add pet api is responsible for adding new pets
+// Validate all the user input is valid
+// Handle photo upload
+// Store pet information in the database
+// Fields:
+// Type
+// Name
+// Adoption Status(Adopted, Fostered, Available)
+// Picture(Picture location URL / Path)
+// Height(number)
+// Weight(Number)
+// Color
+// Bio
+// Hypoallergenic(Boolean)
+// Dietary restrictions
+// Breed
+
 
 function AddPet() {
 
     const [addPetData, setAddPetData] = useState({
         name: "",
-        image: null,
+        image: "",
         type: "",
         breed: "",
         height: 0,
@@ -14,39 +34,46 @@ function AddPet() {
         color: "",
         bio: "",
         hypoallergenic: false,
-        diet: ""
+        diet: "",
+        ownerId: '',
+        status: ''
     });
 
     const handlePictureChange = (event) => {
-        const file = event.target.files[0]
-        setAddPetData({ ...addPetData, image: file })
-    };
-
-    const handleTypeChange = (event) => {
-        if (event === 1) {setAddPetData({ ...addPetData, type: "cat" })}
-        else {setAddPetData({ ...addPetData, type: "dog" })}
+        const file = event.target.files[0];
+        setAddPetData({ ...addPetData, image: file });
     };
 
     const handleHypoChange = (event) => {
-        if (event === 1) {setAddPetData({ ...addPetData, hypoallergenic: true })}
-        else {setAddPetData({ ...addPetData, hypoallergenic: false })}
+        if (event === 1) {setAddPetData({ ...addPetData, hypoallergenic: true });}
+        else {setAddPetData({ ...addPetData, hypoallergenic: false });}
+    };
+
+    const handleTypeChange = (event) => {
+        if (event === 1) {setAddPetData({ ...addPetData, type: "cat" });}
+        else {setAddPetData({ ...addPetData, type: "dog" });}
     };
 
     const handleOnSubmit = (event) => {
         event.preventDefault()
-        postPet(addPetData)
-        // console.log(addPetData, "addpetdata")
+        const formData = new FormData();
+        formData.append('name', addPetData.name)
+        formData.append('weight', addPetData.weight)
+        formData.append('height', addPetData.height)
+        formData.append('color', addPetData.color)
+        formData.append('breed', addPetData.breed)
+        formData.append('type', addPetData.type)
+        formData.append('hypoallergenic', addPetData.hypoallergenic)
+        formData.append('diet', addPetData.diet)
+        formData.append('image', addPetData.breed)
+        formData.append('bio', addPetData.bio)
+        formData.append('status', addPetData.status)
+        formData.append('ownerId', addPetData.ownerId)
+        formData.append('image', addPetData.image)
+        postPet(formData)
         setAddPetData({
-            name: "",
-            image: null,
-            type: "",
-            breed: "",
-            height: 0,
-            weight: 0,
-            color: "",
-            bio: "",
-            hypoallergenic: false,
-            diet: ""
+            name: "", image: "", type: "", breed: "", height: 0, weight: 0, color: "",
+            bio: "", hypoallergenic: false, diet: "", ownerId: '', status: ''
         })
     };
 
@@ -67,7 +94,7 @@ function AddPet() {
                             <Form.Control
                                 type="text"
                                 placeholder="Name"
-                                onChange={(event) => setAddPetData({ ...addPetData, name: event.target.value })}
+                                onChange={(event) =>setAddPetData({ ...addPetData, name: event.target.value })}
                                 value={addPetData.name}
                                 required
                             />
@@ -76,12 +103,10 @@ function AddPet() {
                             <Form.Label>Pet's Image</Form.Label>
                             <Form.File
                                 type="file"
-                                // placeholder="Upload image"
-                                // controlid="petImage"
                                 name="image"
                                 onChange={(event) => handlePictureChange(event)}
-                                // required
-                                // value={addPetData.image}
+                                required
+                                // image needs resetting after submit
                             />
                         </Form.Group>
                         <Form.Group id="type">

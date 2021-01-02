@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Card, Form, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
+import { getPets } from "../lib/api";
 import SearchResults from "./search-results"
 
 
 export default function Search() {
 
-    const [allPets, setAllPets] = useState({})
+    // const [allPets, setAllPets] = useState({})
     const [searchedPets, setSearchedPets] = useState([])
     const [searchTypeBasic, setSearchTypeBasic] = useState(true);
     const [searchData, setSearchData] = useState({})
@@ -14,6 +15,13 @@ export default function Search() {
     // const handleBasicSearch = () => {
     //     all
     // }
+
+    useEffect(() => {
+        getPets().then((response) => {
+            console.log(response, "getPets");
+        })
+        // return () => {cleanup}
+    }, [])
     
     const handleTypeChange = (event) => {
         if (event === 1) { setSearchData({ ...searchData, type: "cat" }) }

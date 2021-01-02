@@ -3,6 +3,21 @@ import { Form, Button, Card } from "react-bootstrap"
 
 import { postUser } from "../lib/api";
 
+// Signup API
+// route: ‘/signup’ [POST]
+// The signup api is responsible for signing up a new user.
+// Validate all the user input is valid
+// Check that passwords match
+// Make sure the email address is unique
+// Store the user in your DB and log the user in
+//     Be sure not to save the users password as a plain string. (bcrypt is a great tool for this)
+
+//     Fields:
+//     Email Address
+// Password(twice to make sure passwords match)
+// First and last name
+// Phone number
+
 
 export default function Signup() {
 

@@ -19,14 +19,6 @@ function App() {
 
   useEffect(() => {
     // works
-    // getPets().then((response) => {
-    //   console.log(response, "getPets");
-    // })
-    // works
-    // getUsers().then((response) => {
-    //   console.log(response, "getUsers");
-    // })
-    // works
     // getPetById("5fec75fc3720284b9c287a81").then((response) => {
     //   console.log(response, "getPetById");
     // })
@@ -40,12 +32,6 @@ function App() {
     // })
     // deleteUserById("5feccadc3e80613a285c288d").then((response) => {
     //   console.log(response, "deleteUserById");
-    // })
-    // updateUserById("5fedfc2b5c7cb144f8b36d6b").then((response) => {
-    //     console.log(response, "updateUserById");
-    // })
-    // updatePetById("5feb8bcabeea947148ce4895").then((response) => {
-    //     console.log(response, "updatePetById");
     // })
     // return () => {cleanup}
   }, [])
