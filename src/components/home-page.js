@@ -1,10 +1,18 @@
 import Login from "./login"
 import Signup from "./signup"
 import UserContext from "../context/context"
-import React, { useContext, useState } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import { Modal } from "react-bootstrap"
 
 function Homepage() {
+
+    // useEffect(() => {
+    //     //GET message from server using fetch api
+    //     fetch('/api/home')
+    //         .then(res => res.text())
+    //         .then(res => this.setState({ message: res }));
+    //     // return () => {cleanup}
+    // }, [])
 
     const userContext = useContext(UserContext)
     const [isLoginOpen, setIsLoginOpen] = useState(false);

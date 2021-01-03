@@ -68,6 +68,7 @@ export default function Signup() {
                                 onChange={(event) => setSignupData({ ...signupData, firstName: event.target.value })}
                                 value={signupData.firstName}
                                 required
+                                name="first name"
                             />
                         </Form.Group>
                         <Form.Group id="last-name">
@@ -78,6 +79,7 @@ export default function Signup() {
                                 onChange={(event) => setSignupData({ ...signupData, lastName: event.target.value })}
                                 value={signupData.lastName}
                                 required
+                                name="last name"
                             />
                         </Form.Group>
                         <Form.Group id="phone-number">
@@ -88,12 +90,14 @@ export default function Signup() {
                                 onChange={(event) => setSignupData({ ...signupData, tel: event.target.value })}
                                 value={signupData.tel}
                                 required
+                                name="tel"
                             />
                         </Form.Group>
                         <Form.Group id="email">
                             <Form.Label>Email</Form.Label>
                             <Form.Control
                                 type="email"
+                                name="email"
                                 placeholder="Email"
                                 onChange={(event) => setSignupData({ ...signupData, email: event.target.value })}
                                 value={signupData.email}
