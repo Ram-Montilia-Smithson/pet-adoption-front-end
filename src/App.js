@@ -6,37 +6,21 @@ import MyPetsPage from './components/my-pets-page';
 import ProfileSettings from './components/profile-settings';
 import Search from './components/search-page';
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
-import { Navbar } from "react-bootstrap"
+import { Button, Navbar } from "react-bootstrap"
 import UserContext from "./context/context"
 import React, { useContext, useEffect} from "react"
 import PetPage from './components/pet-page';
 import { getPetById, getPets, getUserById, getUsers, deletePetById, deleteUserById, updateUserById, updatePetById } from "./lib/api";
-
+let { user } = require("./data.json")
 
 function App() {
 
-  let mongoUserContext = UserContext
+  const userContext = useContext(UserContext)
 
-  useEffect(() => {
-    // works
-    // getPetById("5fec75fc3720284b9c287a81").then((response) => {
-    //   console.log(response, "getPetById");
-    // })
-    // works
-    // getUserById("5fec971b1610890b741e797a").then((response) => {
-    //   console.log(response.data, "getUserById");
-    //   mongoUserContext = response.data
-    // })
-    // deletePetById("5fec9d661610890b741e797d").then((response) => {
-    //   console.log(response, "deletePetById");
-    // })
-    // deleteUserById("5feccadc3e80613a285c288d").then((response) => {
-    //   console.log(response, "deleteUserById");
-    // })
-    // return () => {cleanup}
-  }, [])
-
-  const userContext = useContext(mongoUserContext)
+  const handleLogOut = () => {
+    localStorage.setItem('user', JSON.stringify(user))
+    const reload = window.location.reload()
+  }
 
   return (
     <div className="App">
@@ -50,7 +34,9 @@ function App() {
             {userContext.login ? <>
               <Link to="/Profile">Profile</Link>
               <Link to="/my-pets">My Pets</Link>
-              <Link to="/pet-page">Pet Page</Link></> :
+              <Link to="/pet-page">Pet Page</Link>
+              <Button onClick={() => handleLogOut()}>logOut</Button>
+            </> :
               null
             }
             <Link to="/search"> Search</Link>
@@ -85,7 +71,6 @@ function App() {
           </Switch>
         </div>
       </Router>
-
       </div>
   );
 }

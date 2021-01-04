@@ -11,11 +11,19 @@ export const postPet = async (data) => {
         })
 }
 
-export const postUser = async (data) => {
-    await axios.post('http://localhost:5000/api/users', data)
-        .then((response => {
+export const postUser = async (url,data) => {
+    await axios.post(url, data)
+        .then(response => {
             console.log(response, "response from postUser");
-        }))
+            return response.data;
+        })
+        .then(data => {
+            localStorage.setItem('user', JSON.stringify(data))
+            // Cookies.set('', data.accessToken)
+        })
+        .then(() => {
+            const reload = window.location.reload()
+        })
         .catch((error) => {
             console.log(error);
         })
@@ -24,6 +32,7 @@ export const postUser = async (data) => {
 export const getUsers = async () => {
     const response = await axios.get('http://localhost:5000/api/users')
     const data = response.data
+
     return data
 }
 
@@ -33,7 +42,7 @@ export const getPets = async () => {
     return data
 }
 
-// Get Pet By ID API
+// Get Pet By ID API - V
 // Route: ‘/pet/: id’[GET]
 // Get a pet by ID should take an id and return the corresponding pet from the database.
 export const getPetById = async (id) => {
@@ -85,6 +94,13 @@ export const updateUserById = async (id) => {
     const response = await axios.put(`http://localhost:5000/api/users/${id}`)
     const data = response.data
     return data
+        // .then(data => {
+        //     localStorage.setItem('user', JSON.stringify(data))
+        //     // Cookies.set('', data.accessToken)
+        // })
+        // .then(() => {
+        //     const reload = window.location.reload()
+        // })
 }
 
 // Edit Pet API
@@ -125,3 +141,22 @@ export const updatePetById = async (id) => {
 // Get Pets By User ID API
 // Route ‘/pet/user /: id’[GET]
 // This api allows a user to get the pets owned by(or saved) by a user based on the user id.
+
+
+// export const postUser = async (data) => {
+//     await axios.post('http://localhost:5000/api/users', data)
+//         .then(response => {
+//             console.log(response, "response from postUser");
+//             return response.data;
+//         })
+//         .then(data => {
+//             localStorage.setItem('user', JSON.stringify(data))
+//             // Cookies.set('', data.accessToken)
+//         })
+//         .then(() => {
+//             const reload = window.location.reload()
+//         })
+//         .catch((error) => {
+//             console.log(error);
+//         })
+// }

@@ -4,19 +4,19 @@ import { Form, Button, Card } from "react-bootstrap"
 import { postUser } from "../lib/api";
 
 // Signup API
-// route: ‘/signup’ [POST]
-// The signup api is responsible for signing up a new user.
-// Validate all the user input is valid
-// Check that passwords match
-// Make sure the email address is unique
-// Store the user in your DB and log the user in
-//     Be sure not to save the users password as a plain string. (bcrypt is a great tool for this)
+// route: ‘/signup’ [POST] - V
+// The signup api is responsible for signing up a new user. - V
+// Validate all the user input is valid - V
+// Check that passwords match - V
+// Make sure the email address is unique -V
+// Store the user in your DB (V) and log the user in - X
+//     Be sure not to save the users password as a plain string. (bcrypt is a great tool for this) -X
 
-//     Fields:
-//     Email Address
-// Password(twice to make sure passwords match)
-// First and last name
-// Phone number
+//     Fields: - V
+//     Email Address - V
+// Password(twice to make sure passwords match) - V
+// First and last name - V
+// Phone number - V
 
 
 export default function Signup() {
@@ -31,20 +31,18 @@ export default function Signup() {
         bio: "",
         admin: false,
         pets: [],
-        login: false
+        login: true
     });
 
     const handleOnSubmit = (event) => {
         event.preventDefault();
         if (signupData.password === confirmationPassword) {
-            postUser(signupData)
+            postUser('http://localhost:5000/api/users/signup',signupData)
             console.log(signupData)
             setConfirmationPassword("")
             setSignupData({firstName: "",lastName: "",password: "",email: "",tel: "",bio: "",admin: false,pets: [],login: false})
         }
-        else {
-            console.log("passwords do not match");
-        }
+        else {console.log("passwords do not match");}
     };
 
     return (

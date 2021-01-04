@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
+import { postUser } from "../lib/api";
+
+
 // Login API - V
 // route: ‘/login’ [POST] - V
-// The login api is responsible for logging in existing users
+// The login api is responsible for logging in existing users - (?)
 // Validate all the user input is valid - V
 // Check the email and password match an existing user - V
-// Retrieve the users data from the database -V and login the user. (?)
+// Retrieve the users data from the database -V and login the user. (X)
 //     Fields: - V
 // Email address - V
 // Password - V
@@ -23,26 +26,29 @@ export default function Login() {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        fetch('http://localhost:5000/login', {
-            method: 'POST',
-            body: JSON.stringify(loginData),
-            headers: {'Content-Type': 'application/json'}
-        })
-        .then(res => {
-            if (res.status === 200) {
-                console.log(res)
-                // history.push('/')
-                console.log(history);
-            }
-            else {
-                const error = new Error(res.error);
-                throw error;
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            // alert('Error logging in please try again');
-        });
+        postUser('http://localhost:5000/api/users/login',loginData)
+        // fetch('http://localhost:5000/login', {
+        //     method: 'POST',
+        //     body: JSON.stringify(loginData),
+        //     headers: {'Content-Type': 'application/json'}
+        // })
+    //     .then(res => {
+    //         // if (res.status === 200) {
+    //             console.log(res, "res")
+    //             // return res.body
+    //             // history.push('/') here i need to log in the user
+    //             // localStorage.setItem('user', JSON.stringify(data))
+    //             // const reload = window.location.reload()
+    //         // }
+    //         // else {
+    //             // const error = new Error(res.error);
+    //             // throw error;
+    //         // }
+    //     })
+    //     .catch(err => {
+    //         console.error(err);
+    //         // alert('Error logging in please try again');
+    //     });
     }
 
     return (
