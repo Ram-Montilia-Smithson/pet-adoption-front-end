@@ -22,6 +22,7 @@ function ProfileSettings() {
         event.preventDefault();
         if (profileData.password === confirmationPassword) {
             // Ensure that if the email is being changed it’s not already in use
+            // Be sure not to save the users password as a plain string. (bcrypt is a great tool for this) -X
             let newUserInfo = {}
             for (const property in profileData) {if (profileData[property] !== "") { newUserInfo[property] = profileData[property]}}
             console.log(userContext._id);
@@ -36,11 +37,9 @@ function ProfileSettings() {
         <Card className="d-flex align-items-center justify-content-center bg-transparent">
             <Card.Body>
                 <h2 className="text-center mb-4">Profile Settings</h2>
-                {userContext.admin && <h3>Admin</h3>}
                 <Form
                     className="bg-light"
                     onSubmit={(event) => handleOnSubmit(event)}
-                    // action="settings"
                     method="post"
                     encType="multipart/form-data"
                 >
@@ -105,9 +104,9 @@ function ProfileSettings() {
                         />
                     </Form.Group>
                     <Form.Group id="bio">
-                        <Form.Label>New Bio textarea</Form.Label>
+                        <Form.Label>Wanna tell us something new about yourself?</Form.Label>
                         <Form.Control
-                            placeholder={userContext.bio} //consider fetching data in advance
+                            placeholder={userContext.bio}
                             as="textarea"
                             rows={3}
                             onChange={(event) => setProfileData({ ...profileData, bio: event.target.value })}

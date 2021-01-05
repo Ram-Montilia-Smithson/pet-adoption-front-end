@@ -1,15 +1,7 @@
 {
     "user":
     {
-    "login":false,
-    "id":1,
-    "firstName":"",
-    "lastName":"",
-    "password":"",
-    "email":"",
-    "tel":"",
-    "bio":"",
-    "pets":[]
+    "login":false
     },
     "pets":[
     {

@@ -3,21 +3,7 @@ import { Form, Button, Card } from "react-bootstrap"
 
 import { postUser } from "../lib/api";
 
-// Signup API
-// route: ‘/signup’ [POST] - V
-// The signup api is responsible for signing up a new user. - V
-// Validate all the user input is valid - V
-// Check that passwords match - V
-// Make sure the email address is unique -V
-// Store the user in your DB (V) and log the user in - X
 //     Be sure not to save the users password as a plain string. (bcrypt is a great tool for this) -X
-
-//     Fields: - V
-//     Email Address - V
-// Password(twice to make sure passwords match) - V
-// First and last name - V
-// Phone number - V
-
 
 export default function Signup() {
 
@@ -40,7 +26,7 @@ export default function Signup() {
             postUser('http://localhost:5000/api/users/signup',signupData)
             console.log(signupData)
             setConfirmationPassword("")
-            setSignupData({firstName: "",lastName: "",password: "",email: "",tel: "",bio: "",admin: false,pets: [],login: false})
+            setSignupData({firstName: "",lastName: "",password: "",email: "",tel: "",bio: "",admin: false,pets: [],login: true})
         }
         else {console.log("passwords do not match");}
     };
@@ -48,9 +34,8 @@ export default function Signup() {
     return (
         <>
             <Card className="d-flex align-items-center justify-content-center bg-transparent">
-                <Card.Title className="text-center mb-4">Signup</Card.Title>
+                <Card.Title className="text-center mb-4">Sign Up</Card.Title>
                 <Card.Body>
-                    {/* {error && <Alert variant="danger">{error}</Alert>} */}
                     <Form
                         className="bg-light"
                         onSubmit={(event) => handleOnSubmit(event)}
@@ -103,11 +88,11 @@ export default function Signup() {
                             />
                         </Form.Group>
                         <Form.Group id="user-bio">
-                            <Form.Label>Bio</Form.Label>
+                            <Form.Label>Your Story</Form.Label>
                             <Form.Control
                                 as="textarea"
                                 rows={3}
-                                placeholder="tell me about your self..."
+                                placeholder="tell us about your self..."
                                 onChange={(event) => setSignupData({ ...signupData, bio: event.target.value })}
                                 value={signupData.bio}
                                 required
@@ -139,9 +124,6 @@ export default function Signup() {
                     </Form>
                 </Card.Body>
             </Card>
-            <div className="w-100 text-center mt-2">
-                {/* Already have an account? <Link to="/login">Log In</Link> */}
-            </div>
         </>
     )
 }

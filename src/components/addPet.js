@@ -1,29 +1,12 @@
-import { Button, Card, Form, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
+import { Button, Card, Form, Modal, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
 import React, { useState } from "react";
 import { postPet } from "../lib/api";
-
-// Add Pet API
-// Route: ‘/pet’ [POST] (Protected to admin only)
-// The add pet api is responsible for adding new pets
-// Validate all the user input is valid
-// Handle photo upload
-// Store pet information in the database
-// Fields:
-// Type
-// Name
-// Adoption Status(Adopted, Fostered, Available)
-// Picture(Picture location URL / Path)
-// Height(number)
-// Weight(Number)
-// Color
-// Bio
-// Hypoallergenic(Boolean)
-// Dietary restrictions
-// Breed
-
+import PetPage from "./pet-page";
 
 function AddPet() {
 
+    const [newPet, setNewPet] = useState(JSON.parse(window.localStorage.getItem('newPet')))
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [addPetData, setAddPetData] = useState({
         name: "",
         image: "",
@@ -34,9 +17,7 @@ function AddPet() {
         color: "",
         bio: "",
         hypoallergenic: false,
-        diet: "",
-        ownerId: '',
-        status: ''
+        dietaryRestrictions: "",
     });
 
     const handlePictureChange = (event) => {
@@ -64,18 +45,24 @@ function AddPet() {
         formData.append('breed', addPetData.breed)
         formData.append('type', addPetData.type)
         formData.append('hypoallergenic', addPetData.hypoallergenic)
-        formData.append('diet', addPetData.diet)
+        formData.append('dietaryRestrictions', addPetData.dietaryRestrictions)
         formData.append('image', addPetData.breed)
         formData.append('bio', addPetData.bio)
-        formData.append('status', addPetData.status)
-        formData.append('ownerId', addPetData.ownerId)
+        formData.append('status', 'Available')
+        formData.append('ownerId', '')
         formData.append('image', addPetData.image)
-        postPet(formData)
         setAddPetData({
             name: "", image: "", type: "", breed: "", height: 0, weight: 0, color: "",
-            bio: "", hypoallergenic: false, diet: "", ownerId: '', status: ''
+            bio: "", hypoallergenic: false, dietaryRestrictions: ""
         })
+        postPet(formData)
+        // window.location.replace(`${window.location.origin}/pet-page`)
+        // need to open modal with the right pet details
     };
+
+    const closeModal = () => {
+        setIsModalOpen(false)
+    }
 
     return (
         <>
@@ -191,14 +178,18 @@ function AddPet() {
                             <Form.Control
                                 type="text"
                                 placeholder="Dietary Restrictions"
-                                onChange={(event) => setAddPetData({ ...addPetData, diet: event.target.value })}
-                                value={addPetData.diet}
+                                onChange={(event) => setAddPetData({ ...addPetData, dietaryRestrictions: event.target.value })}
+                                value={addPetData.dietaryRestrictions}
                             />
                         </Form.Group>
                         <Button type="submit">Add Pet</Button>
                     </Form>
                 </Card.Body>
             </Card>
+            {/* make amodal here that would contain the new pet data */}
+            <Modal show={isModalOpen} onHide={closeModal}>
+                <PetPage data={newPet} />
+            </Modal>
         </>
     )
 }

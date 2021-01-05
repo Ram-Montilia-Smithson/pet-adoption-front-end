@@ -6,14 +6,6 @@ import { Modal } from "react-bootstrap"
 
 function Homepage() {
 
-    // useEffect(() => {
-    //     //GET message from server using fetch api
-    //     fetch('/api/home')
-    //         .then(res => res.text())
-    //         .then(res => this.setState({ message: res }));
-    //     // return () => {cleanup}
-    // }, [])
-
     const userContext = useContext(UserContext)
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [isSignupOpen, setIsSignupOpen] = useState(false);
@@ -37,37 +29,32 @@ function Homepage() {
     return (
         <div>
             {userContext.login ?
-                <h1>Welcome to the pet adoption website {userContext.firstName} {userContext.lastName}</h1>
+                <div>
+                    <h1>Welcome to the pet adoption website! {userContext.firstName} {userContext.lastName}</h1>
+                    <h2>what would you like to do today?</h2>
+                </div>
                 :
                 <div>
-                    <h1>Welcome to the site!</h1>
-                    <p>description to the service provided</p>
-                    <button
-                        onClick={openLoginModal}
-                    >
-                        Login
-                    </button>
-                    <button
-                        onClick={openSignupModal}
-                    >
-                        Signup
-                    </button>
+                    <h1>Welcome to the pet adoption website!</h1>
+                    <h2>Here, in our pet adoption website, we offer the very first step to get to know your new best friend</h2>
+                    <div>
+                        <p>if you already have an account</p>
+                        <span>please <button onClick={openLoginModal}>Login</button> here</span>
+                    </div>
+                    <br/>
+                    <div>
+                        <p>if you are not currently registered</p>
+                        <span>you are welcome to <button onClick={openSignupModal}>Signup</button> here</span>
+                    </div>
                     <br />
-                    <Modal
-                        show={isSignupOpen}
-                        onHide={closeSignupModal}
-                    >
+                    <Modal show={isSignupOpen} onHide={closeSignupModal}>
                         <Signup />
                     </Modal>
-                    <Modal
-                        show={isLoginOpen}
-                        onHide={closeLoginModal}
-                    >
+                    <Modal show={isLoginOpen} onHide={closeLoginModal}>
                         <Login />
                     </Modal>
                 </div>
             }
-            {userContext.admin && <h1 className="text-center mb-4 mt-5">Admin</h1>}
         </div>
     );
 }

@@ -1,9 +1,8 @@
 import React from "react"
-
-let { user } = require("../data.json")
-let uu = JSON.parse(window.localStorage.getItem("user"))
-console.log(uu);
-const UserContext = React.createContext(uu)
+// let { user } = require("../data.json")
+let currentUser = JSON.parse(window.localStorage.getItem("user"))
+console.log(currentUser);
+const UserContext = React.createContext(currentUser)
 export default UserContext
 
 

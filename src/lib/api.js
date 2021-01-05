@@ -1,13 +1,17 @@
 import axios from "axios";
 
 export const postPet = async (data) => {
-    console.log("api",data);
-    await axios.post('http://localhost:5000/addPet', data)
+    await axios.post('http://localhost:5000/api/pets', data)
         .then((response => {
             console.log(response, "response from postPet");
+            return response.data
         }))
+        .then(data => {
+            localStorage.setItem('newPet', JSON.stringify(data))
+            // show new pet to user
+        })
         .catch((error) => {
-        console.log(error);
+            console.log(error);
         })
 }
 
@@ -22,7 +26,7 @@ export const postUser = async (url,data) => {
             // Cookies.set('', data.accessToken)
         })
         .then(() => {
-            const reload = window.location.reload()
+            window.location.reload()
         })
         .catch((error) => {
             console.log(error);
@@ -89,7 +93,7 @@ export const updateUserById = async (id, newUserInfo) => {
             localStorage.setItem('user', JSON.stringify(data))
         })
         .then(() => {
-            const reload = window.location.reload()
+            window.location.reload()
         })
         .catch((error) => {
             console.log(error);
@@ -134,22 +138,3 @@ export const updatePetById = async (id) => {
 // Get Pets By User ID API
 // Route ‘/pet/user /: id’[GET]
 // This api allows a user to get the pets owned by(or saved) by a user based on the user id.
-
-
-// export const postUser = async (data) => {
-//     await axios.post('http://localhost:5000/api/users', data)
-//         .then(response => {
-//             console.log(response, "response from postUser");
-//             return response.data;
-//         })
-//         .then(data => {
-//             localStorage.setItem('user', JSON.stringify(data))
-//             // Cookies.set('', data.accessToken)
-//         })
-//         .then(() => {
-//             const reload = window.location.reload()
-//         })
-//         .catch((error) => {
-//             console.log(error);
-//         })
-// }
