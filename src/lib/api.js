@@ -32,7 +32,6 @@ export const postUser = async (url,data) => {
 export const getUsers = async () => {
     const response = await axios.get('http://localhost:5000/api/users')
     const data = response.data
-
     return data
 }
 
@@ -78,29 +77,23 @@ export const deleteUserById = async (id) => {
     return data
 }
 
-// Update User API
-// Route ‘/user/: id’[PUT](protected to logged in user)
-// This API allows you to change your settings while logged in.
-// Validate user inputs
 // Ensure that if the email is being changed it’s not already in use
-// Fields:
-// Password
-// Email
-// first name
-// last name
-// phone number
-// bio
-export const updateUserById = async (id) => {
-    const response = await axios.put(`http://localhost:5000/api/users/${id}`)
-    const data = response.data
-    return data
-        // .then(data => {
-        //     localStorage.setItem('user', JSON.stringify(data))
-        //     // Cookies.set('', data.accessToken)
-        // })
-        // .then(() => {
-        //     const reload = window.location.reload()
-        // })
+export const updateUserById = async (id, newUserInfo) => {
+    console.log("id",id,"newUserInfo",newUserInfo);
+    await axios.put(`http://localhost:5000/api/users/${id}`, newUserInfo)
+        .then(response => {
+            console.log(response, "response from postUser");
+            return response.data;
+        })
+        .then(data => {
+            localStorage.setItem('user', JSON.stringify(data))
+        })
+        .then(() => {
+            const reload = window.location.reload()
+        })
+        .catch((error) => {
+            console.log(error);
+        })
 }
 
 // Edit Pet API

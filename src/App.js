@@ -5,21 +5,21 @@ import Homepage from './components/home-page';
 import MyPetsPage from './components/my-pets-page';
 import ProfileSettings from './components/profile-settings';
 import Search from './components/search-page';
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch, Link, } from "react-router-dom"
 import { Button, Navbar } from "react-bootstrap"
 import UserContext from "./context/context"
 import React, { useContext, useEffect} from "react"
 import PetPage from './components/pet-page';
 import { getPetById, getPets, getUserById, getUsers, deletePetById, deleteUserById, updateUserById, updatePetById } from "./lib/api";
-let { user } = require("./data.json")
-
+const { user } = require("./data.json")
 function App() {
 
   const userContext = useContext(UserContext)
 
+  
   const handleLogOut = () => {
     localStorage.setItem('user', JSON.stringify(user))
-    const reload = window.location.reload()
+    const reload = window.location.replace(window.location.origin)
   }
 
   return (

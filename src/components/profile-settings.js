@@ -1,7 +1,8 @@
 import UserContext from "../context/context"
 import { Form, Button, Card} from "react-bootstrap";
 import React, { useContext, useState } from "react"
-import { updateUserById } from "../lib/api";
+import { updateUserById, getUsers } from "../lib/api";
+
 
 function ProfileSettings() {
 
@@ -15,21 +16,16 @@ function ProfileSettings() {
         email: "",
         tel: "",
         bio: "",
-        // pets: [],
     });
 
     const handleOnSubmit = (event) => {
         event.preventDefault();
         if (profileData.password === confirmationPassword) {
-            // Update User API
-            // Route ‘/user/: id’[PUT](protected to logged in user)
-            // This API allows you to change your settings while logged in.
-            // Validate user inputs
             // Ensure that if the email is being changed it’s not already in use
-            // find one based on email, then checking if values === "", if so, no update field
-            // if !==, then update field
-            // postUser('http://localhost:5000/api/users/profile', profileData)
-            console.log(profileData)
+            let newUserInfo = {}
+            for (const property in profileData) {if (profileData[property] !== "") { newUserInfo[property] = profileData[property]}}
+            console.log(userContext._id);
+            updateUserById(userContext._id, newUserInfo)
             setConfirmationPassword("")
             setProfileData({ firstName: "", lastName: "", password: "", email: "", tel: "", bio: ""})
         }
@@ -43,13 +39,13 @@ function ProfileSettings() {
                 {userContext.admin && <h3>Admin</h3>}
                 <Form
                     className="bg-light"
-                    // onSubmit={(event) => handleOnSubmit(event)}
+                    onSubmit={(event) => handleOnSubmit(event)}
                     // action="settings"
                     method="post"
-                    // encType="multipart/form-data"
+                    encType="multipart/form-data"
                 >
                     <Form.Group id="first-name">
-                        <Form.Label>First Name</Form.Label>
+                        <Form.Label>New First Name</Form.Label>
                         <Form.Control
                             placeholder={userContext.firstName}
                             type="text"
@@ -59,7 +55,7 @@ function ProfileSettings() {
                         />
                     </Form.Group>
                     <Form.Group id="last-name">
-                        <Form.Label>Last Name</Form.Label>
+                        <Form.Label>New Last Name</Form.Label>
                         <Form.Control
                             placeholder={userContext.lastName}
                             type="text"
@@ -69,7 +65,7 @@ function ProfileSettings() {
                         />
                     </Form.Group>
                     <Form.Group id="tel">
-                        <Form.Label>Phone Number</Form.Label>
+                        <Form.Label>New Phone Number</Form.Label>
                         <Form.Control
                             placeholder={userContext.tel}
                             type="tel"
@@ -79,7 +75,7 @@ function ProfileSettings() {
                         />
                     </Form.Group>
                     <Form.Group id="email">
-                        <Form.Label>Email</Form.Label>
+                        <Form.Label>New Email</Form.Label>
                         <Form.Control
                             placeholder={userContext.email}
                             type="email"
@@ -89,17 +85,17 @@ function ProfileSettings() {
                         />
                     </Form.Group>
                     <Form.Group id="password">
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label>New Password</Form.Label>
                         <Form.Control
                             type="password"
-                            placeholder={userContext.password}
+                            placeholder="Password"
                             onChange={(event) => setProfileData({ ...profileData, password: event.target.value })}
                             value={profileData.password}
                             required
                         />
                     </Form.Group>
                     <Form.Group id="password-confirm">
-                        <Form.Label>Password Confirmation</Form.Label>
+                        <Form.Label>New Password Confirmation</Form.Label>
                         <Form.Control
                             type="password"
                             placeholder="Password"
@@ -109,7 +105,7 @@ function ProfileSettings() {
                         />
                     </Form.Group>
                     <Form.Group id="bio">
-                        <Form.Label>Bio textarea</Form.Label>
+                        <Form.Label>New Bio textarea</Form.Label>
                         <Form.Control
                             placeholder={userContext.bio} //consider fetching data in advance
                             as="textarea"
