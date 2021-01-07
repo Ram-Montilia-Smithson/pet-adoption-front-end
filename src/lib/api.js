@@ -1,3 +1,6 @@
+// to do: hashing all passwords, connecting pets to users, replacing local storage with session storage, connecting all apis required, and maybe more
+
+
 import axios from "axios";
 
 export const postPet = async (data) => {

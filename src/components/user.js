@@ -1,8 +1,10 @@
 import { Modal } from "react-bootstrap"
-import React, { useState } from "react"
-import UserDetails from "./userDetails"
+import React, { useRef, useState } from "react"
+import UserModal from "./userModal"
 
 function User(user) {
+
+    const ref = useRef();
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -16,8 +18,8 @@ function User(user) {
                 {user.user.admin ? <span> - Admin</span>
                 :<span> - Owner</span>}
             </h2>
-            <Modal show={isModalOpen} onHide={closeModal}>
-                <UserDetails user={user.user}/>
+            <Modal show={isModalOpen} onHide={closeModal} ref={ref}>
+                <UserModal user={user.user} />
             </Modal>
         </>
     )

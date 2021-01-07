@@ -2,7 +2,7 @@ import { Card } from "react-bootstrap";
 import React from "react"
 
 
-function UserDetails(user) {
+function UserModal(user) {
     
     return (
         <Card
@@ -18,4 +18,4 @@ function UserDetails(user) {
         </Card>
     )
 }
-export default UserDetails
+export default UserModal

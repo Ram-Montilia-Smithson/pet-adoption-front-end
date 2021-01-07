@@ -1,11 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Card, Form, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
-import { AllPets } from "../context/context";
+import { getPets } from "../lib/api";
 import Pet from "./pet";
 
 export default function Search() {
 
-    const allPets = useContext(AllPets)
+    useEffect(() => { getPets() }, [])
+    
+    const allPets = JSON.parse(localStorage.getItem("allPets"))
 
     // still need adjusting
     

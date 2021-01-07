@@ -9,12 +9,7 @@ function Dashboard() {
 
     useEffect(() => {
         getUsers()
-            .then((response) => {return response})
-            .then(data => {localStorage.setItem('allUsers', JSON.stringify(data))})
-        
         getPets()
-            .then((response) => {return response})
-            .then(data => {localStorage.setItem('allPets', JSON.stringify(data))})
     }, [])
 
     // check if these two up here are really necessary 

@@ -1,7 +1,9 @@
 import { Button, Card, ListGroup, Modal } from "react-bootstrap"
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 
 function Pet(pet) {
+
+    const ref = useRef()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -34,8 +36,8 @@ function Pet(pet) {
                 </Card.Body>
             </Card>
             <Modal show={isModalOpen} onHide={closeModal}>
-                <span>to edit this pet, please press here</span>
-                <Button onClick={() => {handleModalButton()}}/>
+                <span ref={ref}>to edit this pet, please press here</span>
+                <Button onClick={() => { handleModalButton() }} ref={ref}/>
             </Modal>
         </>
     )

@@ -1,10 +1,12 @@
 import Login from "./login"
 import Signup from "./signup"
 import UserContext from "../context/context"
-import React, { useContext, useState, useEffect } from "react"
+import React, { useContext, useState, useRef } from "react"
 import { Modal } from "react-bootstrap"
 
 function Homepage() {
+
+    const ref = useRef();
 
     const userContext = useContext(UserContext)
     const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -47,10 +49,10 @@ function Homepage() {
                         <span>you are welcome to <button onClick={openSignupModal}>Signup</button> here</span>
                     </div>
                     <br />
-                    <Modal show={isSignupOpen} onHide={closeSignupModal}>
+                    <Modal show={isSignupOpen} onHide={closeSignupModal} ref={ref}>
                         <Signup />
                     </Modal>
-                    <Modal show={isLoginOpen} onHide={closeLoginModal}>
+                    <Modal show={isLoginOpen} onHide={closeLoginModal} ref={ref}>
                         <Login />
                     </Modal>
                 </div>

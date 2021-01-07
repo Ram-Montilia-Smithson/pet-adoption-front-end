@@ -1,12 +1,9 @@
 import { Button, Card, Form, Modal, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
 import React, { useRef, useState } from "react";
 import { postPet } from "../lib/api";
-// import { NewPet } from "../context/context";
 import Pet from "./pet";
 
 function AddPet() {
-
-    // const newPet = useContext(NewPet)
 
     const ref = useRef();
 
@@ -54,7 +51,9 @@ function AddPet() {
         postPet(formData)
             .then(() => { setNewPet(JSON.parse(localStorage.getItem('newPet'))) })
             .then(() => { setIsModalOpen(true)})
+        // set a loader to run until the response comes
         
+        //this is to do with resetting the image
         // ref.current.value = ""
     };
 
@@ -185,7 +184,7 @@ function AddPet() {
                     </Form>
                 </Card.Body>
             </Card>
-            <Modal show={isModalOpen} onHide={closeModal}>
+            <Modal show={isModalOpen} onHide={closeModal} ref={ref}>
                 <Pet pet={newPet} />
             </Modal>
         </>

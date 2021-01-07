@@ -1,6 +1,7 @@
 import React from "react"
 import Pet from "./pet"
 let pets = JSON.parse(localStorage.getItem("allPets"))
+// let pets = localStorage.getItem("allPets")
 function Pets() {
 
     return (

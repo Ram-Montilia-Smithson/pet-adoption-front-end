@@ -15,6 +15,8 @@ const { user } = require("./data.json")
 
 function App() {
 
+  console.log(localStorage);
+
   const userContext = useContext(UserContext)
   
   const handleLogOut = () => {localStorage.setItem('user', JSON.stringify(user))}
