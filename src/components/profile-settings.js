@@ -1,7 +1,7 @@
 import UserContext from "../context/context"
 import { Form, Button, Card} from "react-bootstrap";
 import React, { useContext, useState } from "react"
-import { updateUserById, getUsers } from "../lib/api";
+import { updateUserById } from "../lib/api";
 
 
 function ProfileSettings() {
@@ -14,7 +14,7 @@ function ProfileSettings() {
         lastName: "",
         password: "",
         email: "",
-        tel: "",
+        tel: "000-0000000",
         bio: "",
     });
 

@@ -1,55 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Card, Form, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
-import { getPets } from "../lib/api";
-import SearchResults from "./search-results"
-
+import { AllPets } from "../context/context";
+import Pet from "./pet";
 
 export default function Search() {
 
-    // const [allPets, setAllPets] = useState({})
-    const [searchedPets, setSearchedPets] = useState([])
-    const [searchTypeBasic, setSearchTypeBasic] = useState(true);
-    const [searchData, setSearchData] = useState({})
-    // const [type, setType] = useState("dogs")
+    const allPets = useContext(AllPets)
 
-    // const handleBasicSearch = () => {
-    //     all
-    // }
-
-    useEffect(() => {
-        getPets().then((response) => {
-            console.log(response, "getPets");
-        })
-        // return () => {cleanup}
-    }, [])
+    // still need adjusting
     
-    const handleTypeChange = (event) => {
-        if (event === 1) { setSearchData({ ...searchData, type: "cat" }) }
-        else { setSearchData({ ...searchData, type: "dog" }) }
-    };
+    const [searchedPets, setSearchedPets] = useState(allPets)
+    const [searchTypeBasic, setSearchTypeBasic] = useState(true);
+    const [searchData, setSearchData] = useState({name:"",height:0,weight:0})
 
-    const handleStatusChange = (event) => {
-        if (event === 1) { setSearchData({ ...searchData, status: "fostered" }) }
-        else if (event === 2) { setSearchData({ ...searchData, status: "owned" }) }
-        else { setSearchData({ ...searchData, status: "sheltered" }) }
-    };
+    const handleBasicSearch = (event) => {
+        const basicSearchPets = []
+        allPets.forEach(pet => { if (pet.type === event) {basicSearchPets.push(pet)}});
+        setSearchedPets(basicSearchPets)
+    }
 
-    // const handleAdvancedSearch = (event) => {
-    //     event.preventDefault();
-    //     let advancedPetArray = []
-    //     allPets.forEach((pet) => {
-    //         for (const value in searchData) {
-    //             for (const prop in pet) {
-    //                 if (pet[prop] === searchData && !advancedPetArray.includes(pet))
-    //                 { advancedPetArray.push(pet) }
-    //             }
-    //         }
-    //     })
-    //     setSearchedPets(advancedPetArray)
-    //     console.log(advancedPetArray)
-    //     console.log(searchedPets)
-    //     setSearchData({ name: "", type: "", height: 0, weight: 0, status: "" })
-    // }
+    const handleAdvanceSearch = (event) => {
+        event.preventDefault()
+        const advanceSearchPets = [...allPets]
+        advanceSearchPets.forEach(pet => {
+            for (const property in pet) {
+                for (const searchValue in searchData) {
+                    if (searchData[searchValue]) {
+                        if (property === searchValue && pet[property] !== searchData[searchValue]) {
+                            let i = advanceSearchPets.indexOf(pet)
+                            advanceSearchPets.splice(i, 1)
+                        }
+                    }
+                }
+            }
+        })
+        setSearchedPets(advanceSearchPets)
+        setSearchData({ name: "", height: 0, weight: 0 })
+    }
 
     return (
         <>
@@ -58,30 +45,29 @@ export default function Search() {
                     <h2 className="text-center mb-4">Search Page</h2>
                     <Form
                         className="bg-light"
-                    // onSubmit={(event) => handleAdvancedSearch(event)}
+                        onSubmit={(event) => handleAdvanceSearch(event)}
                     >
                         <Button
                             className="d-block m-auto"
                             onClick={() => setSearchTypeBasic(!searchTypeBasic)}
                         >
-                            {!searchTypeBasic ? "Basic" : "Advanced"}
+                            {!searchTypeBasic ? "Basic Search" : "Advance Search"}
                         </Button>
                         Results of search (List of animal card components that link to the pet page)
-                        <Card.Title>{searchTypeBasic ? "Basic" : "Advanced"} Search Form:</Card.Title>
+                        <Card.Title>{searchTypeBasic ? "Basic " : "Advance "} Search Form:</Card.Title>
                         {searchTypeBasic ?
                             <>
                             <Form.Group id="type">
-                                <Form.Label className="d-block m-auto" >Pet's Type</Form.Label>
+                                <Form.Label className="d-block m-auto" >Type of pet</Form.Label>
                                 <ToggleButtonGroup
                                     type="radio"
                                     name="types"
-                                    // onChange={(event) => handleBasicSearch(event)}
+                                    onChange={(event) => handleBasicSearch(event)}
                                 >
-                                    <ToggleButton value={1}>cat</ToggleButton>
-                                    <ToggleButton value={2}>dog</ToggleButton>
+                                    <ToggleButton value={"cat"}>cat</ToggleButton>
+                                    <ToggleButton value={"dog"}>dog</ToggleButton>
                                 </ToggleButtonGroup>
                             </Form.Group>
-                            <SearchResults pets = {searchedPets}/>
                             </>
                             :
                             <>
@@ -91,6 +77,7 @@ export default function Search() {
                                         type="text"
                                         placeholder="Name"
                                         onChange={(event) => setSearchData({ ...searchData, name: event.target.value })}
+                                        value={searchData.name}
                                     />
                                 </Form.Group>
                                 <Form.Group id="type">
@@ -98,10 +85,10 @@ export default function Search() {
                                     <ToggleButtonGroup
                                         type="radio"
                                         name="types"
-                                        onChange={(event) => handleTypeChange(event)}
+                                        onChange={(event) => setSearchData({ ...searchData, type: event })}
                                     >
-                                        <ToggleButton value={1}>cat</ToggleButton>
-                                        <ToggleButton value={2}>dog</ToggleButton>
+                                        <ToggleButton value={"cat"}>cat</ToggleButton>
+                                        <ToggleButton value={"dog"}>dog</ToggleButton>
                                     </ToggleButtonGroup>
                                 </Form.Group>
                                 <Form.Group id="status">
@@ -109,11 +96,11 @@ export default function Search() {
                                     <ToggleButtonGroup
                                         type="radio"
                                         name="types"
-                                        onChange={(event) => handleStatusChange(event)}
+                                        onChange={(event) => setSearchData({ ...searchData, status: event })}
                                     >
-                                        <ToggleButton value={1}>Fostered</ToggleButton>
-                                        <ToggleButton value={2}>Owned</ToggleButton>
-                                        <ToggleButton value={3}>Sheltered</ToggleButton>
+                                        <ToggleButton value={"Fostered"}>Fostered</ToggleButton>
+                                        <ToggleButton value={"Adopted"}>Adopted</ToggleButton>
+                                        <ToggleButton value={"Available"}>Available</ToggleButton>
                                     </ToggleButtonGroup>
                                 </Form.Group>
                                 <Form.Group id="height">
@@ -122,6 +109,7 @@ export default function Search() {
                                         type="number"
                                         placeholder="Height"
                                         onChange={(event) => setSearchData({ ...searchData, height: event.target.value })}
+                                        value={searchData.height}
                                     />
                                 </Form.Group>
                                 <Form.Group id="weight">
@@ -130,6 +118,7 @@ export default function Search() {
                                         type="number"
                                         placeholder="weight"
                                         onChange={(event) => setSearchData({ ...searchData, weight: event.target.value })}
+                                        value={searchData.weight}
                                     />
                                 </Form.Group>
                                 <Button type="submit">Search</Button>
@@ -138,10 +127,8 @@ export default function Search() {
                     </Form>
                 </Card.Body>
             </Card>
-            show ten results of pet cards
-            {/* {console.log(type)} */}
             <h2 className="text-center mb-4">Search Results</h2>
-            
+            {searchedPets.map(pet => { return (<Pet pet={pet} key={pet._id}/>)})}
         </>
     );
 }

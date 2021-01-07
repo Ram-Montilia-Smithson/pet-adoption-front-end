@@ -8,8 +8,9 @@ import Search from './components/search-page';
 import { BrowserRouter as Router, Route, Switch, Link, } from "react-router-dom"
 import { Navbar } from "react-bootstrap"
 import UserContext from "./context/context"
-import React, { useContext } from "react"
-import PetPage from './components/pet-page';
+import React, { useContext, useEffect } from "react"
+import PetPage from './components/pet';
+import { getPets, getUsers } from './lib/api';
 const { user } = require("./data.json")
 
 function App() {
@@ -37,7 +38,7 @@ function App() {
               {/* fix pet page and my pets */}
               {/* <Link to="/my-pets"> My Pets </Link> */}
               <>|</>
-              <Link to="/pet-page"> Pet Page </Link>
+              {/* <Link to="/pet-page"> Pet Page </Link> */}
               <>|</>
                 <a href={window.location.origin} className="text-white" onClick={() => handleLogOut()}>logOut</a>
             </>

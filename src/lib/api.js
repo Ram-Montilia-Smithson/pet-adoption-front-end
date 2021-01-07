@@ -4,12 +4,9 @@ export const postPet = async (data) => {
     await axios.post('http://localhost:5000/api/pets', data)
         .then((response => {
             console.log(response, "response from postPet");
+            localStorage.setItem('newPet', JSON.stringify(response.data))
             return response.data
         }))
-        .then(data => {
-            localStorage.setItem('newPet', JSON.stringify(data))
-            // show new pet to user
-        })
         .catch((error) => {
             console.log(error);
         })
@@ -19,12 +16,12 @@ export const postUser = async (url,data) => {
     await axios.post(url, data)
         .then(response => {
             console.log(response, "response from postUser");
+            localStorage.setItem('user', JSON.stringify(response.data))
             return response.data;
         })
-        .then(data => {
-            localStorage.setItem('user', JSON.stringify(data))
-            // Cookies.set('', data.accessToken)
-        })
+        // .then(data => {
+        //     // Cookies.set('', data.accessToken)
+        // })
         .then(() => {
             window.location.reload()
         })
@@ -32,17 +29,30 @@ export const postUser = async (url,data) => {
             console.log(error);
         })
 }
-
 export const getUsers = async () => {
-    const response = await axios.get('http://localhost:5000/api/users')
-    const data = response.data
-    return data
+    await axios.get('http://localhost:5000/api/users')
+        .then(response => {
+            console.log(response, "response from getUsers")
+            let data = response.data
+            localStorage.setItem('allUsers', JSON.stringify(data))
+            return data
+        })
+        .catch((error) => {
+            console.log(error);
+        })
 }
 
 export const getPets = async () => {
-    const response = await axios.get('http://localhost:5000/api/pets')
-    const data = response.data
-    return data
+    await axios.get('http://localhost:5000/api/pets')
+        .then(response => {
+            console.log(response, "response from getPets")
+            let data = response.data
+            localStorage.setItem('allPets', JSON.stringify(data))
+            return data
+        })
+        .catch((error) => {
+            console.log(error);
+        })
 }
 
 // Get Pet By ID API - V

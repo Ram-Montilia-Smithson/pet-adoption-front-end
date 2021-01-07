@@ -5,7 +5,11 @@ import React, { useContext} from "react"
 import UserContext from "../context/context"
 import { Button, Card, } from "react-bootstrap";
 // import PetPage from "./pet-page";
- 
+{/* {pet.status === "owned" && <><Button variant="danger">return the pet</Button></>}
+                    {pet.status === "fostered" && <><Button variant="info">adopt the pet</Button></>}
+                    {!pet.status && <><Button variant="primary">foster the pet</Button>
+                        <Button variant="primary">adopt the pet</Button></>}
+                    <br /><Button>save for later</Button> */}
 function MyPetsPage() {
 
     const userContext = useContext(UserContext)

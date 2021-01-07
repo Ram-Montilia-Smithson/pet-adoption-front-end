@@ -1,11 +1,17 @@
 import { Button, Card, Form, Modal, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { postPet } from "../lib/api";
-import PetPage from "./pet-page";
+// import { NewPet } from "../context/context";
+import Pet from "./pet";
 
 function AddPet() {
 
-    const [newPet, setNewPet] = useState(JSON.parse(window.localStorage.getItem('newPet')))
+    // const newPet = useContext(NewPet)
+
+    const ref = useRef();
+
+    const [newPet, setNewPet] = useState({});
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [addPetData, setAddPetData] = useState({
         name: "",
@@ -17,22 +23,12 @@ function AddPet() {
         color: "",
         bio: "",
         hypoallergenic: false,
-        dietaryRestrictions: "",
+        dietaryRestrictions: ""
     });
 
     const handlePictureChange = (event) => {
         const file = event.target.files[0];
         setAddPetData({ ...addPetData, image: file });
-    };
-
-    const handleHypoChange = (event) => {
-        if (event === 1) {setAddPetData({ ...addPetData, hypoallergenic: true });}
-        else {setAddPetData({ ...addPetData, hypoallergenic: false });}
-    };
-
-    const handleTypeChange = (event) => {
-        if (event === 1) {setAddPetData({ ...addPetData, type: "cat" });}
-        else {setAddPetData({ ...addPetData, type: "dog" });}
     };
 
     const handleOnSubmit = (event) => {
@@ -49,15 +45,17 @@ function AddPet() {
         formData.append('image', addPetData.breed)
         formData.append('bio', addPetData.bio)
         formData.append('status', 'Available')
-        formData.append('ownerId', '')
+        formData.append('ownerId', 0)
         formData.append('image', addPetData.image)
         setAddPetData({
             name: "", image: "", type: "", breed: "", height: 0, weight: 0, color: "",
             bio: "", hypoallergenic: false, dietaryRestrictions: ""
         })
         postPet(formData)
-        // window.location.replace(`${window.location.origin}/pet-page`)
-        // need to open modal with the right pet details
+            .then(() => { setNewPet(JSON.parse(localStorage.getItem('newPet'))) })
+            .then(() => { setIsModalOpen(true)})
+        
+        // ref.current.value = ""
     };
 
     const closeModal = () => {
@@ -81,7 +79,7 @@ function AddPet() {
                             <Form.Control
                                 type="text"
                                 placeholder="Name"
-                                onChange={(event) =>setAddPetData({ ...addPetData, name: event.target.value })}
+                                onChange={(event) => setAddPetData({ ...addPetData, name: event.target.value })}
                                 value={addPetData.name}
                                 required
                             />
@@ -93,6 +91,7 @@ function AddPet() {
                                 name="image"
                                 onChange={(event) => handlePictureChange(event)}
                                 required
+                                ref={ref}
                                 // image needs resetting after submit
                             />
                         </Form.Group>
@@ -101,12 +100,12 @@ function AddPet() {
                             <ToggleButtonGroup
                                 type="radio"
                                 name="types"
-                                onChange={(event) => handleTypeChange(event)}
+                                onChange={(event) => setAddPetData({...addPetData, type: event})}
                                 value={addPetData.type}
                                 required
                             >
-                                <ToggleButton value={1}>cat</ToggleButton>
-                                <ToggleButton value={2}>dog</ToggleButton>
+                                <ToggleButton value={"cat"}>cat</ToggleButton>
+                                <ToggleButton value={"dog"}>dog</ToggleButton>
                             </ToggleButtonGroup>
                         </Form.Group>
                         <Form.Group id="breed">
@@ -165,12 +164,12 @@ function AddPet() {
                             <ToggleButtonGroup
                                 type="radio"
                                 name="hypoallergenic"
-                                onChange={(event) => handleHypoChange(event)}
+                                onChange={(event) => setAddPetData({ ...addPetData, hypoallergenic: event })}
                                 value={addPetData.hypoallergenic}
                                 required
                             >
-                                <ToggleButton value={1}>Yes</ToggleButton>
-                                <ToggleButton value={2}>No</ToggleButton>
+                                <ToggleButton value={"yes"}>Yes</ToggleButton>
+                                <ToggleButton value={"no"}>No</ToggleButton>
                             </ToggleButtonGroup>
                         </Form.Group>
                         <Form.Group id="dietary-restrictions">
@@ -186,9 +185,8 @@ function AddPet() {
                     </Form>
                 </Card.Body>
             </Card>
-            {/* make amodal here that would contain the new pet data */}
             <Modal show={isModalOpen} onHide={closeModal}>
-                <PetPage data={newPet} />
+                <Pet pet={newPet} />
             </Modal>
         </>
     )
