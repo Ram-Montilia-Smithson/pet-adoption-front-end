@@ -9,7 +9,7 @@ import React from "react"
 // export const NewPet = React.createContext(newPet)
 
 let currentUser = JSON.parse(window.localStorage.getItem("user"))
-console.log(currentUser);
+// console.log(currentUser);
 
 const UserContext = React.createContext(currentUser)
 export default UserContext

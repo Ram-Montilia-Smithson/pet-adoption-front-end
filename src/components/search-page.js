@@ -9,11 +9,16 @@ export default function Search() {
     
     const allPets = JSON.parse(localStorage.getItem("allPets"))
 
-    // still need adjusting
+    // still need adjusting, search no good
     
     const [searchedPets, setSearchedPets] = useState(allPets)
     const [searchTypeBasic, setSearchTypeBasic] = useState(true);
-    const [searchData, setSearchData] = useState({name:"",height:0,weight:0})
+    const [searchData, setSearchData] = useState({ name: "", height: 0, weight: 0 })
+    const [pet, setPet] = useState({})
+
+    const handleClick = (pet) => {
+        console.log(pet)
+    }
 
     const handleBasicSearch = (event) => {
         const basicSearchPets = []
@@ -25,8 +30,8 @@ export default function Search() {
         event.preventDefault()
         const advanceSearchPets = [...allPets]
         advanceSearchPets.forEach(pet => {
-            for (const property in pet) {
-                for (const searchValue in searchData) {
+            for (const searchValue in searchData) {
+                for (const property in pet) {
                     if (searchData[searchValue]) {
                         if (property === searchValue && pet[property] !== searchData[searchValue]) {
                             let i = advanceSearchPets.indexOf(pet)

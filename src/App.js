@@ -9,13 +9,14 @@ import { BrowserRouter as Router, Route, Switch, Link, } from "react-router-dom"
 import { Navbar } from "react-bootstrap"
 import UserContext from "./context/context"
 import React, { useContext, useEffect } from "react"
-import PetPage from './components/pet';
+import PetPage from './components/pet-page';
 import { getPets, getUsers } from './lib/api';
 const { user } = require("./data.json")
 
 function App() {
 
   console.log(localStorage);
+
 
   const userContext = useContext(UserContext)
   
@@ -27,7 +28,7 @@ function App() {
         <div id="h" className="mt-5">
           <Navbar
             fixed="top"
-            className="bg-dark mx-5 rounded"
+            className="bg-dark mx-5 rounded d-flex justify-content-around"
           >
             <Link to="/"> Home </Link>
             <>|</>
@@ -38,21 +39,22 @@ function App() {
               <Link to="/Profile"> Profile </Link>
               <>|</>
               {/* fix pet page and my pets */}
-              {/* <Link to="/my-pets"> My Pets </Link> */}
+              <Link to="/my-pets"> My Pets </Link>
               <>|</>
               {/* <Link to="/pet-page"> Pet Page </Link> */}
               <>|</>
-                <a href={window.location.origin} className="text-white" onClick={() => handleLogOut()}>logOut</a>
+              <a href={window.location.origin} className="text-danger" onClick={() => handleLogOut()}>LogOut</a>
+                <span className="text-white">{userContext.firstName}</span>
             </>
             : null}
             {userContext.admin ?
               <>
+                <span className="text-white"> Admin </span>
                 <>|</>
                 <Link to="/admin/add-pet">Add Pet</Link>
                 <>|</>
                 <Link to="/admin/dashboard">Dashboard</Link>
                 <>|</>
-                <span className="text-white">Admin</span>
               </>
             : null}
           </Navbar>
@@ -63,7 +65,7 @@ function App() {
                 <Route path="/admin/dashboard"><Dashboard /></Route>
                 <Route path="/search"><Search /></Route>
                 <Route path="/my-pets"><MyPetsPage /></Route>
-                <Route path="/pet-page"><PetPage/></Route>
+                {/* <Route path="/pet-page"><PetPage/></Route> */}
                 <Route path="/profile"><ProfileSettings /></Route>
                 <Route exact path="/"><Homepage /></Route>
               </>

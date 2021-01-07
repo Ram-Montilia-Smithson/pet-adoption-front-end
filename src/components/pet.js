@@ -1,16 +1,26 @@
-import { Button, Card, ListGroup, Modal } from "react-bootstrap"
+import { Card, Modal, Button, Navbar } from "react-bootstrap"
 import React, { useState, useRef } from "react"
+import { Link, Route } from "react-router-dom"
+import PetPage from "./pet-page"
 
 function Pet(pet) {
+
+    // useEffect(() => {
+        // localStorage.setItem("pet", JSON.stringify(pet))
+        // return () => {
+            
+        // }
+    // }, [])
 
     const ref = useRef()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
-
-    const openModal = () => {setIsModalOpen(true)}
-    const closeModal = () => { setIsModalOpen(false) }
     
-    const handleModalButton = () => { alert("make a pet edit page")}
+    const openModal = () => {
+        localStorage.setItem("pet", JSON.stringify(pet))
+        setIsModalOpen(true)
+    }
+    const closeModal = () => { setIsModalOpen(false) }
 
     return (
         <>
@@ -19,25 +29,22 @@ function Pet(pet) {
                 onClick={()=> {openModal()}}
                 className="d-flex align-items-center justify-content-center bg-transparent">
                 <Card.Body>
-                    <Card.Title>{pet.pet.name}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{pet.pet.type}</Card.Subtitle>
-                    <Card.Img src={pet.pet.image} alt="image of the pet" />
-                    <Card.Text>{pet.pet.breed}</Card.Text>
-                    <Card.Text>{pet.pet.status}</Card.Text>
-                    <ListGroup variant="flush">
-                        <ListGroup.Item>{pet.pet.height}CM</ListGroup.Item>
-                        <ListGroup.Item>{pet.pet.weight}KG</ListGroup.Item>
-                        <ListGroup.Item>{pet.pet.color}</ListGroup.Item>
-                    </ListGroup>
-                    <Card.Text>{pet.pet.bio}</Card.Text>
-                    {/* find a way to present weather yes or no */}
+                    <Card.Title>Name: {pet.pet.name}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">Type: {pet.pet.type}</Card.Subtitle>
+                    <Card.Img src={pet.pet.image} alt="image of the pet" className="rounded w-25 h-25"/>
+                    <Card.Text>Breed: {pet.pet.breed}</Card.Text>
+                    <Card.Text>Status: {pet.pet.status}</Card.Text>
+                    <Card.Text>Height: {pet.pet.height}CM</Card.Text>
+                    <Card.Text>Weight: {pet.pet.weight}KG</Card.Text>
+                    <Card.Text>Color: {pet.pet.color}</Card.Text>
+                    <Card.Text>Bio: {pet.pet.bio}</Card.Text>
                     <Card.Text>{pet.pet.hypoallergenic && "hypoallergenic"}</Card.Text>
                     <Card.Text>dietary restrictions: {pet.pet.dietaryRestrictions}</Card.Text>
                 </Card.Body>
             </Card>
-            <Modal show={isModalOpen} onHide={closeModal}>
-                <span ref={ref}>to edit this pet, please press here</span>
-                <Button onClick={() => { handleModalButton() }} ref={ref}/>
+            <Modal show={isModalOpen} onHide={closeModal} ref={ref}>
+                <Link to={"/pet-page"}>ooooooooooo</Link>
+                <Route path={"pet-page"}><PetPage props={pet}/></Route>
             </Modal>
         </>
     )

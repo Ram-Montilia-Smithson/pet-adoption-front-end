@@ -184,7 +184,7 @@ function AddPet() {
                     </Form>
                 </Card.Body>
             </Card>
-            <Modal show={isModalOpen} onHide={closeModal} ref={ref}>
+            <Modal show={isModalOpen} onHide={closeModal}>
                 <Pet pet={newPet} />
             </Modal>
         </>
