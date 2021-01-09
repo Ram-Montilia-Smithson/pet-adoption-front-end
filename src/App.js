@@ -1,4 +1,3 @@
-import './App.css';
 import AddPet from "./components/addPet"
 import Dashboard from "./components/dashboard";
 import Homepage from './components/home-page';
@@ -13,9 +12,6 @@ import EditPet from './components/edit-pet';
 const { user } = require("./data.json")
 
 function App() {
-
-  console.log(localStorage);
-
 
   const userContext = useContext(UserContext)
   
@@ -39,9 +35,7 @@ function App() {
               <>|</>
               <Link to="/my-pets"> My Pets </Link>
               <>|</>
-              {/* <Link to="/edit-pet/:id"> Edit Pet </Link> */}
-              <>|</>
-              <a href={window.location.origin} className="text-danger" onClick={() => handleLogOut()}>LogOut</a>
+                <a href={window.location.origin} className="text-danger" onClick={() => handleLogOut()}>LogOut</a>
                 <span className="text-white">{userContext.firstName}</span>
             </>
             : null}
@@ -53,6 +47,7 @@ function App() {
                 <>|</>
                 <Link to="/admin/dashboard">Dashboard</Link>
                 <>|</>
+                {/* <Link to="/edit-pet/:id"> Edit Pet </Link> */}
               </>
             : null}
           </Navbar>
@@ -71,7 +66,6 @@ function App() {
               <>
                 <Route path="/search"><Search /></Route>
                 <Route path="/my-pets"><MyPetsPage /></Route>
-                {/* <Route path="/edit-pet/:id"><EditPet/></Route> */}
                 <Route path="/profile"><ProfileSettings /></Route>
                 <Route exact path="/"><Homepage /></Route>
               </>

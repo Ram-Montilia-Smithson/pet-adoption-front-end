@@ -69,7 +69,7 @@ export const updatePetById = async (url, info) => {
         .catch((error) => {alert(error);})
 }
 
-// Edit Pet API
+// Edit Pet API - is not ready 
 // for admin only
 // Route: ‘/pet/: id’[PUT](protected to admin only)
 // The add pet api is responsible for editing pets
@@ -78,11 +78,14 @@ export const updatePetById = async (url, info) => {
 // Store pet information in the database
 // Fields: Same as Add Pet API
 
+// works, but not in use in the app
 export const deletePetById = async (id) => {
     const response = await axios.delete(`http://localhost:5000/api/pets/${id}`)
     const data = response.data
     return data
 }
+
+// works, but not in use in the app
 
 export const deleteUserById = async (id) => {
     const response = await axios.delete(`http://localhost:5000/api/users/${id}`)
