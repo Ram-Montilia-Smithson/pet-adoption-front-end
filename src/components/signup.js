@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button, Card } from "react-bootstrap"
-
 import { postUser } from "../lib/api";
-
-//     Be sure not to save the users password as a plain string. (bcrypt is a great tool for this) -X
 
 export default function Signup() {
 
@@ -118,9 +115,7 @@ export default function Signup() {
                                 required
                             />
                         </Form.Group>
-                        <Button className="w-100" type="submit">
-                            Sign Up
-                        </Button>
+                        <Button className="w-100" type="submit">Sign Up</Button>
                     </Form>
                 </Card.Body>
             </Card>

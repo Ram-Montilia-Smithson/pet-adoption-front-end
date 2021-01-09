@@ -1,7 +1,7 @@
 import Login from "./login"
 import Signup from "./signup"
 import UserContext from "../context/context"
-import React, { useContext, useState, createRef } from "react"
+import React, { useContext, useState } from "react"
 import { Modal } from "react-bootstrap"
 
 function Homepage() {

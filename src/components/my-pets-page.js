@@ -1,33 +1,64 @@
-// See more button(this button takes you to a full detailed description of the pet)
-// Can toggle between pets and saved pets    
-
-import React, { useContext} from "react"
+  import React, { useContext} from "react"
 import UserContext from "../context/context"
-import { Button, Card, } from "react-bootstrap";
-// import PetPage from "./pet-page";
+import { Card, } from "react-bootstrap";
 
 function MyPetsPage() {
 
     const userContext = useContext(UserContext)
 
-    if (userContext.pets.length===0) {return <h2>you currently don't own any pets</h2>}
+    const usersPets = []
+    const allPets = JSON.parse(localStorage.getItem("allPets"))
+    allPets.forEach(pet => {
+        if (userContext._id === pet.ownerId) {
+            usersPets.push(pet)
+        }
+    });
+
+    const usersSavedPets = []
+    allPets.forEach(pet => {
+        if (userContext.savedPets.includes(pet._id)) {
+            usersSavedPets.push(pet)
+        }
+        console.log(usersPets)
+        console.log(allPets);
+    })
+
     return (
         <>
-            <h2 className="text-center mb-4">My Pets</h2>
-            {userContext.pets.map(pet => {
-                return (
-                    <div key={Math.random()}>
-                        <Card className="align-items-center justify-content-center bg-transparent">
-                            <Card.Body>
-                                <Card.Img src="../images" alt="image of the pet" />
-                                <Card.Title>{pet.name}</Card.Title>
-                                <Card.Subtitle className="mb-2 text-muted">{pet.status}</Card.Subtitle>
-                                <Button variant="primary">See More</Button>
-                            </Card.Body>
-                        </Card>
-                    </div>
-                )
-            })}
+            <h1 className="text-center mb-4">My Pets</h1>
+                <div key={Math.random()}>
+                    <Card className="align-items-center justify-content-center bg-transparent">
+                    <Card.Body>
+                        {usersPets.length ?
+                            <Card.Text>User's Pets:
+                            {usersPets.map(pet => {
+                                return (<>
+                                    <Card.Title>Name: {pet.name}</Card.Title>
+                                    <Card.Subtitle className="mb-2 text-muted">Type: {pet.type}</Card.Subtitle>
+                                    <Card.Img src={pet.image} alt="image of the pet" className="rounded w-25 h-25" />
+                                </>)
+                            })}
+                            </Card.Text>
+                            :
+                            <h2>You currently don't own any Pets</h2>
+                        }
+                        {usersSavedPets.length ?
+                            <Card.Text>User's Saved Pets:
+                            {usersSavedPets.map(pet => {
+                                return (<>
+                                    <Card.Title>Name: {pet.name}</Card.Title>
+                                    <Card.Subtitle className="mb-2 text-muted">Type: {pet.type}</Card.Subtitle>
+                                    <Card.Img src={pet.image} alt="image of the pet" className="rounded w-25 h-25" />
+                                </>)
+                            })}
+                            </Card.Text>
+                            :
+                            <h2>You currently don't have any pets saved</h2>
+                        }
+                        </Card.Body>
+                    </Card>
+                </div>
+            
         </>
     )
 }

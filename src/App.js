@@ -9,8 +9,7 @@ import { BrowserRouter as Router, Route, Switch, Link, } from "react-router-dom"
 import { Navbar } from "react-bootstrap"
 import UserContext from "./context/context"
 import React, { useContext, useEffect } from "react"
-import PetPage from './components/pet-page';
-import { getPets, getUsers } from './lib/api';
+import EditPet from './components/edit-pet';
 const { user } = require("./data.json")
 
 function App() {
@@ -23,7 +22,7 @@ function App() {
   const handleLogOut = () => {localStorage.setItem('user', JSON.stringify(user))}
 
   return (
-    <div className="App">
+    <div className="text-center">
       <Router>
         <div id="h" className="mt-5">
           <Navbar
@@ -38,10 +37,9 @@ function App() {
               <>|</>
               <Link to="/Profile"> Profile </Link>
               <>|</>
-              {/* fix pet page and my pets */}
               <Link to="/my-pets"> My Pets </Link>
               <>|</>
-              {/* <Link to="/pet-page"> Pet Page </Link> */}
+              {/* <Link to="/edit-pet/:id"> Edit Pet </Link> */}
               <>|</>
               <a href={window.location.origin} className="text-danger" onClick={() => handleLogOut()}>LogOut</a>
                 <span className="text-white">{userContext.firstName}</span>
@@ -65,7 +63,7 @@ function App() {
                 <Route path="/admin/dashboard"><Dashboard /></Route>
                 <Route path="/search"><Search /></Route>
                 <Route path="/my-pets"><MyPetsPage /></Route>
-                {/* <Route path="/pet-page"><PetPage/></Route> */}
+                {/* <Route path="/edit-pet/:id"><EditPet/></Route>  */}
                 <Route path="/profile"><ProfileSettings /></Route>
                 <Route exact path="/"><Homepage /></Route>
               </>
@@ -73,7 +71,7 @@ function App() {
               <>
                 <Route path="/search"><Search /></Route>
                 <Route path="/my-pets"><MyPetsPage /></Route>
-                <Route path="/pet-page"><PetPage /></Route>
+                {/* <Route path="/edit-pet/:id"><EditPet/></Route> */}
                 <Route path="/profile"><ProfileSettings /></Route>
                 <Route exact path="/"><Homepage /></Route>
               </>

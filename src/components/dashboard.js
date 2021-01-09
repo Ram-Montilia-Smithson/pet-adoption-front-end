@@ -12,7 +12,6 @@ function Dashboard() {
         getPets()
     }, [])
 
-    // check if these two up here are really necessary 
 
     return (
         <>

@@ -1,86 +1,82 @@
-// to do: hashing all passwords, connecting pets to users, replacing local storage with session storage, connecting all apis required, and maybe more
-
-
 import axios from "axios";
 
 export const postPet = async (data) => {
     await axios.post('http://localhost:5000/api/pets', data)
         .then((response => {
-            console.log(response, "response from postPet");
             localStorage.setItem('newPet', JSON.stringify(response.data))
             return response.data
         }))
-        .catch((error) => {
-            console.log(error);
-        })
+        .catch((error) => {alert(error)})
 }
 
 export const postUser = async (url,data) => {
     await axios.post(url, data)
         .then(response => {
-            console.log(response, "response from postUser");
             localStorage.setItem('user', JSON.stringify(response.data))
             return response.data;
         })
-        // .then(data => {
-        //     // Cookies.set('', data.accessToken)
-        // })
-        .then(() => {
-            window.location.reload()
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+        .then(() => {window.location.reload()})
+        .catch((error) => {alert(error)})
 }
 export const getUsers = async () => {
     await axios.get('http://localhost:5000/api/users')
         .then(response => {
-            console.log(response, "response from getUsers")
             let data = response.data
             localStorage.setItem('allUsers', JSON.stringify(data))
             return data
         })
-        .catch((error) => {
-            console.log(error);
-        })
+        .catch((error) => {alert(error);})
 }
 
 export const getPets = async () => {
     await axios.get('http://localhost:5000/api/pets')
         .then(response => {
-            console.log(response, "response from getPets")
             let data = response.data
             localStorage.setItem('allPets', JSON.stringify(data))
             return data
         })
-        .catch((error) => {
-            console.log(error);
-        })
+        .catch((error) => {alert(error);})
 }
 
-// Get Pet By ID API - V
-// Route: ‘/pet/: id’[GET]
-// Get a pet by ID should take an id and return the corresponding pet from the database.
 export const getPetById = async (id) => {
     const response = await axios.get(`http://localhost:5000/api/pets/${id}`)
     const data = response.data
+    localStorage.setItem('pet', JSON.stringify(data))
     return data
 }
 
-// Get User By ID API
-// Route ‘/user/: id’[GET]
-// This api allows you to get a user based on the user's id. 
-
-// Get User By ID API
-// Route ‘/user/: id / full’[GET]
-// This api allows you to get a user based on the user's id. 
-// The API should return all the user details(aside from password) and the users pets they own.
-
 export const getUserById = async (id) => {
     const response = await axios.get(`http://localhost:5000/api/users/${id}`)
-    // const data = response.data
     return response
 }
+
+export const updateUserById = async (url, newUserInfo) => {
+    console.log("url",url,"newUserInfo",newUserInfo);
+    await axios.put(url, newUserInfo)
+        .then(response => {return response.data;})
+        .then(data => {
+            localStorage.setItem('user', JSON.stringify(data))
+            return data
+        })
+        .then(() => {window.location.reload()})
+        .catch((error) => {alert(error);})
+}
+
+export const updatePetById = async (url, info) => {
+    await axios.put(url, info)
+        .then(response => {return response.data})
+        .then(() => {window.location.reload()})
+        .catch((error) => {alert(error);})
+}
+
+// Edit Pet API
+// for admin only
+// Route: ‘/pet/: id’[PUT](protected to admin only)
+// The add pet api is responsible for editing pets
+// Validate all the user input is valid
+// Handle photo upload
+// Store pet information in the database
+// Fields: Same as Add Pet API
 
 export const deletePetById = async (id) => {
     const response = await axios.delete(`http://localhost:5000/api/pets/${id}`)
@@ -93,61 +89,3 @@ export const deleteUserById = async (id) => {
     const data = response.data
     return data
 }
-
-// Ensure that if the email is being changed it’s not already in use
-export const updateUserById = async (id, newUserInfo) => {
-    console.log("id",id,"newUserInfo",newUserInfo);
-    await axios.put(`http://localhost:5000/api/users/${id}`, newUserInfo)
-        .then(response => {
-            console.log(response, "response from postUser");
-            return response.data;
-        })
-        .then(data => {
-            localStorage.setItem('user', JSON.stringify(data))
-        })
-        .then(() => {
-            window.location.reload()
-        })
-        .catch((error) => {
-            console.log(error);
-        })
-}
-
-// Edit Pet API
-// Route: ‘/pet/: id’[PUT](protected to admin only)
-// The add pet api is responsible for editing pets
-// Validate all the user input is valid
-// Handle photo upload
-// Store pet information in the database
-// Fields: Same as Add Pet API
-export const updatePetById = async (id) => {
-    const response = await axios.put(`http://localhost:5000/api/pets/${id}`)
-    const data = response.data
-    return data
-}
-
-// Adopt / Foster API
-// Route ‘/pet/: id / adopt’[POST](protected to logged in users)
-// The Adopt / Foster API is responsible for adding the pet to the current users pets.
-// This API also should change the pet’s adoption status.
-//     Field:
-// Type(Adopt or foster)
-
-// Return Pet API
-// Route ‘/pet/: id /return ’[POST](protected to logged in users)
-// The Return Pet API is responsible for returning the pet to the agency.
-// The API should change the pets status back to available
-// The API should remove the pet from the users pets.
-
-// Save Pet API
-// Route ‘/pet/: id / save’[POST](protected to logged in users)
-// The save PET api allows a user to save a pet for later
-// The saved pet should be stored as saved in the users account
-
-// Delete Saved Pet API
-// Route ‘/pet/: id / save’[DELETE](protected to logged in users)
-// The save PET api allows a user to remove a saved pet.
-
-// Get Pets By User ID API
-// Route ‘/pet/user /: id’[GET]
-// This api allows a user to get the pets owned by(or saved) by a user based on the user id.

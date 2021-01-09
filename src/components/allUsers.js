@@ -1,7 +1,6 @@
 import React from "react"
 import User from "./user"
 let users = JSON.parse(localStorage.getItem("allUsers"))
-// let users = localStorage.getItem("allUsers")
 function Users() {
 
     return (

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card, Form, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
 import { getPets } from "../lib/api";
-import Pet from "./pet";
+import Pet from "./pet-card";
 
 export default function Search() {
 
@@ -15,10 +15,6 @@ export default function Search() {
     const [searchTypeBasic, setSearchTypeBasic] = useState(true);
     const [searchData, setSearchData] = useState({ name: "", height: 0, weight: 0 })
     const [pet, setPet] = useState({})
-
-    const handleClick = (pet) => {
-        console.log(pet)
-    }
 
     const handleBasicSearch = (event) => {
         const basicSearchPets = []

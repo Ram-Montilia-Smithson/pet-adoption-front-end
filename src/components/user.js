@@ -6,6 +6,23 @@ function User(user) {
 
     const ref = useRef();
 
+    // get pets by user id
+    const usersPets = []
+    const allPets = JSON.parse(localStorage.getItem("allPets"))
+    console.log(user.user._id);
+    allPets.forEach(pet => {
+        if (user.user._id === pet.ownerId) {
+            usersPets.push(pet)
+        }
+    });
+
+    const usersSavedPets = []
+    allPets.forEach(pet => {
+        if (user.user.savedPets.includes(pet._id)) {
+            usersSavedPets.push(pet)
+        }
+    })
+
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const openModal = () => { setIsModalOpen(true) }
@@ -19,7 +36,7 @@ function User(user) {
                 :<span> - Owner</span>}
             </h2>
             <Modal show={isModalOpen} onHide={closeModal} ref={ref}>
-                <UserModal user={user.user} />
+                <UserModal user={user.user} pets={usersPets} savedPets={usersSavedPets}/>
             </Modal>
         </>
     )

@@ -1,7 +1,7 @@
 import { Button, Card, Form, Modal, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
 import React, { useRef, useState } from "react";
 import { postPet } from "../lib/api";
-import Pet from "./pet";
+import Pet from "./pet-card";
 
 function AddPet() {
 
@@ -52,13 +52,11 @@ function AddPet() {
             .then(() => { setNewPet(JSON.parse(localStorage.getItem('newPet'))) })
             .then(() => { setIsModalOpen(true)})
         // set a loader to run until the response comes
-        
-        //this is to do with resetting the image
-        // ref.current.value = ""
     };
 
     const closeModal = () => {
         setIsModalOpen(false)
+        window.location.reload()
     }
 
     return (
@@ -91,7 +89,6 @@ function AddPet() {
                                 onChange={(event) => handlePictureChange(event)}
                                 required
                                 ref={ref}
-                                // image needs resetting after submit
                             />
                         </Form.Group>
                         <Form.Group id="type">

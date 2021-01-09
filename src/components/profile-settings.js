@@ -14,19 +14,17 @@ function ProfileSettings() {
         lastName: "",
         password: "",
         email: "",
-        tel: "000-0000000",
+        tel: "",
         bio: "",
     });
 
     const handleOnSubmit = (event) => {
         event.preventDefault();
         if (profileData.password === confirmationPassword) {
-            // Ensure that if the email is being changed it’s not already in use
-            // Be sure not to save the users password as a plain string. (bcrypt is a great tool for this) -X
             let newUserInfo = {}
             for (const property in profileData) {if (profileData[property] !== "") { newUserInfo[property] = profileData[property]}}
             console.log(userContext._id);
-            updateUserById(userContext._id, newUserInfo)
+            updateUserById(`http://localhost:5000/api/users/${userContext._id}`, newUserInfo)
             setConfirmationPassword("")
             setProfileData({ firstName: "", lastName: "", password: "", email: "", tel: "", bio: ""})
         }
