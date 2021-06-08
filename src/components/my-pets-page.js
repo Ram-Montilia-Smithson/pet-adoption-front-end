@@ -2,12 +2,16 @@
 import UserContext from "../context/context"
 import { Card, } from "react-bootstrap";
 
+// add pet status
+// See more button (this button takes you to a full detailed description of the pet)
+
 function MyPetsPage() {
 
     const userContext = useContext(UserContext)
 
     const usersPets = []
-    const allPets = JSON.parse(localStorage.getItem("allPets"))
+    // const allPets = JSON.parse(localStorage.getItem("allPets"))
+    const allPets = [1,2,3]
     allPets.forEach(pet => {
         if (userContext._id === pet.ownerId) {
             usersPets.push(pet)
@@ -15,13 +19,13 @@ function MyPetsPage() {
     });
 
     const usersSavedPets = []
-    allPets.forEach(pet => {
-        if (userContext.savedPets.includes(pet._id)) {
-            usersSavedPets.push(pet)
-        }
-        console.log(usersPets)
-        console.log(allPets);
-    })
+    // allPets.forEach(pet => {
+    //     if (userContext.savedPets.includes(pet._id)) {
+    //         usersSavedPets.push(pet)
+    //     }
+    //     console.log(usersPets)
+    //     console.log(allPets);
+    // })
 
     return (
         <>

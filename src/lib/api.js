@@ -3,16 +3,18 @@ import axios from "axios";
 export const postPet = async (data) => {
     await axios.post('http://localhost:5000/api/pets', data)
         .then((response => {
-            localStorage.setItem('newPet', JSON.stringify(response.data))
+            // localStorage.setItem('newPet', JSON.stringify(response.data))
             return response.data
         }))
         .catch((error) => {alert(error)})
 }
 
-export const postUser = async (url,data) => {
+export const postUser = async (url, data) => {
+    console.log(url,data);
     await axios.post(url, data)
         .then(response => {
-            localStorage.setItem('user', JSON.stringify(response.data))
+            console.log(response);
+            // localStorage.setItem('user', JSON.stringify(response.data))
             return response.data;
         })
         .then(() => {window.location.reload()})
@@ -22,8 +24,10 @@ export const getUsers = async () => {
     await axios.get('http://localhost:5000/api/users')
         .then(response => {
             let data = response.data
-            localStorage.setItem('allUsers', JSON.stringify(data))
-            return data
+            // localStorage.setItem('allUsers', JSON.stringify(data))
+            // document.cookie = `allUsers=${JSON.stringify(data)}`
+            console.log(data);
+            return (data)
         })
         .catch((error) => {alert(error);})
 }
@@ -31,17 +35,16 @@ export const getUsers = async () => {
 export const getPets = async () => {
     await axios.get('http://localhost:5000/api/pets')
         .then(response => {
-            let data = response.data
-            localStorage.setItem('allPets', JSON.stringify(data))
-            return data
+            // console.log(response.data);
+            return response.data
         })
+        // .then(response => console.log(response))
         .catch((error) => {alert(error);})
 }
 
 export const getPetById = async (id) => {
     const response = await axios.get(`http://localhost:5000/api/pets/${id}`)
     const data = response.data
-    localStorage.setItem('pet', JSON.stringify(data))
     return data
 }
 
@@ -55,7 +58,7 @@ export const updateUserById = async (url, newUserInfo) => {
     await axios.put(url, newUserInfo)
         .then(response => {return response.data;})
         .then(data => {
-            localStorage.setItem('user', JSON.stringify(data))
+            // localStorage.setItem('user', JSON.stringify(data))
             return data
         })
         .then(() => {window.location.reload()})

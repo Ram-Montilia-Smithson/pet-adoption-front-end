@@ -1,6 +1,7 @@
 import React from "react"
 
-let currentUser = JSON.parse(window.localStorage.getItem("user"))
+let currentUser = 1
+console.log(currentUser);
 
 const UserContext = React.createContext(currentUser)
 export default UserContext

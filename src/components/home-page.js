@@ -4,6 +4,10 @@ import UserContext from "../context/context"
 import React, { useContext, useState } from "react"
 import { Modal } from "react-bootstrap"
 
+// differentiate between home page as a logged in user and not
+// add a search button
+
+
 function Homepage() {
     
     const userContext = useContext(UserContext)
@@ -28,9 +32,11 @@ function Homepage() {
 
     return (
         <div>
-            {userContext.login ?
+            {/* {userContext.login ? */}
                 <div>
-                    <h1>Welcome to the pet adoption website! {userContext.firstName} {userContext.lastName}</h1>
+                <h1>Welcome to the pet adoption website!
+                        {/* {userContext.firstName} {userContext.lastName} */}
+                </h1>
                     <h2>what would you like to do today?</h2>
                 </div>
                 :
@@ -54,7 +60,7 @@ function Homepage() {
                         <Login/>
                     </Modal>
                 </div>
-            }
+            {/* } */}
         </div>
     );
 }

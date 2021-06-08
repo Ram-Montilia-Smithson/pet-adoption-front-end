@@ -9,13 +9,25 @@ import { Navbar } from "react-bootstrap"
 import UserContext from "./context/context"
 import React, { useContext, useEffect } from "react"
 import EditPet from './components/edit-pet';
+import { getPets, getUsers } from "../lib/api"
+
 const { user } = require("./data.json")
+
+
 
 function App() {
 
+  useEffect(() => {
+    // getUsers()
+    // getPets()
+  }, [])
+
+
   const userContext = useContext(UserContext)
   
-  const handleLogOut = () => {localStorage.setItem('user', JSON.stringify(user))}
+  const handleLogOut = () => {
+    // localStorage.setItem('user', JSON.stringify(user))
+  }
 
   return (
     <div className="text-center">
@@ -28,7 +40,7 @@ function App() {
             <Link to="/"> Home </Link>
             <>|</>
             <Link to="/search"> Search </Link>
-            {userContext.login ?
+            {/* {userContext.login ? */}
             <>
               <>|</>
               <Link to="/Profile"> Profile </Link>
@@ -36,10 +48,10 @@ function App() {
               <Link to="/my-pets"> My Pets </Link>
               <>|</>
                 <a href={window.location.origin} className="text-danger" onClick={() => handleLogOut()}>LogOut</a>
-                <span className="text-white">{userContext.firstName}</span>
+                {/* <span className="text-white">{userContext.firstName}</span> */}
             </>
-            : null}
-            {userContext.admin ?
+            {/* : null} */}
+            {/* {userContext.admin ? */}
               <>
                 <span className="text-white"> Admin </span>
                 <>|</>
@@ -49,10 +61,10 @@ function App() {
                 <>|</>
                 {/* <Link to="/edit-pet/:id"> Edit Pet </Link> */}
               </>
-            : null}
+            {/* : null} */}
           </Navbar>
           <Switch>
-            {userContext.admin ?
+            {/* {userContext.admin ? */}
               <>
                 <Route path="/admin/add-pet"><AddPet /></Route>
                 <Route path="/admin/dashboard"><Dashboard /></Route>
@@ -69,7 +81,7 @@ function App() {
                 <Route path="/profile"><ProfileSettings /></Route>
                 <Route exact path="/"><Homepage /></Route>
               </>
-            }
+            {/* } */}
           </Switch>
         </div>
       </Router>

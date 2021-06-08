@@ -5,26 +5,28 @@ import Pet from "./pet-card";
 
 export default function Search() {
 
-    useEffect(() => { getPets() }, [])
-    
-    const allPets = JSON.parse(localStorage.getItem("allPets"))
+    const [searchedPets, setSearchedPets] = useState([])
 
-    // still need adjusting, search no good
+    useEffect(() => {
+        (async () => {
+            console.log(getPets());
+            
+        })()
+    }, [])
     
-    const [searchedPets, setSearchedPets] = useState(allPets)
     const [searchTypeBasic, setSearchTypeBasic] = useState(true);
     const [searchData, setSearchData] = useState({ name: "", height: 0, weight: 0 })
-    const [pet, setPet] = useState({})
+    // const [pet, setPet] = useState({})
 
     const handleBasicSearch = (event) => {
         const basicSearchPets = []
-        allPets.forEach(pet => { if (pet.type === event) {basicSearchPets.push(pet)}});
+        searchedPets.forEach(pet => { if (pet.type === event) {basicSearchPets.push(pet)}});
         setSearchedPets(basicSearchPets)
     }
 
     const handleAdvanceSearch = (event) => {
         event.preventDefault()
-        const advanceSearchPets = [...allPets]
+        const advanceSearchPets = [...searchedPets]
         advanceSearchPets.forEach(pet => {
             for (const searchValue in searchData) {
                 for (const property in pet) {
@@ -131,7 +133,7 @@ export default function Search() {
                 </Card.Body>
             </Card>
             <h2 className="text-center mb-4">Search Results</h2>
-            {searchedPets.map(pet => { return (<Pet pet={pet} key={pet._id}/>)})}
+            {searchedPets && searchedPets.map(pet => { return (<Pet pet={pet} key={pet._id} />) })}
         </>
     );
 }

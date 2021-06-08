@@ -3,15 +3,10 @@ import { Navbar } from "react-bootstrap"
 import React, {useEffect} from "react"
 import Pets from "./allPets"
 import Users from "./allUsers"
-import { getPets, getUsers } from "../lib/api"
+
+// get the users and the pets from context
 
 function Dashboard() {
-
-    useEffect(() => {
-        getUsers()
-        getPets()
-    }, [])
-
 
     return (
         <>
