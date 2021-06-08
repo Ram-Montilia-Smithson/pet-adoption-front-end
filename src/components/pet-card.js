@@ -1,6 +1,6 @@
 import { Card, Button } from "react-bootstrap"
 import React, { useContext } from "react"
-import UserContext from "../context/context";
+import {UserContext} from "../context/context";
 import { updatePetById, updateUserById } from "../lib/api"
 
 // save for later

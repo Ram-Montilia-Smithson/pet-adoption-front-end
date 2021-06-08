@@ -4,12 +4,13 @@ import Homepage from './components/home-page';
 import MyPetsPage from './components/my-pets-page';
 import ProfileSettings from './components/profile-settings';
 import Search from './components/search-page';
-import { BrowserRouter as Router, Route, Switch, Link, } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch, Link, useHistory } from "react-router-dom"
 import { Navbar } from "react-bootstrap"
-import UserContext from "./context/context"
+import {UserContext} from "./context/context"
 import React, { useContext, useEffect } from "react"
 import EditPet from './components/edit-pet';
-import { getPets, getUsers } from "../lib/api"
+import { getPets, getUsers } from "./lib/api"
+// import { createBrowserHistory } from 'history';
 
 const { user } = require("./data.json")
 
@@ -17,13 +18,15 @@ const { user } = require("./data.json")
 
 function App() {
 
+  let history = useHistory()
+
   useEffect(() => {
     // getUsers()
     // getPets()
   }, [])
 
 
-  const userContext = useContext(UserContext)
+  // const userContext = useContext(UserContext)
   
   const handleLogOut = () => {
     // localStorage.setItem('user', JSON.stringify(user))

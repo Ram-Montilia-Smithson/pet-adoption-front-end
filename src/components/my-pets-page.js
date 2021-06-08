@@ -1,5 +1,5 @@
   import React, { useContext} from "react"
-import UserContext from "../context/context"
+import {UserContext} from "../context/context"
 import { Card, } from "react-bootstrap";
 
 // add pet status

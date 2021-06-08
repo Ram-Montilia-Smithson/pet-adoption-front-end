@@ -1,4 +1,4 @@
-import UserContext from "../context/context"
+import {UserContext} from "../context/context"
 import { Form, Button, Card} from "react-bootstrap";
 import React, { useContext, useState } from "react"
 import { updateUserById } from "../lib/api";

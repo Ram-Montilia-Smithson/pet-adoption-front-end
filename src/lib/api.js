@@ -9,16 +9,18 @@ export const postPet = async (data) => {
         .catch((error) => {alert(error)})
 }
 
+
 export const postUser = async (url, data) => {
-    console.log(url,data);
-    await axios.post(url, data)
+    // console.log(url,data);
+    const user = await axios.post(url, data)
         .then(response => {
-            console.log(response);
+            
             // localStorage.setItem('user', JSON.stringify(response.data))
             return response.data;
         })
-        .then(() => {window.location.reload()})
         .catch((error) => {alert(error)})
+        return user
+        // .then(() => {window.location.reload()})
 }
 export const getUsers = async () => {
     await axios.get('http://localhost:5000/api/users')

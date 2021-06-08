@@ -1,6 +1,6 @@
 import Login from "./login"
 import Signup from "./signup"
-import UserContext from "../context/context"
+import {UserContext} from "../context/context"
 import React, { useContext, useState } from "react"
 import { Modal } from "react-bootstrap"
 
@@ -11,9 +11,11 @@ import { Modal } from "react-bootstrap"
 function Homepage() {
     
     const userContext = useContext(UserContext)
+    console.log(userContext);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [isSignupOpen, setIsSignupOpen] = useState(false);
 
+    
     const openLoginModal = () => {
         setIsLoginOpen(true)
     }

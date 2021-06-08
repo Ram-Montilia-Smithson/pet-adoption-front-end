@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Button, Card } from "react-bootstrap";
+// import { useHistory } from "react-router";
 import { postUser } from "../lib/api";
+import {UserContext} from '../context/context'
 
 export default function Login() {
+
+    const userContext = useContext(UserContext)
 
     const [loginData, setLoginData] = useState({
         email: "",
@@ -11,7 +15,10 @@ export default function Login() {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        postUser('http://localhost:5000/api/users/login',loginData)
+        postUser('http://localhost:5000/api/users/login',loginData).then((user) => {
+            console.log(user);
+            userContext.user = user
+        })
     }
 
     return (
