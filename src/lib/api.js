@@ -25,7 +25,7 @@ export const postUser = async (url, data) => {
         // .then(() => {window.location.reload()})
 }
 export const getUsers = async () => {
-    await axios.get('http://localhost:5000/api/users')
+    await axios.get('http://localhost:5000/api/users', {withCredentials: true})
         .then(response => {
             let data = response.data
             // localStorage.setItem('allUsers', JSON.stringify(data))

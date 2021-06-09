@@ -24,7 +24,7 @@ function ProfileSettings() {
             let newUserInfo = {}
             for (const property in profileData) {if (profileData[property] !== "") { newUserInfo[property] = profileData[property]}}
             console.log(userContext._id);
-            updateUserById(`http://localhost:5000/api/users/${userContext._id}`, newUserInfo)
+            updateUserById(`/api/users/${userContext._id}`, newUserInfo)
             setConfirmationPassword("")
             setProfileData({ firstName: "", lastName: "", password: "", email: "", tel: "", bio: ""})
         }

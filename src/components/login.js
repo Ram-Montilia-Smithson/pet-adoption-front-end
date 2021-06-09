@@ -15,7 +15,7 @@ export default function Login() {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        postUser('http://localhost:5000/api/users/login',loginData).then((user) => {
+        postUser('/api/users/login',loginData).then((user) => {
             console.log(user);
             userContext.user = user
         })

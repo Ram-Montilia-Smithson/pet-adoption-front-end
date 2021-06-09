@@ -1,8 +1,9 @@
 import Login from "./login"
 import Signup from "./signup"
 import {UserContext} from "../context/context"
-import React, { useContext, useState } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import { Modal } from "react-bootstrap"
+import { getUsers } from "../lib/api"
 
 // differentiate between home page as a logged in user and not
 // add a search button
@@ -15,6 +16,11 @@ function Homepage() {
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [isSignupOpen, setIsSignupOpen] = useState(false);
 
+    useEffect(() => {
+        if (userContext.user !== null) {
+            getUsers()
+        }
+    }, [userContext])
     
     const openLoginModal = () => {
         setIsLoginOpen(true)
