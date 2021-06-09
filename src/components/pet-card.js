@@ -12,15 +12,15 @@ function Pet({pet}) {
     const userContext = useContext(UserContext)
 
     const handleReturn = () => {
-        updatePetById(`http://localhost:5000/api/pets/return/${pet._id}`, { pet: pet._id })
+        updatePetById(`http://localhost:5000/api/pets/return/${pet._id}`)
     }
 
     const handleFoster = () => {
-        updatePetById(`http://localhost:5000/api/pets/foster/${pet._id}`,{ pet: pet._id, user: userContext._id, updateType: "Foster" })
+        updatePetById(`http://localhost:5000/api/pets/foster/${pet._id}`,{ user: userContext._id })
     }
 
     const handleAdopt = () => {
-        updatePetById(`http://localhost:5000/api/pets/adopt/${pet._id}`,{ pet: pet._id, user: userContext._id })
+        updatePetById(`http://localhost:5000/api/pets/adopt/${pet._id}`,{ user: userContext._id })
     }
 
     const handleSave = () => {

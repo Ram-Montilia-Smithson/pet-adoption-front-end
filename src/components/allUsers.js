@@ -1,7 +1,9 @@
 import React from "react"
 import User from "./user"
 // let users = JSON.parse(localStorage.getItem("allUsers"))
-function Users() {
+let users = []
+
+const Users = () => {
 
     return (
         <>

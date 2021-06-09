@@ -1,7 +1,11 @@
 import React from "react"
 import Pet from "./pet-card"
-let pets = JSON.parse(localStorage.getItem("allPets"))
-function Pets() {
+// let pets = JSON.parse(localStorage.getItem("allPets"))
+let pets = []
+
+// make the edit pet page and insert here
+
+const Pets = () => {
 
     return (
         <>

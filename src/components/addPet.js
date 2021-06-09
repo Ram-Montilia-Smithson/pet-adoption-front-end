@@ -43,13 +43,9 @@ function AddPet() {
         formData.append('status', 'Available')
         formData.append('ownerId', 0)
         formData.append('image', addPetData.image)
-        // console.log(addPetData);
-        const neePet = await postPet('http://localhost:5000/api/pets', formData)
-        console.log(neePet);
-        setNewPet(neePet)
-            // .then(() => { setNewPet(addPetData)})
+        const pet = await postPet('http://localhost:5000/api/pets', formData)
+        setNewPet(pet)
         setIsModalOpen(true)
-        
         // set a loader to run until the response comes
     };
 
@@ -59,7 +55,7 @@ function AddPet() {
             name: "", image: "", type: "", breed: "", height: 0, weight: 0, color: "",
             bio: "", hypoallergenic: false, dietaryRestrictions: ""
         })
-        // window.location.reload()
+        window.location.reload()
     }
 
     return (
@@ -184,10 +180,7 @@ function AddPet() {
                     </Form>
                 </Card.Body>
             </Card>
-            <Modal show={isModalOpen} onHide={closeModal}>
-                <Pet pet={newPet} />
-                {/* add the received pet here */}
-            </Modal>
+            <Modal show={isModalOpen} onHide={closeModal}> <Pet pet={newPet} /> </Modal>
         </>
     )
 }

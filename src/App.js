@@ -21,8 +21,8 @@ function App() {
   let history = useHistory()
 
   useEffect(() => {
-    getUsers()
-    getPets()
+    // getUsers()
+    // getPets()
   }, [])
 
 
@@ -62,7 +62,7 @@ function App() {
                 <>|</>
                 <Link to="/admin/dashboard">Dashboard</Link>
                 <>|</>
-                <Link to="/edit-pet/:id"> Edit Pet </Link>
+                {/* <Link to="/edit-pet/:id"> Edit Pet </Link> */}
               </>
             : null}
           </Navbar>
@@ -73,7 +73,7 @@ function App() {
                 <Route path="/admin/dashboard"><Dashboard /></Route>
                 <Route path="/search"><Search /></Route>
                 <Route path="/my-pets"><MyPetsPage /></Route>
-                <Route path="/edit-pet/:id"><EditPet/></Route> 
+                {/* <Route path="/edit-pet/:id"><EditPet/></Route>  */}
                 <Route path="/profile"><ProfileSettings /></Route>
                 <Route exact path="/"><Homepage /></Route>
               </>
