@@ -21,12 +21,12 @@ function App() {
   let history = useHistory()
 
   useEffect(() => {
-    // getUsers()
-    // getPets()
+    getUsers()
+    getPets()
   }, [])
 
 
-  // const userContext = useContext(UserContext)
+  const userContext = useContext(UserContext)
   
   const handleLogOut = () => {
     // localStorage.setItem('user', JSON.stringify(user))
@@ -43,7 +43,7 @@ function App() {
             <Link to="/"> Home </Link>
             <>|</>
             <Link to="/search"> Search </Link>
-            {/* {userContext.login ? */}
+            {userContext.login ?
             <>
               <>|</>
               <Link to="/Profile"> Profile </Link>
@@ -51,10 +51,10 @@ function App() {
               <Link to="/my-pets"> My Pets </Link>
               <>|</>
                 <a href={window.location.origin} className="text-danger" onClick={() => handleLogOut()}>LogOut</a>
-                {/* <span className="text-white">{userContext.firstName}</span> */}
+                <span className="text-white">{userContext.firstName}</span>
             </>
-            {/* : null} */}
-            {/* {userContext.admin ? */}
+            : null}
+            {userContext.admin ?
               <>
                 <span className="text-white"> Admin </span>
                 <>|</>
@@ -62,18 +62,18 @@ function App() {
                 <>|</>
                 <Link to="/admin/dashboard">Dashboard</Link>
                 <>|</>
-                {/* <Link to="/edit-pet/:id"> Edit Pet </Link> */}
+                <Link to="/edit-pet/:id"> Edit Pet </Link>
               </>
-            {/* : null} */}
+            : null}
           </Navbar>
           <Switch>
-            {/* {userContext.admin ? */}
+            {userContext.admin ?
               <>
                 <Route path="/admin/add-pet"><AddPet /></Route>
                 <Route path="/admin/dashboard"><Dashboard /></Route>
                 <Route path="/search"><Search /></Route>
                 <Route path="/my-pets"><MyPetsPage /></Route>
-                {/* <Route path="/edit-pet/:id"><EditPet/></Route>  */}
+                <Route path="/edit-pet/:id"><EditPet/></Route> 
                 <Route path="/profile"><ProfileSettings /></Route>
                 <Route exact path="/"><Homepage /></Route>
               </>
@@ -84,7 +84,7 @@ function App() {
                 <Route path="/profile"><ProfileSettings /></Route>
                 <Route exact path="/"><Homepage /></Route>
               </>
-            {/* } */}
+            }
           </Switch>
         </div>
       </Router>

@@ -28,7 +28,7 @@ function AddPet() {
         setAddPetData({ ...addPetData, image: file });
     };
 
-    const handleOnSubmit = (event) => {
+    const handleOnSubmit = async (event) => {
         event.preventDefault()
         const formData = new FormData();
         formData.append('name', addPetData.name)
@@ -39,20 +39,16 @@ function AddPet() {
         formData.append('type', addPetData.type)
         formData.append('hypoallergenic', addPetData.hypoallergenic)
         formData.append('dietaryRestrictions', addPetData.dietaryRestrictions)
-        formData.append('image', addPetData.breed)
         formData.append('bio', addPetData.bio)
         formData.append('status', 'Available')
         formData.append('ownerId', 0)
         formData.append('image', addPetData.image)
-        console.log(addPetData);
-        postPet('http://localhost:5000/api/pets', formData, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'multipart/form-data',
-            }
-        })
-            .then(() => { setNewPet(addPetData)})
-            .then(() => { setIsModalOpen(true) })
+        // console.log(addPetData);
+        const neePet = await postPet('http://localhost:5000/api/pets', formData)
+        console.log(neePet);
+        setNewPet(neePet)
+            // .then(() => { setNewPet(addPetData)})
+        setIsModalOpen(true)
         
         // set a loader to run until the response comes
     };
@@ -63,7 +59,7 @@ function AddPet() {
             name: "", image: "", type: "", breed: "", height: 0, weight: 0, color: "",
             bio: "", hypoallergenic: false, dietaryRestrictions: ""
         })
-        window.location.reload()
+        // window.location.reload()
     }
 
     return (
@@ -190,6 +186,7 @@ function AddPet() {
             </Card>
             <Modal show={isModalOpen} onHide={closeModal}>
                 <Pet pet={newPet} />
+                {/* add the received pet here */}
             </Modal>
         </>
     )

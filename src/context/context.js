@@ -5,7 +5,10 @@ import React from "react"
 
 
 export const UserContext = React.createContext({
-    user: null
+    login: true,
+    admin: true,
+    firstName: "ram",
+    savedPets: [],
 })
 
 // export default UserContext

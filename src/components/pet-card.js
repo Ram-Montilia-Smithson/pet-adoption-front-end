@@ -40,7 +40,7 @@ function Pet({pet}) {
                 <Card.Body>
                     <Card.Title>Name: {pet.name}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">Type: {pet.type}</Card.Subtitle>
-                    <Card.Img src={pet.image} alt="image of the pet" className="rounded w-25 h-25"/>
+                    <Card.Img src={pet.image} alt="image of the pet" alt={pet.name} className="rounded w-25 h-25"/>
                     <Card.Text>Breed: {pet.breed}</Card.Text>
                     <Card.Text>Status: {pet.status}</Card.Text>
                     <Card.Text>Height: {pet.height}CM</Card.Text>
