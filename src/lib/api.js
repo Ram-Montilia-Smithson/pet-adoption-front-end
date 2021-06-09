@@ -1,12 +1,14 @@
 import axios from "axios";
 
-export const postPet = async (data) => {
-    await axios.post('http://localhost:5000/api/pets', data)
-        .then((response => {
+export const postPet = async (url, data) => {
+    const pet = await axios.post(url, data)
+        .then(response => {
             // localStorage.setItem('newPet', JSON.stringify(response.data))
             return response.data
-        }))
-        .catch((error) => {alert(error)})
+        })
+        .catch((error) => alert(error))
+    console.log(pet);
+    return pet
 }
 
 

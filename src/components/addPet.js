@@ -44,18 +44,25 @@ function AddPet() {
         formData.append('status', 'Available')
         formData.append('ownerId', 0)
         formData.append('image', addPetData.image)
-        setAddPetData({
-            name: "", image: "", type: "", breed: "", height: 0, weight: 0, color: "",
-            bio: "", hypoallergenic: false, dietaryRestrictions: ""
+        console.log(addPetData);
+        postPet('http://localhost:5000/api/pets', formData, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data',
+            }
         })
-        postPet(formData)
-            .then(() => { setNewPet(JSON.parse(localStorage.getItem('newPet'))) })
-            .then(() => { setIsModalOpen(true)})
+            .then(() => { setNewPet(addPetData)})
+            .then(() => { setIsModalOpen(true) })
+        
         // set a loader to run until the response comes
     };
 
     const closeModal = () => {
         setIsModalOpen(false)
+        setAddPetData({
+            name: "", image: "", type: "", breed: "", height: 0, weight: 0, color: "",
+            bio: "", hypoallergenic: false, dietaryRestrictions: ""
+        })
         window.location.reload()
     }
 
@@ -84,7 +91,7 @@ function AddPet() {
                         <Form.Group id="pet's-image">
                             <Form.Label>Pet's Image</Form.Label>
                             <Form.File
-                                type="file"
+                                type="image/jpeg"
                                 name="image"
                                 onChange={(event) => handlePictureChange(event)}
                                 required
