@@ -6,6 +6,7 @@
 .pnp.js
 .eslintcache
 /images
+.env
 
 # testing
 /coverage
