@@ -7,29 +7,25 @@ import Search from './components/search-page';
 import { BrowserRouter as Router, Route, Switch, Link, useHistory } from "react-router-dom"
 import { Navbar } from "react-bootstrap"
 import {UserContext} from "./context/context"
-import React, { useContext, useEffect } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import EditPet from './components/edit-pet';
 import { getPets, getUsers } from "./lib/api"
 // import { createBrowserHistory } from 'history';
 
-const { user } = require("./data.json")
-
-
 
 function App() {
 
-  let history = useHistory()
-
-  useEffect(() => {
-    // getUsers()
-    // getPets()
-  }, [])
-
-
   const userContext = useContext(UserContext)
+
+  const [state, setState] = useState(null)
   
   const handleLogOut = () => {
-    // localStorage.setItem('user', JSON.stringify(user))
+    userContext.user = {}
+    setState("logged out")
+  }
+
+  const handleLogIn = () => {
+    setState("logged in")
   }
 
   return (
@@ -43,7 +39,7 @@ function App() {
             <Link to="/"> Home </Link>
             <>|</>
             <Link to="/search"> Search </Link>
-            {userContext.login ?
+            {userContext.user.login ?
             <>
               <>|</>
               <Link to="/Profile"> Profile </Link>
@@ -51,10 +47,10 @@ function App() {
               <Link to="/my-pets"> My Pets </Link>
               <>|</>
                 <a href={window.location.origin} className="text-danger" onClick={() => handleLogOut()}>LogOut</a>
-                <span className="text-white">{userContext.firstName}</span>
+                <span className="text-white">{userContext.user.firstName}</span>
             </>
             : null}
-            {userContext.admin ?
+            {userContext.user.admin ?
               <>
                 <span className="text-white"> Admin </span>
                 <>|</>
@@ -67,7 +63,7 @@ function App() {
             : null}
           </Navbar>
           <Switch>
-            {userContext.admin ?
+            {userContext.user.admin ?
               <>
                 <Route path="/admin/add-pet"><AddPet /></Route>
                 <Route path="/admin/dashboard"><Dashboard /></Route>
@@ -75,14 +71,14 @@ function App() {
                 <Route path="/my-pets"><MyPetsPage /></Route>
                 {/* <Route path="/edit-pet/:id"><EditPet/></Route>  */}
                 <Route path="/profile"><ProfileSettings /></Route>
-                <Route exact path="/"><Homepage /></Route>
+                <Route exact path="/"><Homepage handleLogOut={handleLogOut} handleLogIn={handleLogIn}/></Route>
               </>
               :
               <>
                 <Route path="/search"><Search /></Route>
                 <Route path="/my-pets"><MyPetsPage /></Route>
                 <Route path="/profile"><ProfileSettings /></Route>
-                <Route exact path="/"><Homepage /></Route>
+                <Route exact path="/"><Homepage handleLogOut={handleLogOut} handleLogIn={handleLogIn}/></Route>
               </>
             }
           </Switch>

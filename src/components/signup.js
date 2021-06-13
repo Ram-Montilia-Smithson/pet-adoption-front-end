@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Form, Button, Card } from "react-bootstrap"
 import { postUser } from "../lib/api";
+import { UserContext } from '../context/context'
 
-export default function Signup() {
+export default function Signup({ closeSignupModal }) {
+    
+    const userContext = useContext(UserContext)
 
     const [confirmationPassword, setConfirmationPassword] = useState("")
+    const [error, setError] = useState("")
     const [signupData, setSignupData] = useState({
         firstName: "",
         lastName: "",
@@ -17,15 +21,28 @@ export default function Signup() {
         login: true
     });
 
-    const handleOnSubmit = (event) => {
+    const handleOnSubmit = async (event) => {
         event.preventDefault();
         if (signupData.password === confirmationPassword) {
-            postUser('http://localhost:5000/api/users/signup',signupData)
-            console.log(signupData)
-            setConfirmationPassword("")
-            setSignupData({firstName: "",lastName: "",password: "",email: "",tel: "",bio: "",admin: false,pets: [],login: true})
+            const response = await postUser('http://localhost:5000/api/users/signup',signupData)
+            // console.log(signupData)
+            if (typeof response === "string") {
+                // console.log(response);
+                setError(`${response}`)
+            }
+            else {
+                // console.log("no Error", response);
+                setSignupData({ firstName: "", lastName: "", password: "", email: "", tel: "", bio: "", admin: false, pets: [], login: true })
+                setConfirmationPassword("")
+                userContext.user = response
+                setError("")
+                closeSignupModal()
+            }
         }
-        else {console.log("passwords do not match");}
+        else {
+            setError("passwords do not match")
+            // console.log("passwords do not match");
+        }
     };
 
     return (
@@ -115,6 +132,7 @@ export default function Signup() {
                                 required
                             />
                         </Form.Group>
+                        <div className="text-danger bg-warning rounded my-2">{error}</div>
                         <Button className="w-100" type="submit">Sign Up</Button>
                     </Form>
                 </Card.Body>

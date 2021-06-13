@@ -4,12 +4,13 @@ import {UserContext} from "../context/context"
 import React, { useContext, useState } from "react"
 import { Modal } from "react-bootstrap"
 
-function Homepage() {
+function Homepage({ handleLogOut, handleLogIn }) {
     
     const userContext = useContext(UserContext)
-    console.log(userContext);
+    // console.log(userContext);
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [isSignupOpen, setIsSignupOpen] = useState(false);
+    // const [UserError, setUserError] = useState("")
 
     
     const openLoginModal = () => {
@@ -18,6 +19,8 @@ function Homepage() {
 
     const closeLoginModal = () => {
         setIsLoginOpen(false)
+        // console.log(userContext.user);
+        handleLogIn()
     }
 
     const openSignupModal = () => {
@@ -25,14 +28,16 @@ function Homepage() {
     }
 
     const closeSignupModal = () => {
+        console.log(userContext.user);
         setIsSignupOpen(false)
+        handleLogIn()
     }
 
     return (
         <div>
-            {userContext.login ?
+            {userContext.user.login ?
                 <div>
-                <h1>Welcome to the pet adoption website!  {userContext.firstName} {userContext.lastName}</h1>
+                    <h1>Welcome to the pet adoption website!  {userContext.user.firstName} {userContext.user.lastName}</h1>
                     <h2>what would you like to do today?</h2>
                 </div>
                 :
@@ -50,10 +55,10 @@ function Homepage() {
                     </div>
                     <br />
                     <Modal show={isSignupOpen} onHide={closeSignupModal}>
-                        <Signup/>
+                        <Signup closeSignupModal={closeSignupModal}/>
                     </Modal>
                     <Modal show={isLoginOpen} onHide={closeLoginModal}>
-                        <Login/>
+                        <Login closeLoginModal={closeLoginModal}/>
                     </Modal>
                 </div>
             }

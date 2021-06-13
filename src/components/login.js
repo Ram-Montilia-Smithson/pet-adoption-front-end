@@ -1,24 +1,29 @@
 import React, { useState, useContext } from "react";
 import { Form, Button, Card } from "react-bootstrap";
-// import { useHistory } from "react-router";
 import { postUser } from "../lib/api";
 import {UserContext} from '../context/context'
 
-export default function Login() {
+export default function Login({ closeLoginModal}) {
 
     const userContext = useContext(UserContext)
-
+    const [error, setError] = useState("")
     const [loginData, setLoginData] = useState({
         email: "",
         password: ""
     })
 
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
-        postUser('http://localhost:5000/api/users/login',loginData).then((user) => {
-            console.log(user);
-            userContext.user = user
-        })
+        const response = await postUser('http://localhost:5000/api/users/login', loginData)
+        if (typeof response === "string") {
+            setError(`${response}`)
+            // console.log(response);
+        }
+        else {
+            userContext.user = response
+            closeLoginModal()
+        }
+
     }
 
     return (
@@ -49,6 +54,7 @@ export default function Login() {
                                 onChange={(event) => setLoginData({...loginData, password: event.target.value})}
                             />
                         </Form.Group>
+                        <div className="text-danger bg-warning rounded my-2">{error}</div>
                         <Button className="w-100" type="submit">
                             Log In
                         </Button>

@@ -3,7 +3,6 @@ import axios from "axios";
 export const postPet = async (url, data) => {
     const pet = await axios.post(url, data)
         .then(response => {
-            // localStorage.setItem('newPet', JSON.stringify(response.data))
             return response.data
         })
         .catch((error) => alert(error))
@@ -11,19 +10,20 @@ export const postPet = async (url, data) => {
     return pet
 }
 
-
+// works good for signUp and logIn
 export const postUser = async (url, data) => {
     // console.log(url,data);
     const user = await axios.post(url, data)
         .then(response => {
-            
-            // localStorage.setItem('user', JSON.stringify(response.data))
+            console.log(response.data);
             return response.data;
         })
-        .catch((error) => {alert(error)})
+        .catch((error) => { return (`${error}`) })
+        console.log(user);
         return user
-        // .then(() => {window.location.reload()})
 }
+
+
 export const getUsers = async () => {
     await axios.get('http://localhost:5000/api/users')
         .then(response => {
