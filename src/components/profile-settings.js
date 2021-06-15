@@ -7,7 +7,7 @@ import { updateUserById } from "../lib/api";
 function ProfileSettings() {
 
     const userContext = useContext(UserContext)
-
+    const [error, setError] = useState("")
     const [confirmationPassword, setConfirmationPassword] = useState("")
     const [profileData, setProfileData] = useState({
         firstName: "",
@@ -18,17 +18,27 @@ function ProfileSettings() {
         bio: "",
     });
 
-    const handleOnSubmit = (event) => {
+    const handleOnSubmit = async (event) => {
         event.preventDefault();
+        // console.log(profileData);
         if (profileData.password === confirmationPassword) {
             let newUserInfo = {}
             for (const property in profileData) {if (profileData[property] !== "") { newUserInfo[property] = profileData[property]}}
-            console.log(userContext._id);
-            updateUserById(`http://localhost:5000/api/users/${userContext._id}`, newUserInfo)
-            setConfirmationPassword("")
-            setProfileData({ firstName: "", lastName: "", password: "", email: "", tel: "", bio: ""})
+            const response = await updateUserById(`http://localhost:5000/api/users/${userContext.user._id}`, newUserInfo)
+            console.log(response);
+            if (typeof response === "string") {
+                setError(response)
+            }
+            else if (typeof response === "object") {
+                setConfirmationPassword("")
+                setProfileData({ firstName: "", lastName: "", password: "", email: "", tel: "", bio: ""})
+                userContext.user = response
+                setError("")
+            }
         }
-        else { console.log("passwords do not match"); }
+        else {
+            setError("passwords do not match")
+        }
     };
 
     return (
@@ -44,7 +54,7 @@ function ProfileSettings() {
                     <Form.Group id="first-name">
                         <Form.Label>New First Name</Form.Label>
                         <Form.Control
-                            placeholder={userContext.firstName}
+                            placeholder={userContext.user.firstName}
                             type="text"
                             onChange={(event) => setProfileData({ ...profileData, firstName: event.target.value })}
                             value={profileData.firstName}
@@ -54,7 +64,7 @@ function ProfileSettings() {
                     <Form.Group id="last-name">
                         <Form.Label>New Last Name</Form.Label>
                         <Form.Control
-                            placeholder={userContext.lastName}
+                            placeholder={userContext.user.lastName}
                             type="text"
                             onChange={(event) => setProfileData({ ...profileData, lastName: event.target.value })}
                             value={profileData.lastName}
@@ -64,7 +74,7 @@ function ProfileSettings() {
                     <Form.Group id="tel">
                         <Form.Label>New Phone Number</Form.Label>
                         <Form.Control
-                            placeholder={userContext.tel}
+                            placeholder={userContext.user.tel}
                             type="tel"
                             onChange={(event) => setProfileData({ ...profileData, tel: event.target.value })}
                             value={profileData.tel}
@@ -74,7 +84,7 @@ function ProfileSettings() {
                     <Form.Group id="email">
                         <Form.Label>New Email</Form.Label>
                         <Form.Control
-                            placeholder={userContext.email}
+                            placeholder={userContext.user.email}
                             type="email"
                             name="email"
                             onChange={(event) => setProfileData({ ...profileData, email: event.target.value })}
@@ -104,13 +114,14 @@ function ProfileSettings() {
                     <Form.Group id="bio">
                         <Form.Label>Wanna tell us something new about yourself?</Form.Label>
                         <Form.Control
-                            placeholder={userContext.bio}
+                            placeholder={userContext.user.bio}
                             as="textarea"
                             rows={3}
                             onChange={(event) => setProfileData({ ...profileData, bio: event.target.value })}
                             value={profileData.bio}
                         />
                     </Form.Group>
+                    <div className="text-danger bg-warning rounded my-2">{error}</div>
                     <Button className="w-100" type="submit">
                         save changes
                     </Button>

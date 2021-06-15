@@ -58,15 +58,15 @@ export const getUserById = async (id) => {
 }
 
 export const updateUserById = async (url, newUserInfo) => {
-    console.log("url",url,"newUserInfo",newUserInfo);
-    await axios.put(url, newUserInfo)
-        .then(response => {return response.data;})
-        .then(data => {
-            // localStorage.setItem('user', JSON.stringify(data))
-            return data
-        })
-        .then(() => {window.location.reload()})
-        .catch((error) => {alert(error);})
+    // console.log("url",url,"newUserInfo",newUserInfo);
+    const response = await axios.put(url, newUserInfo)    
+    .catch((error) => { console.log(error); return ({data:`${error}`}) })
+    if (response.data) {
+        return (response.data)
+    }
+    else {
+        return (response)
+    }
 }
 
 export const updatePetById = async (url, info) => {
