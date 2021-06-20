@@ -50,8 +50,13 @@ export const getPets = async () => {
 
 export const getPetById = async (id) => {
     const response = await axios.get(`http://localhost:5000/api/pets/${id}`)
-    const data = response.data
-    return data
+        .catch((error) => { console.log(error); return ({ data: `${error}` }) })
+    if (response.data) {
+        return (response.data)
+    }
+    else {
+        return (response)
+    }
 }
 
 export const getUserById = async (id) => {

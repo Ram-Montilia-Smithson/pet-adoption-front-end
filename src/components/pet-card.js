@@ -10,7 +10,7 @@ function Pet({ pet }) {
     const userContext = useContext(UserContext)
 
     const [state, setState] = useState({})
-    const [error, setError] = useState("")
+    const [message, setMessage] = useState("")
 
     useEffect(() => {
         setState(pet)
@@ -18,40 +18,40 @@ function Pet({ pet }) {
 
     const handleReturn = async () => {
         const newPet = await updatePetById(`http://localhost:5000/api/pets/return/${state._id}`)
-        if (typeof newPet == "string") {setError(newPet)}
+        if (typeof newPet == "string") {setMessage(newPet)}
         else {
             setState(newPet)
-            setError("pet returned successfully")
+            setMessage("pet returned successfully")
         }
         console.log(newPet);
     }
 
     const handleFoster = async () => {
         const newPet = await updatePetById(`http://localhost:5000/api/pets/foster/${state._id}`, { user: userContext.user._id })
-        if (typeof newPet == "string") {setError(newPet)}
+        if (typeof newPet == "string") {setMessage(newPet)}
         else {
             setState(newPet)
-            setError("pet fostered successfully")
+            setMessage("pet fostered successfully")
         }
         console.log(newPet);
     }
 
     const handleAdopt = async () => {
         const newPet = await updatePetById(`http://localhost:5000/api/pets/adopt/${state._id}`, { user: userContext.user._id })
-        if (typeof newPet == "string") {setError(newPet)}
+        if (typeof newPet == "string") {setMessage(newPet)}
         else {
             setState(newPet)
-            setError("pet adopted successfully")
+            setMessage("pet adopted successfully")
         }
         console.log(newPet);
     }
 
     const handleSave = async () => {
         const newUser = await updateUserById(`http://localhost:5000/api/users/save/${userContext.user._id}`, { savedPets: [...userContext.user.savedPets, state._id] })
-        if (typeof newUser == "string") { setError(newUser) }
+        if (typeof newUser == "string") { setMessage(newUser) }
         else {
             userContext.user = newUser
-            setError("pet saved successfully")
+            setMessage("pet saved successfully")
             console.log(userContext);
         }
     }
@@ -59,10 +59,10 @@ function Pet({ pet }) {
         const index = userContext.user.savedPets.indexOf(state._id)
         userContext.user.savedPets.splice(index,1)
         const newUser = await updateUserById(`http://localhost:5000/api/users/save/${userContext.user._id}`, { savedPets: [...userContext.user.savedPets]})
-        if (typeof newUser == "string") { setError(newUser) }
+        if (typeof newUser == "string") { setMessage(newUser) }
         else {
             userContext.user = newUser
-            setError("pet unsaved successfully")
+            setMessage("pet unsaved successfully")
             console.log(userContext);
         }
     }
@@ -86,7 +86,7 @@ function Pet({ pet }) {
                     <Card.Text>dietary restrictions: {state.dietaryRestrictions}</Card.Text>
                 </Card.Body>
                 {userContext.user.login && <>
-                    <h3>{error}</h3>
+                    <h3>{message}</h3>
                     {state.status === "Available" ?
                     <>
                         <Button className="btn btn-primary" onClick={handleAdopt}>Adopt pet</Button>

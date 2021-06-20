@@ -55,7 +55,6 @@ function AddPet() {
             name: "", image: "", type: "", breed: "", height: 0, weight: 0, color: "",
             bio: "", hypoallergenic: false, dietaryRestrictions: ""
         })
-        window.location.reload()
     }
 
     return (
