@@ -1,57 +1,93 @@
 import { Card, Button } from "react-bootstrap"
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import {UserContext} from "../context/context";
 import { updatePetById, updateUserById } from "../lib/api"
 
 // save for later
 
-function Pet({pet}) {
-
-    console.log(pet);
-
+function Pet({ pet }) {
+    
     const userContext = useContext(UserContext)
 
-    const handleReturn = () => {
-        updatePetById(`http://localhost:5000/api/pets/return/${pet._id}`)
+    const [state, setState] = useState({})
+    const [error, setError] = useState("")
+
+    useEffect(() => {
+        setState(pet)
+    }, [])
+
+    const handleReturn = async () => {
+        const newPet = await updatePetById(`http://localhost:5000/api/pets/return/${state._id}`)
+        if (typeof newPet == "string") {setError(newPet)}
+        else {
+            setState(newPet)
+            setError("pet returned successfully")
+        }
+        console.log(newPet);
     }
 
-    const handleFoster = () => {
-        updatePetById(`http://localhost:5000/api/pets/foster/${pet._id}`,{ user: userContext._id })
+    const handleFoster = async () => {
+        const newPet = await updatePetById(`http://localhost:5000/api/pets/foster/${state._id}`, { user: userContext.user._id })
+        if (typeof newPet == "string") {setError(newPet)}
+        else {
+            setState(newPet)
+            setError("pet fostered successfully")
+        }
+        console.log(newPet);
     }
 
-    const handleAdopt = () => {
-        updatePetById(`http://localhost:5000/api/pets/adopt/${pet._id}`,{ user: userContext._id })
+    const handleAdopt = async () => {
+        const newPet = await updatePetById(`http://localhost:5000/api/pets/adopt/${state._id}`, { user: userContext.user._id })
+        if (typeof newPet == "string") {setError(newPet)}
+        else {
+            setState(newPet)
+            setError("pet adopted successfully")
+        }
+        console.log(newPet);
     }
 
-    const handleSave = () => {
-        updateUserById(`http://localhost:5000/api/users/save/${userContext._id}`,{ savedPets: [...userContext.savedPets, pet._id] })
+    const handleSave = async () => {
+        const newUser = await updateUserById(`http://localhost:5000/api/users/save/${userContext.user._id}`, { savedPets: [...userContext.user.savedPets, state._id] })
+        if (typeof newUser == "string") { setError(newUser) }
+        else {
+            userContext.user = newUser
+            setError("pet saved successfully")
+            console.log(userContext);
+        }
     }
-    const handleUnSave = () => {
-        const index = userContext.savedPets.indexOf(pet._id)
-        userContext.savedPets.splice(index,1)
-        updateUserById(`http://localhost:5000/api/users/save/${userContext._id}`,{ savedPets: [...userContext.savedPets]})
+    const handleUnSave = async () => {
+        const index = userContext.user.savedPets.indexOf(state._id)
+        userContext.user.savedPets.splice(index,1)
+        const newUser = await updateUserById(`http://localhost:5000/api/users/save/${userContext.user._id}`, { savedPets: [...userContext.user.savedPets]})
+        if (typeof newUser == "string") { setError(newUser) }
+        else {
+            userContext.user = newUser
+            setError("pet unsaved successfully")
+            console.log(userContext);
+        }
     }
 
     return (
         <>
-            <h2 className="text-center mb-4">{pet.name} the {pet.type} details:</h2>
+            <h2 className="text-center mb-4">{state.name} the {state.type} details:</h2>
             <Card
                 className="d-flex align-items-center justify-content-center bg-transparent">
                 <Card.Body>
-                    <Card.Title>Name: {pet.name}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">Type: {pet.type}</Card.Subtitle>
-                    <Card.Img src={pet.image} alt="image of the pet" alt={pet.name} className="rounded w-25 h-25"/>
-                    <Card.Text>Breed: {pet.breed}</Card.Text>
-                    <Card.Text>Status: {pet.status}</Card.Text>
-                    <Card.Text>Height: {pet.height}CM</Card.Text>
-                    <Card.Text>Weight: {pet.weight}KG</Card.Text>
-                    <Card.Text>Color: {pet.color}</Card.Text>
-                    <Card.Text>Bio: {pet.bio}</Card.Text>
-                    <Card.Text>{pet.hypoallergenic && "hypoallergenic"}</Card.Text>
-                    <Card.Text>dietary restrictions: {pet.dietaryRestrictions}</Card.Text>
+                    <Card.Title>Name: {state.name}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">Type: {state.type}</Card.Subtitle>
+                    <Card.Img src={state.image} alt="image of the pet" alt={state.name} className="rounded w-25 h-25"/>
+                    <Card.Text>Breed: {state.breed}</Card.Text>
+                    <Card.Text>Status: {state.status}</Card.Text>
+                    <Card.Text>Height: {state.height}CM</Card.Text>
+                    <Card.Text>Weight: {state.weight}KG</Card.Text>
+                    <Card.Text>Color: {state.color}</Card.Text>
+                    <Card.Text>Bio: {state.bio}</Card.Text>
+                    <Card.Text>{state.hypoallergenic && "hypoallergenic"}</Card.Text>
+                    <Card.Text>dietary restrictions: {state.dietaryRestrictions}</Card.Text>
                 </Card.Body>
-                {userContext.login && <>
-                    {pet.status === "Available" ?
+                {userContext.user.login && <>
+                    <h3>{error}</h3>
+                    {state.status === "Available" ?
                     <>
                         <Button className="btn btn-primary" onClick={handleAdopt}>Adopt pet</Button>
                         <Button className="btn btn-warning" onClick={handleFoster}>Foster pet</Button>
@@ -59,7 +95,7 @@ function Pet({pet}) {
                         :    
                     null    
                     }
-                    {pet.status === "Fostered" ?
+                    {state.status === "Fostered" ?
                     <>
                         <Button className="btn btn-primary" onClick={handleAdopt}>Adopt pet</Button>
                         <Button className="btn btn-danger" onClick={handleReturn}>Return pet</Button>
@@ -67,12 +103,12 @@ function Pet({pet}) {
                         :
                     null
                     }
-                    {pet.status === "Adopted" ?
+                    {state.status === "Adopted" ?
                         <Button className="btn btn-danger" onClick={handleReturn}>Return pet</Button>
                         :
                     null
                     }
-                    {userContext.savedPets.includes(pet._id) ? 
+                    {userContext.user.savedPets.includes(state._id) ? 
                         <Button className="btn btn-dark" onClick={handleUnSave}>Unsave Pet</Button>
                         :
                         <Button className="btn btn-success" onClick={handleSave}>Save Pet</Button>

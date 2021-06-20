@@ -37,13 +37,15 @@ export const getUsers = async () => {
 }
 
 export const getPets = async () => {
-    await axios.get('http://localhost:5000/api/pets')
-        .then(response => {
-            // console.log(response.data);
-            return response.data
-        })
-        // .then(response => console.log(response))
-        .catch((error) => {alert(error);})
+    const response = await axios.get('http://localhost:5000/api/pets')
+        .catch((error) => { console.log(error); return ({ data: `${error}` }) })
+    if (response.data) {
+        return (response.data)
+    }
+    else {
+        return (response)
+    }
+    
 }
 
 export const getPetById = async (id) => {
@@ -61,19 +63,16 @@ export const updateUserById = async (url, newUserInfo) => {
     // console.log("url",url,"newUserInfo",newUserInfo);
     const response = await axios.put(url, newUserInfo)    
     .catch((error) => { console.log(error); return ({data:`${error}`}) })
-    if (response.data) {
-        return (response.data)
-    }
-    else {
-        return (response)
-    }
+    if (response.data) {return (response.data)}
+    else {return (response)}
 }
 
 export const updatePetById = async (url, info) => {
-    await axios.put(url, info)
-        .then(response => {return response.data})
-        .then(() => {window.location.reload()})
-        .catch((error) => {alert(error);})
+    const response = await axios.put(url, info)
+        .catch((error) => { console.log(error); return ({ data: `${error}` }) })
+    console.log(response);
+    if (response.data) {return (response.data)}
+    else {return (response)}
 }
 
 // Edit Pet API - is not ready 
