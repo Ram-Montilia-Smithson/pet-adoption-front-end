@@ -25,14 +25,15 @@ function ProfileSettings() {
             let newUserInfo = {}
             for (const property in profileData) {if (profileData[property] !== "") { newUserInfo[property] = profileData[property]}}
             const response = await updateUserById(`http://localhost:5000/api/users/${userContext.user._id}`, newUserInfo)
+            // console.log(newUserInfo);
             console.log(response);
             if (typeof response === "string") {
                 setError(response)
             }
             else if (typeof response === "object") {
+                userContext.user = response
                 setConfirmationPassword("")
                 setProfileData({ firstName: "", lastName: "", password: "", email: "", tel: "", bio: ""})
-                userContext.user = response
                 setError("")
             }
         }
