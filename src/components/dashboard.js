@@ -12,8 +12,9 @@ function Dashboard() {
         <>
             <h1 className="text-center mb-4 mt-5">Dashboard</h1>
             <Router>
-                <Navbar className="bg-dark mx-5 rounded">
+                <Navbar className="bg-dark mx-5 rounded d-flex justify-content-around">
                     <Link to="/admin/dashboard/users">Users</Link>
+                    |
                     <Link to="/admin/dashboard/pets">Pets</Link>
                 </Navbar>
                 <Switch>

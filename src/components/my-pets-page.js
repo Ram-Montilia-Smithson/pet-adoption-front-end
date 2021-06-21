@@ -17,12 +17,12 @@ function MyPetsPage() {
 
     useEffect(() => {
         getAllPets()
-        // getSavedPets() 
+        getSavedPets() 
     }, [])
 
     const closeModal = () => {
         setIsModalOpen(false)
-        // getSavedPets()
+        getSavedPets()
         getAllPets()
     }
 
@@ -35,20 +35,16 @@ function MyPetsPage() {
     setUsersPets(petArray)
 }
 
-    // const getSavedPets = () => {
-    //     const petArray = userContext.user.savedPets
-    //     // setSavedPets(savedPets => savedPets = [])
-    //     petArray.forEach( async (pet) => {
-    //         const savedPet = await getPetById(pet)
-    //         console.log(savedPet);
-    //         // petArray.push(savedPet)
-    //         // console.log(petArray);
-    //         setSavedPets([...savedPets, savedPet])
-    //     });
-    //     // console.log(userContext.user.savedPets);
-    //     // console.log(savedPets.length);
-
-    // }
+    const getSavedPets = () => {
+        const petIDArray = userContext.user.savedPets
+        const petArray = []
+        setSavedPets(savedPets => [])
+        petIDArray.forEach( async (pet) => {
+            const savedPet = await getPetById(pet)
+            petArray.push(savedPet)
+            setSavedPets(savedPets => [...savedPets, savedPet])
+        })
+    }
 
     return (
         <>
@@ -83,22 +79,21 @@ function MyPetsPage() {
                         {savedPets.length ?
                             <div>
                                 <h2>Saved Pets</h2>
-                                {/* {savedPets.map(pet => {
+                                {savedPets.map(pet => {
                                     console.log(pet); 
                                     return (
-                                        <>
-                                            <div onClick={() => setIsModalOpen(true)}>
+                                        <div key={pet._id}>
+                                            <div onClick={() => setIsModalOpen(pet._id)}>
                                                 <Card.Title>Name: {pet.name}</Card.Title>
                                                 <Card.Subtitle className="mb-2 text-muted">Type: {pet.type}</Card.Subtitle>
                                                 <Card.Img src={pet.image} alt="image of the pet" className="rounded w-25 h-25" />
                                             </div>
-                                            <Modal show={isModalOpen} onHide={closeModal} >
+                                            <Modal show={isModalOpen === pet._id} onHide={closeModal} >
                                                 <Pet pet={pet} />
                                             </Modal>
-                                        </>
-                                        
+                                        </div>
                                     )
-                                })} */}
+                                })}
                             </div>
                             :
                             <h3>You currently don't have any pets saved</h3>
