@@ -7,11 +7,9 @@ import { Modal } from "react-bootstrap"
 function Homepage({ handleLogOut, handleLogIn }) {
     
     const userContext = useContext(UserContext)
-    // console.log(userContext);
+
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [isSignupOpen, setIsSignupOpen] = useState(false);
-    // const [UserError, setUserError] = useState("")
-
     
     const openLoginModal = () => {
         setIsLoginOpen(true)
@@ -19,7 +17,6 @@ function Homepage({ handleLogOut, handleLogIn }) {
 
     const closeLoginModal = () => {
         setIsLoginOpen(false)
-        // console.log(userContext.user);
         handleLogIn()
     }
 
@@ -28,7 +25,6 @@ function Homepage({ handleLogOut, handleLogIn }) {
     }
 
     const closeSignupModal = () => {
-        console.log(userContext.user);
         setIsSignupOpen(false)
         handleLogIn()
     }

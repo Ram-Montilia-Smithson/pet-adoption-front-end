@@ -10,9 +10,7 @@ export const postPet = async (url, data) => {
     return pet
 }
 
-// works good for signUp and logIn
 export const postUser = async (url, data) => {
-    // console.log(url,data);
     const user = await axios.post(url, data)
         .then(response => {
             console.log(response.data);
@@ -25,15 +23,14 @@ export const postUser = async (url, data) => {
 
 
 export const getUsers = async () => {
-    await axios.get('http://localhost:5000/api/users')
-        .then(response => {
-            let data = response.data
-            // localStorage.setItem('allUsers', JSON.stringify(data))
-            // document.cookie = `allUsers=${JSON.stringify(data)}`
-            console.log(data);
-            return (data)
-        })
-        .catch((error) => {alert(error);})
+    const response = await axios.get('http://localhost:5000/api/users')
+        .catch((error) => { console.log(error); return ({ data: `${error}` }) })
+    if (response.data) {
+        return (response.data)
+    }
+    else {
+        return (response)
+    }
 }
 
 export const getPets = async () => {
@@ -45,7 +42,6 @@ export const getPets = async () => {
     else {
         return (response)
     }
-    
 }
 
 export const getPetById = async (id) => {

@@ -17,7 +17,6 @@ export default function Login({ closeLoginModal}) {
         const response = await postUser('http://localhost:5000/api/users/login', loginData)
         if (typeof response === "string") {
             setError(`${response}`)
-            // console.log(response);
         }
         else {
             userContext.user = response

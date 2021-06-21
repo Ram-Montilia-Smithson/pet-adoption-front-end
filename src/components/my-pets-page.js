@@ -4,13 +4,9 @@ import { Card, Modal, } from "react-bootstrap";
 import { getPetById, getPets } from "../lib/api";
 import Pet from "./pet-card";
 
-// add pet status
-// See more button (this button takes you to a full detailed description of the pet)
-
 function MyPetsPage() {
 
     const userContext = useContext(UserContext)
-    // console.log(userContext);
     const [savedPets, setSavedPets] = useState([])
     const [usersPets, setUsersPets] = useState([])
     const [isModalOpen, setIsModalOpen] = useState("");
@@ -30,10 +26,10 @@ function MyPetsPage() {
         const petArray = []
         const pets = await getPets()
         pets.forEach(pet => {
-        if (pet.ownerId === userContext.user._id) {petArray.push(pet)}
-    })
-    setUsersPets(petArray)
-}
+            if (pet.ownerId === userContext.user._id) {petArray.push(pet)}
+        })
+        setUsersPets(petArray)
+    }
 
     const getSavedPets = () => {
         const petIDArray = userContext.user.savedPets
@@ -56,7 +52,6 @@ function MyPetsPage() {
                             <div>
                                 <h2>Owned/Fostered Pets</h2>
                                 {usersPets.map(pet => {
-                                    // console.log(usersPets);
                                     return (
                                         <div key={pet._id}>
                                             <div onClick={() => setIsModalOpen(pet._id)}>
@@ -80,7 +75,6 @@ function MyPetsPage() {
                             <div>
                                 <h2>Saved Pets</h2>
                                 {savedPets.map(pet => {
-                                    console.log(pet); 
                                     return (
                                         <div key={pet._id}>
                                             <div onClick={() => setIsModalOpen(pet._id)}>

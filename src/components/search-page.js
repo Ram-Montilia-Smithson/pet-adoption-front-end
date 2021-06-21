@@ -3,6 +3,8 @@ import { Button, Card, Form, ToggleButton, ToggleButtonGroup } from "react-boots
 import { getPets } from "../lib/api";
 import Pet from "./pet-card";
 
+// the search is still no good
+
 export default function Search() {
 
     const [searchTypeBasic, setSearchTypeBasic] = useState(true);

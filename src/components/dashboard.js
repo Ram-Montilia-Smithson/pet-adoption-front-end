@@ -1,12 +1,29 @@
 import {BrowserRouter as Router, Route, Switch, Link} from "react-router-dom"
 import { Navbar } from "react-bootstrap"
-import React, {useEffect} from "react"
+import React, { useEffect, useState} from "react"
 import Pets from "./allPets"
 import Users from "./allUsers"
-
-// get the users and the pets from context
+import { getPets, getUsers } from "../lib/api"
 
 function Dashboard() {
+
+    const [pets, setPets] = useState([])
+    const [users, setUsers] = useState([])
+    
+    useEffect(() => {
+        getAllUsers()
+        getAllPets()
+    }, [])
+
+    const getAllPets = async () => {
+        const pets = await getPets()
+        setPets(pets)
+    }
+
+    const getAllUsers = async () => {
+        const users = await getUsers()
+        setUsers(users)
+    }
 
     return (
         <>
@@ -19,14 +36,10 @@ function Dashboard() {
                 </Navbar>
                 <Switch>
                     <Route path="/admin/dashboard/users">
-                        <Users/>
-                        <p>List of all the users in the database(pet owners and administrators)
-                        Clicking on a user should display all the pets that the user owns along with all of
-                        their profile details so the administrators can contact the user.</p>
+                        <Users users={users}/>
                     </Route>
                     <Route path="/admin/dashboard/pets">
-                        <p>List of all pets and ability to go to the pet page and edit. (The edit should be just like adding a pet but with the details already displayed there)</p>
-                        <Pets/>
+                        <Pets pets={pets}/>
                     </Route>
                 </Switch>
             </Router>
