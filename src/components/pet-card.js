@@ -3,18 +3,15 @@ import React, { useContext, useEffect, useState } from "react"
 import {UserContext} from "../context/context";
 import { updatePetById, updateUserById } from "../lib/api"
 
-// save for later
-
 function Pet({ pet }) {
     
     const userContext = useContext(UserContext)
-
     const [state, setState] = useState({})
     const [message, setMessage] = useState("")
 
     useEffect(() => {
         setState(pet)
-    }, [])
+    }, [pet])
 
     const handleReturn = async () => {
         const newPet = await updatePetById(`http://localhost:5000/api/pets/return/${state._id}`)
@@ -113,7 +110,6 @@ function Pet({ pet }) {
                         :
                         <Button className="btn btn-success" onClick={handleSave}>Save Pet</Button>
                     }
-                    {/* {userContext.admin && <Card.Link href={`/edit-pet/${pet._id}`}>Edit Pet</Card.Link>} */}
                 </>}
             </Card>
         </>

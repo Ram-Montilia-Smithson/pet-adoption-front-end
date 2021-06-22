@@ -13,17 +13,17 @@ export const postPet = async (url, data) => {
 export const postUser = async (url, data) => {
     const user = await axios.post(url, data)
         .then(response => {
-            console.log(response.data);
             return response.data;
         })
         .catch((error) => { return (`${error}`) })
-        console.log(user);
         return user
 }
 
 
 export const getUsers = async () => {
-    const response = await axios.get('http://localhost:5000/api/users')
+    const response = await axios.get('http://localhost:5000/api/users',
+        // { withCredentials: true }
+    )
         .catch((error) => { console.log(error); return ({ data: `${error}` }) })
     if (response.data) {
         return (response.data)
@@ -61,7 +61,6 @@ export const getUserById = async (id) => {
 }
 
 export const updateUserById = async (url, newUserInfo) => {
-    // console.log("url",url,"newUserInfo",newUserInfo);
     const response = await axios.put(url, newUserInfo)    
     .catch((error) => { console.log(error); return ({data:`${error}`}) })
     if (response.data) {return (response.data)}
@@ -71,19 +70,11 @@ export const updateUserById = async (url, newUserInfo) => {
 export const updatePetById = async (url, info) => {
     const response = await axios.put(url, info)
         .catch((error) => { console.log(error); return ({ data: `${error}` }) })
-    console.log(response);
+    // console.log(response);
     if (response.data) {return (response.data)}
     else {return (response)}
 }
 
-// Edit Pet API - is not ready 
-// for admin only
-// Route: ‘/pet/: id’[PUT](protected to admin only)
-// The add pet api is responsible for editing pets
-// Validate all the user input is valid
-// Handle photo upload
-// Store pet information in the database
-// Fields: Same as Add Pet API
 
 // works, but not in use in the app
 export const deletePetById = async (id) => {
@@ -93,7 +84,6 @@ export const deletePetById = async (id) => {
 }
 
 // works, but not in use in the app
-
 export const deleteUserById = async (id) => {
     const response = await axios.delete(`http://localhost:5000/api/users/${id}`)
     const data = response.data

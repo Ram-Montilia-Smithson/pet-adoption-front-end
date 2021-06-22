@@ -39,7 +39,7 @@ function Dashboard() {
                         <Users users={users}/>
                     </Route>
                     <Route path="/admin/dashboard/pets">
-                        <Pets pets={pets}/>
+                        <Pets pets={pets} getAllPets={getAllPets}/>
                     </Route>
                 </Switch>
             </Router>

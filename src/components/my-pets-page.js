@@ -17,7 +17,7 @@ function MyPetsPage() {
     }, [])
 
     const closeModal = () => {
-        setIsModalOpen(false)
+        setIsModalOpen("")
         getSavedPets()
         getAllPets()
     }

@@ -18,11 +18,13 @@ function UserModal({ user, pets, savedPets }) {
                         <>
                             User's Pets:
                             {pets.map(pet => {
-                                return (<>
-                                    <Card.Title>Name: {pet.name}</Card.Title>
-                                    <Card.Subtitle className="mb-2 text-muted">Type: {pet.type}</Card.Subtitle>
-                                    <Card.Img src={pet.image} alt="image of the pet" className="rounded w-25 h-25" />
-                                </>)
+                                return (
+                                    <div key={pet._id}>
+                                        <Card.Title>Name: {pet.name}</Card.Title>
+                                        <Card.Subtitle className="mb-2 text-muted">Type: {pet.type}</Card.Subtitle>
+                                        <Card.Img src={pet.image} alt="image of the pet" className="rounded w-25 h-25" />
+                                    </div>
+                                )
                             })}
                         </>
                         :

@@ -8,15 +8,11 @@ import { BrowserRouter as Router, Route, Switch, Link, useHistory } from "react-
 import { Navbar } from "react-bootstrap"
 import {UserContext} from "./context/context"
 import React, { useContext, useEffect, useState } from "react"
-import EditPet from './components/edit-pet';
-import { getPets, getUsers } from "./lib/api"
-// import { createBrowserHistory } from 'history';
-
 
 function App() {
 
   const userContext = useContext(UserContext)
-
+  // check if necessary 
   const [state, setState] = useState(null)
   
   const handleLogOut = () => {
@@ -58,7 +54,6 @@ function App() {
                 <>|</>
                 <Link to="/admin/dashboard">Dashboard</Link>
                 <>|</>
-                {/* <Link to="/edit-pet/:id"> Edit Pet </Link> */}
               </>
             : null}
           </Navbar>
@@ -69,7 +64,6 @@ function App() {
                 <Route path="/admin/dashboard"><Dashboard /></Route>
                 <Route path="/search"><Search /></Route>
                 <Route path="/my-pets"><MyPetsPage /></Route>
-                {/* <Route path="/edit-pet/:id"><EditPet/></Route>  */}
                 <Route path="/profile"><ProfileSettings /></Route>
                 <Route exact path="/"><Homepage handleLogOut={handleLogOut} handleLogIn={handleLogIn}/></Route>
               </>

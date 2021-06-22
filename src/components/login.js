@@ -22,7 +22,7 @@ export default function Login({ closeLoginModal}) {
             userContext.user = response
             closeLoginModal()
         }
-
+        // console.log(document.cookie)
     }
 
     return (

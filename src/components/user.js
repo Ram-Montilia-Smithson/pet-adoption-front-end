@@ -13,9 +13,8 @@ const User = ({ user }) => {
     useEffect(() => {
         getAllPets()
         getSavedPets()
-    }, [])
+    }, [user])
 
-    // get pets by user id
     const getAllPets = async () => {
         const petArray = []
         const pets = await getPets()

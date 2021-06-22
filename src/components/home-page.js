@@ -31,6 +31,7 @@ function Homepage({ handleLogOut, handleLogIn }) {
 
     return (
         <div>
+            fix search, add edit pet and sort out the cookies
             {userContext.user.login ?
                 <div>
                     <h1>Welcome to the pet adoption website!  {userContext.user.firstName} {userContext.user.lastName}</h1>
