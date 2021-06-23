@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Form, Button, Card } from "react-bootstrap"
 import { postUser } from "../lib/api";
 import { UserContext } from '../context/context'
@@ -24,14 +24,9 @@ export default function Signup({ closeSignupModal }) {
     const handleOnSubmit = async (event) => {
         event.preventDefault();
         if (signupData.password === confirmationPassword) {
-            const response = await postUser('http://localhost:5000/api/users/signup',signupData)
-            // console.log(signupData)
-            if (typeof response === "string") {
-                // console.log(response);
-                setError(`${response}`)
-            }
+            const response = await postUser('/api/users/signup',signupData)
+            if (typeof response === "string") setError(`${response}`)
             else {
-                // console.log("no Error", response);
                 setSignupData({ firstName: "", lastName: "", password: "", email: "", tel: "", bio: "", admin: false, pets: [], login: true })
                 setConfirmationPassword("")
                 userContext.user = response
@@ -39,10 +34,7 @@ export default function Signup({ closeSignupModal }) {
                 closeSignupModal()
             }
         }
-        else {
-            setError("passwords do not match")
-            // console.log("passwords do not match");
-        }
+        else setError("passwords do not match")
     };
 
     return (
@@ -132,7 +124,7 @@ export default function Signup({ closeSignupModal }) {
                                 required
                             />
                         </Form.Group>
-                        <div className="text-danger bg-warning rounded my-2">{error}</div>
+                        <div className="my-2 bg-warning rounded text-danger border border-primary">{error}</div>
                         <Button className="w-100" type="submit">Sign Up</Button>
                     </Form>
                 </Card.Body>

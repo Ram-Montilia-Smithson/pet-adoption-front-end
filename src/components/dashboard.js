@@ -9,6 +9,7 @@ function Dashboard() {
 
     const [pets, setPets] = useState([])
     const [users, setUsers] = useState([])
+    const [error, setError] = useState("")
     
     useEffect(() => {
         getAllUsers()
@@ -17,17 +18,26 @@ function Dashboard() {
 
     const getAllPets = async () => {
         const pets = await getPets()
-        setPets(pets)
+        if (typeof pets === "string") setError(pets)
+        else {
+            setPets(pets)
+            setError("")
+        }
     }
 
     const getAllUsers = async () => {
         const users = await getUsers()
-        setUsers(users)
+        if (typeof users === "string") setError(users)
+        else {
+            setUsers(users)
+            setError("")
+        }
     }
 
     return (
         <>
             <h1 className="text-center mb-4 mt-5">Dashboard</h1>
+            <h2>{error}</h2>
             <Router>
                 <Navbar className="bg-dark mx-5 rounded d-flex justify-content-around">
                     <Link to="/admin/dashboard/users">Users</Link>
@@ -36,7 +46,7 @@ function Dashboard() {
                 </Navbar>
                 <Switch>
                     <Route path="/admin/dashboard/users">
-                        <Users users={users}/>
+                        <Users users={users} getAllUsers={getAllUsers}/>
                     </Route>
                     <Route path="/admin/dashboard/pets">
                         <Pets pets={pets} getAllPets={getAllPets}/>

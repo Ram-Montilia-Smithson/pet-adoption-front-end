@@ -4,6 +4,8 @@ import { Card, Modal, } from "react-bootstrap";
 import { getPetById, getPets } from "../lib/api";
 import Pet from "./pet-card";
 
+// check getSavedPets use of savedPets if needed
+
 function MyPetsPage() {
 
     const userContext = useContext(UserContext)
@@ -25,9 +27,7 @@ function MyPetsPage() {
     const getAllPets = async () => {
         const petArray = []
         const pets = await getPets()
-        pets.forEach(pet => {
-            if (pet.ownerId === userContext.user._id) {petArray.push(pet)}
-        })
+        pets.forEach(pet => { if (pet.ownerId === userContext.user._id) petArray.push(pet)})
         setUsersPets(petArray)
     }
 

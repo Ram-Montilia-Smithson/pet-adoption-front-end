@@ -2,6 +2,8 @@ import { Button, Card, Form, ToggleButton, ToggleButtonGroup } from "react-boots
 import React, { useState } from "react"
 import { updatePetById } from "../lib/api";
 
+// set a loader to run until the response comes
+
 export default function EditPet({ pet, closeModal }) {
 
     const [newPicture, setNewPicture] = useState(false)
@@ -50,7 +52,7 @@ export default function EditPet({ pet, closeModal }) {
         if (!editPetData.bio) { formData.append('bio', newPet.bio) }
         if (newPicture) {formData.append('image', editPetData.image)}
         if (!newPicture) { formData.append('image', newPet.image) }
-        const EditedPet = await updatePetById(`http://localhost:5000/api/pets/${newPet._id}`, formData)
+        const EditedPet = await updatePetById(newPet._id, formData)
         setNewPet(EditedPet)
         setNewPicture(false)
         setEditPetData({

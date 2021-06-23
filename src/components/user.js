@@ -1,14 +1,15 @@
 import { Modal } from "react-bootstrap"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import UserModal from "./userModal"
 import { getPetById, getPets } from "../lib/api"
+
+
+// check getSavedPets use of savedPets if needed
 
 const User = ({ user }) => {
     
     const [savedPets, setSavedPets] = useState([])
     const [usersPets, setUsersPets] = useState([])
-
-    const ref = useRef();
 
     useEffect(() => {
         getAllPets()
@@ -18,9 +19,7 @@ const User = ({ user }) => {
     const getAllPets = async () => {
         const petArray = []
         const pets = await getPets()
-        pets.forEach(pet => {
-            if (pet.ownerId === user._id) { petArray.push(pet) }
-        })
+        pets.forEach(pet => { if (pet.ownerId === user._id) { petArray.push(pet) }})
         setUsersPets(petArray)
     }
 
@@ -50,8 +49,8 @@ const User = ({ user }) => {
                     <span> - Owner</span>
                 }
             </h2>
-            <Modal show={isModalOpen} onHide={closeModal} ref={ref}>
-                <UserModal user={user} pets={usersPets} savedPets={savedPets}/>
+            <Modal show={isModalOpen} onHide={closeModal}>
+                <UserModal user={user} pets={usersPets} savedPets={savedPets} />
             </Modal>
         </>
     )

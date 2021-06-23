@@ -1,7 +1,6 @@
 import { Card } from "react-bootstrap";
 import React from "react"
 
-
 function UserModal({ user, pets, savedPets }) {
 
     return (

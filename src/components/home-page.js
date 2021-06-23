@@ -4,7 +4,7 @@ import {UserContext} from "../context/context"
 import React, { useContext, useState } from "react"
 import { Modal } from "react-bootstrap"
 
-function Homepage({ handleLogOut, handleLogIn }) {
+function Homepage({ handleLogIn }) {
     
     const userContext = useContext(UserContext)
 
@@ -31,7 +31,6 @@ function Homepage({ handleLogOut, handleLogIn }) {
 
     return (
         <div>
-            fix search, add edit pet and sort out the cookies
             {userContext.user.login ?
                 <div>
                     <h1>Welcome to the pet adoption website!  {userContext.user.firstName} {userContext.user.lastName}</h1>

@@ -1,11 +1,9 @@
 import { Button, Card, Form, Modal, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { postPet } from "../lib/api";
 import Pet from "./pet-card";
 
 function AddPet() {
-
-    const ref = useRef();
 
     const [newPet, setNewPet] = useState({});
 
@@ -43,7 +41,7 @@ function AddPet() {
         formData.append('status', 'Available')
         formData.append('ownerId', 0)
         formData.append('image', addPetData.image)
-        const pet = await postPet('http://localhost:5000/api/pets', formData)
+        const pet = await postPet(formData)
         setNewPet(pet)
         setIsModalOpen(true)
         // set a loader to run until the response comes
@@ -86,7 +84,6 @@ function AddPet() {
                                 name="image"
                                 onChange={(event) => handlePictureChange(event)}
                                 required
-                                ref={ref}
                             />
                         </Form.Group>
                         <Form.Group id="type">

@@ -14,15 +14,12 @@ export default function Login({ closeLoginModal}) {
 
     const onSubmit = async (event) => {
         event.preventDefault();
-        const response = await postUser('http://localhost:5000/api/users/login', loginData)
-        if (typeof response === "string") {
-            setError(`${response}`)
-        }
+        const response = await postUser('/api/users/login', loginData)
+        if (typeof response === "string") setError(`${response}`)
         else {
             userContext.user = response
             closeLoginModal()
         }
-        // console.log(document.cookie)
     }
 
     return (
@@ -53,7 +50,7 @@ export default function Login({ closeLoginModal}) {
                                 onChange={(event) => setLoginData({...loginData, password: event.target.value})}
                             />
                         </Form.Group>
-                        <div className="text-danger bg-warning rounded my-2">{error}</div>
+                        <div className="my-2 bg-warning rounded text-danger border border-primary">{error}</div>
                         <Button className="w-100" type="submit">
                             Log In
                         </Button>

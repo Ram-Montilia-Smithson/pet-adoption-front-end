@@ -20,26 +20,19 @@ function ProfileSettings() {
 
     const handleOnSubmit = async (event) => {
         event.preventDefault();
-        // console.log(profileData);
         if (profileData.password === confirmationPassword) {
             let newUserInfo = {}
             for (const property in profileData) {if (profileData[property] !== "") { newUserInfo[property] = profileData[property]}}
-            const response = await updateUserById(`http://localhost:5000/api/users/${userContext.user._id}`, newUserInfo)
-            // console.log(newUserInfo);
-            console.log(response);
-            if (typeof response === "string") {
-                setError(response)
-            }
+            const response = await updateUserById(userContext.user._id, newUserInfo)
+            if (typeof response === "string") setError(response)
             else if (typeof response === "object") {
                 userContext.user = response
                 setConfirmationPassword("")
                 setProfileData({ firstName: "", lastName: "", password: "", email: "", tel: "", bio: ""})
-                setError("")
+                setError("profile settings changed")
             }
         }
-        else {
-            setError("passwords do not match")
-        }
+        else setError("passwords do not match")
     };
 
     return (
@@ -122,7 +115,7 @@ function ProfileSettings() {
                             value={profileData.bio}
                         />
                     </Form.Group>
-                    <div className="text-danger bg-warning rounded my-2">{error}</div>
+                    <div className="my-2 bg-warning rounded text-danger border border-primary">{error}</div>
                     <Button className="w-100" type="submit">
                         save changes
                     </Button>

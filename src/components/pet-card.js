@@ -14,53 +14,48 @@ function Pet({ pet }) {
     }, [pet])
 
     const handleReturn = async () => {
-        const newPet = await updatePetById(`http://localhost:5000/api/pets/return/${state._id}`)
-        if (typeof newPet == "string") {setMessage(newPet)}
+        const newPet = await updatePetById(`/api/pets/return/${state._id}`)
+        if (typeof newPet == "string") setMessage(newPet)
         else {
             setState(newPet)
             setMessage("pet returned successfully")
         }
-        console.log(newPet);
     }
 
     const handleFoster = async () => {
-        const newPet = await updatePetById(`http://localhost:5000/api/pets/foster/${state._id}`, { user: userContext.user._id })
-        if (typeof newPet == "string") {setMessage(newPet)}
+        const newPet = await updatePetById(`/api/pets/foster/${state._id}`, { user: userContext.user._id })
+        if (typeof newPet == "string") setMessage(newPet)
         else {
             setState(newPet)
             setMessage("pet fostered successfully")
         }
-        console.log(newPet);
     }
 
     const handleAdopt = async () => {
-        const newPet = await updatePetById(`http://localhost:5000/api/pets/adopt/${state._id}`, { user: userContext.user._id })
-        if (typeof newPet == "string") {setMessage(newPet)}
+        const newPet = await updatePetById(`/api/pets/adopt/${state._id}`, { user: userContext.user._id })
+        if (typeof newPet == "string") setMessage(newPet)
         else {
             setState(newPet)
             setMessage("pet adopted successfully")
         }
-        console.log(newPet);
     }
 
     const handleSave = async () => {
-        const newUser = await updateUserById(`http://localhost:5000/api/users/save/${userContext.user._id}`, { savedPets: [...userContext.user.savedPets, state._id] })
-        if (typeof newUser == "string") { setMessage(newUser) }
+        const newUser = await updateUserById(userContext.user._id, { savedPets: [...userContext.user.savedPets, state._id] })
+        if (typeof newUser == "string") setMessage(newUser)
         else {
             userContext.user = newUser
             setMessage("pet saved successfully")
-            console.log(userContext);
         }
     }
     const handleUnSave = async () => {
         const index = userContext.user.savedPets.indexOf(state._id)
         userContext.user.savedPets.splice(index,1)
-        const newUser = await updateUserById(`http://localhost:5000/api/users/save/${userContext.user._id}`, { savedPets: [...userContext.user.savedPets]})
-        if (typeof newUser == "string") { setMessage(newUser) }
+        const newUser = await updateUserById(userContext.user._id, { savedPets: [...userContext.user.savedPets]})
+        if (typeof newUser == "string") setMessage(newUser)
         else {
             userContext.user = newUser
             setMessage("pet unsaved successfully")
-            console.log(userContext);
         }
     }
 
@@ -72,7 +67,7 @@ function Pet({ pet }) {
                 <Card.Body>
                     <Card.Title>Name: {state.name}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">Type: {state.type}</Card.Subtitle>
-                    <Card.Img src={state.image} alt="image of the pet" alt={state.name} className="rounded w-25 h-25"/>
+                    <Card.Img src={state.image} alt={state.name} className="rounded w-25 h-25"/>
                     <Card.Text>Breed: {state.breed}</Card.Text>
                     <Card.Text>Status: {state.status}</Card.Text>
                     <Card.Text>Height: {state.height}CM</Card.Text>
@@ -83,7 +78,7 @@ function Pet({ pet }) {
                     <Card.Text>dietary restrictions: {state.dietaryRestrictions}</Card.Text>
                 </Card.Body>
                 {userContext.user.login && <>
-                    <h3>{message}</h3>
+                    <div className="my-2 bg-warning rounded text-danger border border-primary">{message}</div>
                     {state.status === "Available" ?
                     <>
                         <Button className="btn btn-primary" onClick={handleAdopt}>Adopt pet</Button>

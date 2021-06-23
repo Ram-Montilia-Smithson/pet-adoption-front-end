@@ -4,25 +4,22 @@ import Homepage from './components/home-page';
 import MyPetsPage from './components/my-pets-page';
 import ProfileSettings from './components/profile-settings';
 import Search from './components/search-page';
-import { BrowserRouter as Router, Route, Switch, Link, useHistory } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
 import { Navbar } from "react-bootstrap"
 import {UserContext} from "./context/context"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useState } from "react"
 
 function App() {
 
   const userContext = useContext(UserContext)
-  // check if necessary 
-  const [state, setState] = useState(null)
-  
-  const handleLogOut = () => {
-    userContext.user = {}
-    setState("logged out")
-  }
 
-  const handleLogIn = () => {
-    setState("logged in")
-  }
+  const [logIn, setLogIn] = useState("logged out")
+  
+  const handleLogOut = () => { setLogIn("logged out")}
+
+  const handleLogIn = () => { setLogIn("logged in") }
+  
+  console.log(logIn);
 
   return (
     <div className="text-center">
