@@ -18,7 +18,7 @@ export default function Login({ closeLoginModal}) {
         if (typeof response === "string") setError(`${response}`)
         else {
             userContext.user = response
-            closeLoginModal()
+            closeLoginModal(response)
         }
     }
 

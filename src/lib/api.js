@@ -40,7 +40,7 @@ export const getPetById = async (id) => {
     if (response.data) return (response.data)
     else return (response)
 }
-
+// not in use in app
 export const getUserById = async (id) => {
     const response = await axios.get(`/api/users/${id}`, { withCredentials: true })
         .catch((error) => { return ({ data: `${error}` }) })

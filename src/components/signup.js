@@ -31,7 +31,7 @@ export default function Signup({ closeSignupModal }) {
                 setConfirmationPassword("")
                 userContext.user = response
                 setError("")
-                closeSignupModal()
+                closeSignupModal(response)
             }
         }
         else setError("passwords do not match")

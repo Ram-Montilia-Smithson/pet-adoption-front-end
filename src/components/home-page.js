@@ -3,6 +3,7 @@ import Signup from "./signup"
 import {UserContext} from "../context/context"
 import React, { useContext, useState } from "react"
 import { Modal } from "react-bootstrap"
+import { getUserById } from "../lib/api"
 
 function Homepage({ handleLogIn }) {
     
@@ -15,18 +16,18 @@ function Homepage({ handleLogIn }) {
         setIsLoginOpen(true)
     }
 
-    const closeLoginModal = () => {
+    const closeLoginModal = (response) => {
         setIsLoginOpen(false)
-        handleLogIn()
+        if (response) handleLogIn()
     }
 
     const openSignupModal = () => {
         setIsSignupOpen(true)
     }
 
-    const closeSignupModal = () => {
+    const closeSignupModal = (response) => {
         setIsSignupOpen(false)
-        handleLogIn()
+        if (response) handleLogIn()
     }
 
     return (
