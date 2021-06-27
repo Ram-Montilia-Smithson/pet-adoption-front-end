@@ -16,15 +16,19 @@ function Users({ users, getAllUsers }) {
             {users.map(user => {
                 return (
                     <div className="text-center">
-                        <User user={user} key={user._id} />
-                        {!user.admin &&
-                            <Button
-                                className="bg-danger text-warning"
-                                onClick={() => { deleteUser(user) }}
-                            >
-                                {`Delete Owner ${user.firstName}`}
-                            </Button>
-                        }
+                        <div className="d-inline-flex">
+                            <User user={user} key={user._id} />
+                            {!user.admin &&
+                                <div>
+                                    <Button
+                                        className="bg-danger text-warning"
+                                        onClick={() => { deleteUser(user) }}
+                                    >
+                                        {`Delete Owner ${user.firstName}`}
+                                    </Button>
+                                </div>
+                            }
+                        </div>
                     </div>
                 )
             })}

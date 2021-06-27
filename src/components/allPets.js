@@ -28,22 +28,23 @@ function Pets({ pets, getAllPets }) {
             {pets.map(pet => {
                 return (
                     <div key={pet._id}>
-                        <Pet pet={pet}/>
-                        <Button className="btn btn-info" onClick={() => setIsModalOpen(pet._id)}>Edit Pet</Button>
-                        
-                        {loader ?
-                            <Button variant="danger" disabled>
-                                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
-                                <span className="text-warning">{" Loading..."}</span>
-                            </Button>
-                            :
-                            <Button
-                                className="btn btn-danger text-warning"
-                                onClick={() => { deletePet(pet) }}
-                            >
-                                Delete Pet
-                            </Button>
-                        }
+                        <Pet pet={pet} />
+                        <div className="d-inline-flex flex-column">
+                            <Button className="btn btn-info" onClick={() => setIsModalOpen(pet._id)}>Edit Pet</Button>
+                            {loader ?
+                                <Button variant="danger" disabled>
+                                    <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                                    <span className="text-warning">{" Loading..."}</span>
+                                </Button>
+                                :
+                                <Button
+                                    className="btn btn-danger text-warning"
+                                    onClick={() => { deletePet(pet) }}
+                                >
+                                    Delete Pet
+                                </Button>
+                            }
+                        </div>
                         <Modal show={isModalOpen === pet._id}>
                             <EditPet pet={pet} closeModal={closeModal} />
                         </Modal>

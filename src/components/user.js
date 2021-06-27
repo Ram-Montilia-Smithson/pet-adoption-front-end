@@ -1,4 +1,4 @@
-import { Modal } from "react-bootstrap"
+import { Button, Modal } from "react-bootstrap"
 import React, { useEffect, useState } from "react"
 import UserModal from "./userModal"
 import { getPetById, getPets } from "../lib/api"
@@ -41,14 +41,15 @@ const User = ({ user }) => {
 
     return (
         <>
-            <h2 className="text-center mb-4" onClick={() => { openModal()}}>
+            <h2 className="text-center mb-4" >
                 {user.firstName} {user.lastName}
                 {user.admin ?
-                    <span> - Admin</span>
+                    <span> - Admin - </span>
                     :
-                    <span> - Owner</span>
+                    <span> - Owner - </span>
                 }
             </h2>
+            <Button onClick={() => { openModal() }} className="d-inline mx-2 h-50"> Show User Details</Button>
             <Modal show={isModalOpen} onHide={closeModal}>
                 <UserModal user={user} pets={usersPets} savedPets={savedPets} />
             </Modal>
