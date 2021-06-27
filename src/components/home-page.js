@@ -3,7 +3,6 @@ import Signup from "./signup"
 import {UserContext} from "../context/context"
 import React, { useContext, useState } from "react"
 import { Modal } from "react-bootstrap"
-import { getUserById } from "../lib/api"
 
 function Homepage({ handleLogIn }) {
     

@@ -1,4 +1,4 @@
-import { Button, Card, Form, Modal, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
+import { Button, Card, Form, Modal, Spinner, ToggleButton, ToggleButtonGroup } from "react-bootstrap"
 import React, { useState } from "react";
 import { postPet } from "../lib/api";
 import Pet from "./pet-card";
@@ -6,7 +6,7 @@ import Pet from "./pet-card";
 function AddPet() {
 
     const [newPet, setNewPet] = useState({});
-
+    const [loader, setLoader] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [addPetData, setAddPetData] = useState({
         name: "",
@@ -28,6 +28,7 @@ function AddPet() {
 
     const handleOnSubmit = async (event) => {
         event.preventDefault()
+        setLoader(true)
         const formData = new FormData();
         formData.append('name', addPetData.name)
         formData.append('weight', addPetData.weight)
@@ -44,7 +45,7 @@ function AddPet() {
         const pet = await postPet(formData)
         setNewPet(pet)
         setIsModalOpen(true)
-        // set a loader to run until the response comes
+        setLoader(false)
     };
 
     const closeModal = () => {
@@ -172,7 +173,14 @@ function AddPet() {
                                 value={addPetData.dietaryRestrictions}
                             />
                         </Form.Group>
-                        <Button type="submit">Add Pet</Button>
+                        {loader ?
+                            <Button variant="primary" disabled>
+                                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true"/>
+                                <span>{" Loading..."}</span>
+                            </Button>
+                            :
+                            <Button type="submit">Add Pet</Button>
+                        }
                     </Form>
                 </Card.Body>
             </Card>
