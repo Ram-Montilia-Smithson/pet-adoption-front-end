@@ -6,6 +6,7 @@ import Pet from "./pet-card";
 function AddPet() {
 
     const [newPet, setNewPet] = useState({});
+    const [error, setError] = useState("")
     const [loader, setLoader] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [addPetData, setAddPetData] = useState({
@@ -43,9 +44,16 @@ function AddPet() {
         formData.append('ownerId', 0)
         formData.append('image', addPetData.image)
         const pet = await postPet(formData)
-        setNewPet(pet)
-        setIsModalOpen(true)
-        setLoader(false)
+        if (typeof pet === "string") {
+            setError(pet)
+            setLoader(false)
+        }
+        else if (typeof pet === "object") {
+            setError("")
+            setNewPet(pet)
+            setIsModalOpen(true)
+            setLoader(false)
+        }
     };
 
     const closeModal = () => {
@@ -173,6 +181,7 @@ function AddPet() {
                                 value={addPetData.dietaryRestrictions}
                             />
                         </Form.Group>
+                        <div className="my-2 bg-warning rounded text-danger border border-primary">{error}</div>
                         {loader ?
                             <Button variant="primary" disabled>
                                 <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true"/>

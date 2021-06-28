@@ -9,7 +9,6 @@ function Pets({ pets, getAllPets }) {
     const [isModalOpen, setIsModalOpen] = useState("");
     const [loader, setLoader] = useState(false)
 
-
     const closeModal = () => {
         setIsModalOpen("")
         getAllPets()

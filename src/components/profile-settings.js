@@ -3,7 +3,6 @@ import { Form, Button, Card} from "react-bootstrap";
 import React, { useContext, useState } from "react"
 import { updateUserById } from "../lib/api";
 
-
 function ProfileSettings() {
 
     const userContext = useContext(UserContext)

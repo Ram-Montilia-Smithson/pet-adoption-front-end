@@ -3,9 +3,6 @@ import React, { useEffect, useState } from "react"
 import UserModal from "./userModal"
 import { getPetById, getPets } from "../lib/api"
 
-
-// check getSavedPets use of savedPets if needed
-
 const User = ({ user }) => {
     
     const [savedPets, setSavedPets] = useState([])
@@ -26,7 +23,7 @@ const User = ({ user }) => {
     const getSavedPets = () => {
         const petIDArray = user.savedPets
         const petArray = []
-        setSavedPets(savedPets => [])
+        setSavedPets([])
         petIDArray.forEach(async (pet) => {
             const savedPet = await getPetById(pet)
             petArray.push(savedPet)

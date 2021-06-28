@@ -19,7 +19,7 @@ function Dashboard() {
     const getAllPets = async () => {
         const pets = await getPets()
         if (typeof pets === "string") setError(pets)
-        else {
+        else if (typeof pets === "object") {
             setPets(pets)
             setError("")
         }
@@ -28,7 +28,7 @@ function Dashboard() {
     const getAllUsers = async () => {
         const users = await getUsers()
         if (typeof users === "string") setError(users)
-        else {
+        else if (typeof users === "object") {
             setUsers(users)
             setError("")
         }

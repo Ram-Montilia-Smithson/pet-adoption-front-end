@@ -11,6 +11,7 @@ export default function Search() {
     const [searchedPets, setSearchedPets] = useState([])
     const [searchData, setSearchData] = useState({ name: "", height: 0, weight: 0, type: ""})
     const [pets, setPets] = useState([])
+    const [error, setError] = useState("")
 
     useEffect(() => {
         getAllPets()
@@ -18,7 +19,11 @@ export default function Search() {
 
     const getAllPets = async () => {
         const pets = await getPets()
-        setPets(pets)
+        if (typeof pets === "string") setError(pets)
+        else if (typeof pets === "object") {
+            setError("")
+            setPets(pets)
+        }
     }
     
     const handleBasicSearch = (petType) => {
@@ -65,17 +70,18 @@ export default function Search() {
                         <Card.Title>{searchTypeBasic ? "Basic " : "Advance "} Search Form:</Card.Title>
                         {searchTypeBasic ?
                             <>
-                            <Form.Group id="type">
-                                <Form.Label className="d-block m-auto" >Type of pet</Form.Label>
-                                <ToggleButtonGroup
-                                    type="radio"
-                                    name="types"
-                                    onChange={(event) => handleBasicSearch(event)}
-                                >
-                                    <ToggleButton value={"cat"}>cat</ToggleButton>
-                                    <ToggleButton value={"dog"}>dog</ToggleButton>
-                                </ToggleButtonGroup>
-                            </Form.Group>
+                                <Form.Group id="type">
+                                    <Form.Label className="d-block m-auto" >Type of pet</Form.Label>
+                                    <ToggleButtonGroup
+                                        type="radio"
+                                        name="types"
+                                        onChange={(event) => handleBasicSearch(event)}
+                                    >
+                                        <ToggleButton value={"cat"}>cat</ToggleButton>
+                                        <ToggleButton value={"dog"}>dog</ToggleButton>
+                                    </ToggleButtonGroup>
+                                </Form.Group>
+                                <div className="my-2 bg-warning rounded text-danger border border-primary">{error}</div>
                             </>
                             :
                             <>
@@ -137,6 +143,7 @@ export default function Search() {
                                         value={searchData.weight}
                                     />
                                 </Form.Group>
+                                <div className="my-2 bg-warning rounded text-danger border border-primary">{error}</div>
                                 <Button type="submit">Search</Button>
                             </>
                         }

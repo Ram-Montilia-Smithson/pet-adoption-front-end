@@ -26,7 +26,7 @@ export default function Signup({ closeSignupModal }) {
         if (signupData.password === confirmationPassword) {
             const response = await postUser('/api/users/signup',signupData)
             if (typeof response === "string") setError(`${response}`)
-            else {
+            else if (typeof response === "object") {
                 setSignupData({ firstName: "", lastName: "", password: "", email: "", tel: "", bio: "", admin: false, pets: [], login: true })
                 setConfirmationPassword("")
                 userContext.user = response

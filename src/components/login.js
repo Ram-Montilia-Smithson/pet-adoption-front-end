@@ -16,7 +16,8 @@ export default function Login({ closeLoginModal}) {
         event.preventDefault();
         const response = await postUser('/api/users/login', loginData)
         if (typeof response === "string") setError(`${response}`)
-        else {
+        else if (typeof response === "object") {
+            setError("")
             userContext.user = response
             closeLoginModal(response)
         }

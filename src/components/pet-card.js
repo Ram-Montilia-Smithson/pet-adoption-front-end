@@ -16,7 +16,7 @@ function Pet({ pet }) {
     const handleReturn = async () => {
         const newPet = await updatePetById(`/api/pets/return/${state._id}`)
         if (typeof newPet == "string") setMessage(newPet)
-        else {
+        else if (typeof newPet === "object") {
             setState(newPet)
             setMessage("pet returned successfully")
         }
@@ -25,7 +25,7 @@ function Pet({ pet }) {
     const handleFoster = async () => {
         const newPet = await updatePetById(`/api/pets/foster/${state._id}`, { user: userContext.user._id })
         if (typeof newPet == "string") setMessage(newPet)
-        else {
+        else if (typeof newPet === "object") {
             setState(newPet)
             setMessage("pet fostered successfully")
         }
@@ -34,7 +34,7 @@ function Pet({ pet }) {
     const handleAdopt = async () => {
         const newPet = await updatePetById(`/api/pets/adopt/${state._id}`, { user: userContext.user._id })
         if (typeof newPet == "string") setMessage(newPet)
-        else {
+        else if (typeof newPet === "object") {
             setState(newPet)
             setMessage("pet adopted successfully")
         }
@@ -43,7 +43,7 @@ function Pet({ pet }) {
     const handleSave = async () => {
         const newUser = await updateUserById(userContext.user._id, { savedPets: [...userContext.user.savedPets, state._id] })
         if (typeof newUser == "string") setMessage(newUser)
-        else {
+        else if (typeof newUser === "object") {
             userContext.user = newUser
             setMessage("pet saved successfully")
         }
@@ -53,7 +53,7 @@ function Pet({ pet }) {
         userContext.user.savedPets.splice(index,1)
         const newUser = await updateUserById(userContext.user._id, { savedPets: [...userContext.user.savedPets]})
         if (typeof newUser == "string") setMessage(newUser)
-        else {
+        else if (typeof newUser === "object") {
             userContext.user = newUser
             setMessage("pet unsaved successfully")
         }
