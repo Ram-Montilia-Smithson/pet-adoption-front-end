@@ -34,21 +34,23 @@ export default function Search() {
 
     const handleAdvanceSearch = (event) => {
         event.preventDefault()
+        console.log(pets);
         const advanceSearchPets = [...pets]
         advanceSearchPets.forEach(pet => {
-            let i = advanceSearchPets.indexOf(pet)
+            pet.exclusion = false
             for (const searchValue in searchData) {
                 for (const property in pet) {
                     if (searchData[searchValue]) {
                         if (property === searchValue && pet[property] !== searchData[searchValue]) {
-                            advanceSearchPets.splice(i, 1)
+                            pet.exclusion = true
                         }
                     }
                 }
             }
         })
-        setSearchedPets(advanceSearchPets)
-        setSearchData({ name: "", height: 0, weight: 0 })
+        const filteredAdvanceSearchPets = advanceSearchPets.filter(pet => pet.exclusion !== true)
+        setSearchedPets(filteredAdvanceSearchPets)
+        setSearchData({ name: "", height: 0, weight: 0, type: "" })
     }
 
     return (
@@ -114,7 +116,7 @@ export default function Search() {
                                         type="radio"
                                         name="types"
                                     >
-                                        <ToggleButton onChange={() => setSearchData({ ...searchData, status: "fostered" })}>
+                                        <ToggleButton onChange={() => setSearchData({ ...searchData, status: "Fostered" })}>
                                             Fostered
                                         </ToggleButton>
                                         <ToggleButton onChange={() => setSearchData({ ...searchData, status: "Adopted" })}>
